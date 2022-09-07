@@ -4,114 +4,6 @@
 #include <readline/history.h>
 #include <string.h>
 
-
-// size_t	ft_checkblock(char const *s, char c)
-// {
-// 	char const	*st;
-// 	int			swit;
-// 	size_t		size;
-
-// 	size = 0;
-// 	swit = 1;
-// 	st = s;
-// 	while (*st)
-// 	{
-// 		if (*st == c)
-// 		{
-// 			swit = 1;
-// 		}
-// 		else if (swit == 1)
-// 		{
-// 			swit = 0;
-// 			size++;
-// 		}
-// 		st++;
-// 	}
-// 	return (size);
-// }
-
-// size_t	ft_retstrcnt(const char *cpy, char c)
-// {
-// 	size_t		i;
-// 	const char	*temp;
-
-// 	i = 0;
-// 	temp = cpy;
-// 	while (*temp && *temp != c)
-// 	{
-// 		i++;
-// 		temp++;
-// 	}
-// 	return (i);
-// }
-
-// const char	*ft_cpystr(char **ar, const char *cpy, char c, size_t index)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (*cpy && *cpy != c)
-// 	{
-// 		ar[index][i] = *cpy;
-// 		cpy++;
-// 		i++;
-// 	}
-// 	ar[index][i] = '\0';
-// 	return (cpy);
-// }
-
-// int	ft_makearr2(const char *cpy, char c, char **ar, size_t cnt)
-// {
-// 	size_t		fkcnt;
-// 	size_t		swit;
-// 	size_t		i;
-
-// 	fkcnt = cnt;
-// 	swit = 1;
-// 	while (*cpy && fkcnt >= 0)
-// 	{
-// 		if (*cpy == c)
-// 		{
-// 			swit = 1;
-// 			cpy++;
-// 		}
-// 		else if (swit == 1)
-// 		{
-// 			swit = 0;
-// 			i = ft_retstrcnt(cpy, c);
-// 			ar[cnt - fkcnt] = (char *) ft_calloc(i + 1, sizeof(char));
-// 			if (!(ar[cnt - fkcnt]))
-// 				return (0);
-// 			cpy = ft_cpystr(ar, cpy, c, cnt - fkcnt);
-// 			fkcnt--;
-// 		}
-// 	}
-// 	return (1);
-// }
-
-// char	**ft_split(char const *s, char c)
-// {
-// 	size_t	vol;
-// 	char	**arr;
-
-// 	if (!s)
-// 		return (NULL);
-// 	vol = ft_checkblock(s, c);
-// 	arr = (char **) ft_calloc(vol + 1, sizeof(char *));
-// 	if (!arr)
-// 	{
-// 		free(arr);
-// 		return (NULL);
-// 	}
-// 	if (!(ft_makearr2(s, c, arr, vol - 1)))
-// 	{
-// 		free(arr);
-// 		return (NULL);
-// 	}
-// 	arr[vol] = NULL;
-// 	return (arr);
-// }
-
 int	ft_checkq(char *str)
 {
 	char	*st;
@@ -165,8 +57,8 @@ int	ft_switch(char c)
 	else if (c == '\"')
 		return (2);
 	else if (ft_isspace(c) == 0 && c != 0)
-		return (3); //문자일때 3
-	return (0);
+		return (3);
+	return (0); //null,공백
 }
 
 int	ft_split_util(char *str)
@@ -210,6 +102,7 @@ int	ft_split_util(char *str)
 	}
 	return (cnt);
 }
+
 // ehco       abc   'def' "abc   d"
 // "abc"
 // "abc""abc"
@@ -217,14 +110,86 @@ int	ft_split_util(char *str)
 // "abc"abc
 // 'abc'"abc"
 // 'abc' "abc"e
+
 // '\0  "\0  a\0  '''a   \0
 
-// char	**ft_split2(char *str)
-// {
-// 	int	len;
+void	ft_removeq(char *str, char **strarr, int len)
+{
+	int		swit; //
+	char	*st;
+	int		cnt;
+	int		i;
 
-// 	len = ft_split_util(str);
-// }
+	i = 0;
+	cnt = 0;
+	swit = 0;
+	st = str;
+	while(i < len)
+	{
+		//////////////////////////////
+		while (*st)
+		{
+			while (*st != 0 && ft_isspace(*st))
+			{
+				//swit
+				st++;
+			}
+			if (*st == 0)
+				break ;
+			if (swit == 0)
+			{
+				swit = ft_switch(*st);
+				if (swit == 3)
+				{
+					while (*(st + 1) != 0 && ft_switch(*(st + 1)) == 3)
+					{
+						cnt++;
+						st++;
+					}
+					cnt++;
+					//printf("%d\n",cnt);
+					///함수 호출
+					// cnt = -1;
+					swit = 0;
+				}
+			}
+			else if (swit == ft_switch(*st))
+			{
+				/////////
+				cnt++;
+				//함수 호호출
+				swit = 0;
+				// cnt = -1;
+			}
+			if (ft_switch(*(st + 1)) == 0 && swit == 0) //"abd""ab"
+			{
+				// cnt++;
+				printf("\"::: %d\n",cnt); //
+				cnt = -1;
+			}
+			else if (ft_switch(*(st + 1)) != 0 && swit == 0)
+			{
+				cnt--;
+			}
+			cnt++;//
+			st++;
+		}
+		///////////////////////////////////
+		i++;
+	}
+}
+
+char	**ft_split2(char *str)
+{
+	int	len;
+	char **ans;
+	len = ft_split_util(str);
+	ans = calloc (len + 1, sizeof(char *));
+	if (!ans)
+		return (NULL);//
+	ft_removeq(str, ans, len);
+	return (0);
+}
 
 //test:a     b
 //1
@@ -251,8 +216,8 @@ int main(int argc, char *argv[], char *env[])
         // Add input to history.
         add_history(input);
 		//printf("%d\n",ft_checkq(input)); > 완료
-        printf("%d\n",ft_split_util(input));
-
+        // printf("%d\n",ft_split2(input));
+		ft_split2(input);
         if( 0 == strcmp(input, "exit") )
         {
             printf("Bye!\n");
@@ -288,5 +253,3 @@ int main(int argc, char *argv[], char *env[])
     }
     return 0;
 }
-
-//echo flksdajfl

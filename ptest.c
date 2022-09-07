@@ -13,4 +13,5 @@ int main()
 	s = "hellow";
 	s = ft_tt(s);
 	printf("%s\n",s);
+	return (64);
 }
