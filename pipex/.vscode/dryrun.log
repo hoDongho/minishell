@@ -1,0 +1,12 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/hodongho/42Seoul_Subject/pipex'
+make -C ./ft_lib
+gcc -Wall -Wextra -Werror -I./include   -c -o pipex.o pipex.c
+gcc -Wall -Wextra -Werror -I./include   -c -o init.o init.c
+gcc -Wall -Wextra -Werror -I./include   -c -o utils.o utils.c
+gcc -Wall -Wextra -Werror -I./include   -c -o args.o args.c
+gcc -Wall -Wextra -Werror -I./include   -c -o exec.o exec.c
+gcc -Wall -Wextra -Werror -I./include   -c -o option.o option.c
+gcc -o pipex pipex.o init.o utils.o args.o exec.o option.o -L./ft_lib -lft
+make: Leaving directory `/Users/hodongho/42Seoul_Subject/pipex'
+ 
