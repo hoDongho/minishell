@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:00:44 by dhyun             #+#    #+#             */
-/*   Updated: 2022/07/17 20:17:38 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/07 10:57:45 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	set_path(char *env[], t_data *data)
 	while (*env != 0 && ft_strncmp(*env, "PATH=", 5) != 0)
 		env++;
 	if (*env == 0)
-		print_error("Wrong enviroments", 1);
+		print_error("Wrong environments", 1);
 	data->path = ft_split(*env + 5, ':');
 	if (data->path == 0)
 		print_error("split", 1);
