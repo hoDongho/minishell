@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <string.h>
+#include "minishell.h"
+
 
 int	ft_checkq(char *str)
 {
@@ -110,6 +107,26 @@ int	ft_split_util(char *str)
 // "abc"abc
 // 'abc'"abc"
 // 'abc' "abc"e
+//   asdf d$ abd
+//"   asdf d$ abd"
+//    dsaf $ asdf
+// "asdf$aaa$asdf"
+
+//
+//   sadf
+
+// ' $ '
+// ' $sadf'
+
+//export sadf = 12345
+
+// " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
+// " $"
+// " $asdf"
+// " $sadf" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
+
+//   $
+//   $sadf
 
 // '\0  "\0  a\0  '''a   \0
 
@@ -164,7 +181,6 @@ void	ft_removeq(char *str, char **strarr, int len)
 			if (ft_switch(*(st + 1)) == 0 && swit == 0) //"abd""ab"
 			{
 				// cnt++;
-				printf("\"::: %d\n",cnt); //
 				cnt = -1;
 			}
 			else if (ft_switch(*(st + 1)) != 0 && swit == 0)
@@ -179,7 +195,7 @@ void	ft_removeq(char *str, char **strarr, int len)
 	}
 }
 
-char	**ft_split2(char *str)
+char	**ft_split2(t_data *data, char *str)
 {
 	int	len;
 	char **ans;
@@ -187,7 +203,7 @@ char	**ft_split2(char *str)
 	ans = calloc (len + 1, sizeof(char *));
 	if (!ans)
 		return (NULL);//
-	ft_removeq(str, ans, len);
+	ft_removeq2(str, ans, len, data);
 	return (0);
 }
 
@@ -195,29 +211,35 @@ char	**ft_split2(char *str)
 //1
 //test:a bb   c
 
+void ft_init(t_data *data)
+{
+	data->head = ft_newlist(0);
+	data->tail = ft_newlist(0);
+	data->head->next = data->tail;
+	data->tail->prev = data->head;
+	data->datasize = 0;
+}
+
 int main(int argc, char *argv[], char *env[])
 {
 	char *input;
 	char **cc;
 	int	i;
+	t_data	data;
 
 	i = 2;
     int work = 1;
+
     printf("Commands to use: name, ver, exit \n");
-    // loop for working with commands
+	ft_init(&data);
     while(work) {
-        // Build prompt string.
-        //#### snprintf(shell_prompt, sizeof(shell_prompt), "your command $ ");
-        // Display prompt and read input
         input = readline("test:");
-        // Check for EOF.
         if (!input)
             break;
-        // Add input to history.
         add_history(input);
 		//printf("%d\n",ft_checkq(input)); > 완료
         // printf("%d\n",ft_split2(input));
-		ft_split2(input);
+		ft_split2(&data, input);
         if( 0 == strcmp(input, "exit") )
         {
             printf("Bye!\n");
@@ -247,8 +269,6 @@ int main(int argc, char *argv[], char *env[])
 		// 	}
         //     // printf("%s\n", input);
         // }
-        // ...
-        // Free input for future use
         free(input);
     }
     return 0;
