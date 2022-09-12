@@ -24,13 +24,17 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <stdlib.h>
 
 int main()
 {
    char buff[1024];
 
    mkdir( "test_A"     , 0755);           // 실행 파일이 있는 곳에 생성
-   chdir( "./test_A");                    // 작업 디렉토리를 변경
+   chdir( "-");                    // 작업 디렉토리를 변경
    getcwd( buff, 1024);                   // 작업 디렉토리 구하기
    printf( "작업 디렉토리: %s\n", buff);
+   system("pwd");
+   // while(1)
+   //    printf( "작업 디렉토리: %s\n", buff);
 }

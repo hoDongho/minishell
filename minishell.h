@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/08 14:26:34 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/12 14:06:26 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,33 @@ typedef struct s_list
 	char			c;
 } t_list;
 
-
-typedef struct s_data
+typedef struct s_listdata
 {
 	t_list	*head; /// 초초기화// NULL
 	t_list	*tail; // 초기화 //NULL
 	int		datasize; //""
-} t_data;
+} t_listdata;
+
+typedef struct s_myenv
+{
+	struct s_myenv		*next;
+	struct s_myenv		*prev;
+	char				*key;
+	char				*val;
+} t_myenv;
+
+typedef struct s_envdata
+{
+	t_myenv	*head; /// 초초기화// NULL
+	t_myenv	*tail; // 초기화 //NULL
+	int		datasize; //""
+} t_envdata;
+
+
 
 t_list	*ft_newlist(char c);
 int		ft_switch(char c);
-void	ft_removeq2(char *str, char **strarr, int len, t_data *data);
+void	ft_removeq2(char *str, char **strarr, int len, t_listdata *data, t_envdata *s_envdata);
+void 	ft_set_env(t_envdata *envdata, char **env);
+t_myenv	*ft_newenv(void);
+void 	ft_envinit(t_envdata *envdata);

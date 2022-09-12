@@ -195,7 +195,7 @@ void	ft_removeq(char *str, char **strarr, int len)
 	}
 }
 
-char	**ft_split2(t_data *data, char *str)
+char	**ft_split2(t_listdata *data, char *str, t_envdata *envdata)
 {
 	int	len;
 	char **ans;
@@ -203,7 +203,12 @@ char	**ft_split2(t_data *data, char *str)
 	ans = calloc (len + 1, sizeof(char *));
 	if (!ans)
 		return (NULL);//
-	ft_removeq2(str, ans, len, data);
+	ft_removeq2(str, ans, len, data, envdata);
+	while(*ans)
+	{
+		printf("%s\n", *ans);
+		ans++;
+	}
 	return (0);
 }
 
@@ -211,7 +216,7 @@ char	**ft_split2(t_data *data, char *str)
 //1
 //test:a bb   c
 
-void ft_init(t_data *data)
+void ft_init(t_listdata *data)
 {
 	data->head = ft_newlist(0);
 	data->tail = ft_newlist(0);
@@ -220,18 +225,78 @@ void ft_init(t_data *data)
 	data->datasize = 0;
 }
 
+void ft_envinit(t_envdata *envdata)
+{
+	envdata->head = ft_newenv();
+	envdata->tail = ft_newenv();
+	envdata->head->next = envdata->tail;
+	envdata->tail->prev = envdata->head;
+	envdata->datasize = 0;
+}
+
+t_myenv	*ft_newenv(void)
+{
+	t_myenv	*new;
+
+	new = calloc(1, sizeof(t_myenv));
+	if (!new)
+		return (NULL);//
+	return (new);
+}
+
+void ft_set_env(t_envdata *envdata, char **env)
+{
+	int			i;
+	int			cnt;
+	char		*str;
+	t_myenv		*new;
+
+	i = 0;
+	ft_envinit(envdata);
+	while(env[i])
+	{
+		str = env[i];
+		cnt = 0;
+		while(*str)
+		{
+			if (*str == '=')
+				break ;
+			cnt++;
+			str++;
+		}
+		str = 0;
+		str = calloc(cnt + 1, sizeof(char));
+		memmove(str, env[i], cnt);
+		new = ft_newenv();
+		new->key = str;
+		new->val = getenv(env[i]);
+		envdata->tail->prev->next = new;
+		new->next = envdata->tail;
+		new->prev = envdata->tail->prev;
+		envdata->tail->prev = new;
+		envdata->datasize++;
+		// printf("env : %s\n", env[i]);
+		// printf("key : %s\n", new->key);
+		// printf("val : %s\n\n", new->val);
+		i++;
+	}
+}
+
 int main(int argc, char *argv[], char *env[])
 {
 	char *input;
 	char **cc;
 	int	i;
-	t_data	data;
+	t_listdata	data;
+	t_envdata	envdata;
 
 	i = 2;
     int work = 1;
 
     printf("Commands to use: name, ver, exit \n");
 	ft_init(&data);
+	ft_set_env(&envdata, env);
+
     while(work) {
         input = readline("test:");
         if (!input)
@@ -239,7 +304,7 @@ int main(int argc, char *argv[], char *env[])
         add_history(input);
 		//printf("%d\n",ft_checkq(input)); > 완료
         // printf("%d\n",ft_split2(input));
-		ft_split2(&data, input);
+		ft_split2(&data, input, &envdata);
         if( 0 == strcmp(input, "exit") )
         {
             printf("Bye!\n");
