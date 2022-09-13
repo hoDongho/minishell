@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 12:06:58 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 12:14:10 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ typedef struct s_cmdlist
 
 typedef struct s_par_mdata
 {
-	t_cmdlist	*
-
+	t_cmdlist	*cmdlist;
+	t_arglist	*arglist;
+	t_envlist	*envlist;
+	char		*origin;
 } t_par_mdata;
 
 t_argnode	*ft_new_argnode(char c);

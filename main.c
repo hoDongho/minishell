@@ -219,7 +219,7 @@ char	**ft_split2(t_arglist *arglist, char *str, t_envlist *envlist)
 //1
 //test:a bb   c
 
-void ft_init(t_arglist *arglist)
+void ft_arginit(t_arglist *arglist)
 {
 	arglist->head = ft_new_argnode(0);
 	arglist->tail = ft_new_argnode(0);
@@ -236,6 +236,16 @@ void ft_envinit(t_envlist *envlist)
 	envlist->tail->prev = envlist->head;
 	envlist->datasize = 0;
 }
+
+void ft_init(t_par_mdata *par_mdata)
+{
+	par_mdata->arglist = calloc (1, sizeof(t_arglist));
+	par_mdata->envlist = calloc (1, sizeof(t_envlist));
+	//cmdlist추가하기랑 null
+	ft_arginit(par_mdata->arglist);
+	ft_envinit(par_mdata->envlist);
+}
+
 
 t_envnode	*ft_newenv(void)
 {
@@ -255,7 +265,7 @@ void ft_set_env(t_envlist *envlist, char **env)
 	t_envnode		*new;
 
 	i = 0;
-	ft_envinit(envlist);
+	// ft_envinit(envlist);
 	while(env[i])
 	{
 		str = env[i];
@@ -298,8 +308,8 @@ int main(int argc, char *argv[], char *env[])
     int work = 1;
 
     printf("Commands to use: name, ver, exit \n");
-	ft_init(&arglist); /// metadata관련된 것.  cmdlist까지 추가로 해줘야함
-	ft_set_env(&envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
+	ft_init(&par_mdata); /// metadata관련된 것.  cmdlist까지 추가로 해줘야함
+	ft_set_env(par_mdata.envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
 
     while(work) {
         input = readline("test:");
@@ -308,7 +318,8 @@ int main(int argc, char *argv[], char *env[])
         add_history(input);
 		//printf("%d\n",ft_checkq(input)); > 완료
         // printf("%d\n",ft_split2(input));
-		ft_split2(&arglist, input, &envlist);
+		par_mdata.origin = input;
+		ft_split2(par_mdata.arglist, par_mdata.origin, par_mdata.envlist);
         if( 0 == strcmp(input, "exit") )
         {
             printf("Bye!\n");
