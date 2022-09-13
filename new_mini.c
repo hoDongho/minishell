@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 11:47:13 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 12:34:07 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,11 @@ char	*ft_makeword(t_arglist	*arglist)
 
 char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 {
-	// char	test[2][1];//
 	char	*key;
 	int		i;
 	t_envnode	*curr;
 	char	*st_val;
 	// $ // "$"
-	// test[0][0] = 'a';//name
-	// test[1][0] = 'b';//val
 	i = 0;
 	st++;
 	if (ft_switch(*st) != 3)
@@ -109,8 +106,6 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 		// 	curr = curr->next;
 
 		// if (curr != envlist->tail)
-		// if (key[0] == 'a') ///반복문으로 구조체 전체 순회하는거
-		// 	ft_push(arglist, 'b'); /// 여기도 와일문에서 푸시해야함
 		free(key);//
 		st = st + i;
 	}
@@ -118,7 +113,7 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 	// while()
 }
 
-void	ft_removeq2(char *str, char **strarr, int len, t_arglist *arglist, t_envlist *envlist)
+void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 {
 	char	*st;
 	int		i;
@@ -127,7 +122,7 @@ void	ft_removeq2(char *str, char **strarr, int len, t_arglist *arglist, t_envlis
 
 	i = 0;
 	swit = 0;
-	st = str;
+	st = par_mdata->origin;
 	cnt = 0;
 	while(len > i)
 	{
@@ -144,11 +139,11 @@ void	ft_removeq2(char *str, char **strarr, int len, t_arglist *arglist, t_envlis
 				while (*st != 0 && ft_switch(*st) == swit)//
 				{
 					if (*st == '$')
-						st = ft_chgenv(st, arglist, envlist);
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함///여기도
 					else //
 					{
-						ft_push(arglist, *st);//
+						ft_push(par_mdata->arglist, *st);//
 						st++; //치환 시 st에 증가량에 대한 고려
 					}
 				}
@@ -161,13 +156,13 @@ void	ft_removeq2(char *str, char **strarr, int len, t_arglist *arglist, t_envlis
 				while (*st != 0 && ft_switch(*st) != swit)//
 				{
 					if (swit == 2 && *st == '$')
-						st = ft_chgenv(st, arglist, envlist);
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함
 					//copy  --> f_return /// 밑에서 담을거임
 					/////
 					else //
 					{
-						ft_push(arglist, *st);//
+						ft_push(par_mdata->arglist, *st);//
 						st++; //치환 시 st에 증가량에 대한 고려
 					}
 					// ft_push(arglist, *st);
@@ -182,7 +177,7 @@ void	ft_removeq2(char *str, char **strarr, int len, t_arglist *arglist, t_envlis
 				break ;//
 			// st++;
 		}
-		strarr[i] = ft_makeword(arglist);
+		strarr[i] = ft_makeword(par_mdata->arglist);
 		//printf("%s\n",strarr[i]);
 		i++;
 	}

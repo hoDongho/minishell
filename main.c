@@ -130,82 +130,17 @@ int	ft_split_util(char *str)
 
 // '\0  "\0  a\0  '''a   \0
 
-void	ft_removeq(char *str, char **strarr, int len)
-{
-	int		swit; //
-	char	*st;
-	int		cnt;
-	int		i;
-
-	i = 0;
-	cnt = 0;
-	swit = 0;
-	st = str;
-	while(i < len)
-	{
-		//////////////////////////////
-		while (*st)
-		{
-			while (*st != 0 && ft_isspace(*st))
-			{
-				//swit
-				st++;
-			}
-			if (*st == 0)
-				break ;
-			if (swit == 0)
-			{
-				swit = ft_switch(*st);
-				if (swit == 3)
-				{
-					while (*(st + 1) != 0 && ft_switch(*(st + 1)) == 3)
-					{
-						cnt++;
-						st++;
-					}
-					cnt++;
-					//printf("%d\n",cnt);
-					///함수 호출
-					// cnt = -1;
-					swit = 0;
-				}
-			}
-			else if (swit == ft_switch(*st))
-			{
-				/////////
-				cnt++;
-				//함수 호호출
-				swit = 0;
-				// cnt = -1;
-			}
-			if (ft_switch(*(st + 1)) == 0 && swit == 0) //"abd""ab"
-			{
-				// cnt++;
-				cnt = -1;
-			}
-			else if (ft_switch(*(st + 1)) != 0 && swit == 0)
-			{
-				cnt--;
-			}
-			cnt++;//
-			st++;
-		}
-		///////////////////////////////////
-		i++;
-	}
-}
-
 //ft_init_cmdlist()
 
-char	**ft_split2(t_arglist *arglist, char *str, t_envlist *envlist)
+char	**ft_split2(t_par_mdata *par_mdata)
 {
 	int	len;
 	char **ans;
-	len = ft_split_util(str);
+	len = ft_split_util(par_mdata->origin);
 	ans = calloc (len + 1, sizeof(char *));
 	if (!ans)
 		return (NULL);//
-	ft_removeq2(str, ans, len, arglist, envlist);
+	ft_removeq2(par_mdata, ans, len);
 	//init
 	while(*ans)
 	{
@@ -265,7 +200,6 @@ void ft_set_env(t_envlist *envlist, char **env)
 	t_envnode		*new;
 
 	i = 0;
-	// ft_envinit(envlist);
 	while(env[i])
 	{
 		str = env[i];
@@ -319,7 +253,7 @@ int main(int argc, char *argv[], char *env[])
 		//printf("%d\n",ft_checkq(input)); > 완료
         // printf("%d\n",ft_split2(input));
 		par_mdata.origin = input;
-		ft_split2(par_mdata.arglist, par_mdata.origin, par_mdata.envlist);
+		ft_split2(&par_mdata);
         if( 0 == strcmp(input, "exit") )
         {
             printf("Bye!\n");
