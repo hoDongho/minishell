@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 12:31:54 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 12:42:24 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_envlist
 
 typedef struct s_cmdnode
 {
-	struct s_arglist	*next;
-	struct s_arglist	*prev;
+	struct s_cmdnode	*next;
+	struct s_cmdnode	*prev;
 	char				*str;
 } t_cmdnode ;
 

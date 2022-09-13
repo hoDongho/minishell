@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 12:34:07 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 13:04:49 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	*ft_makeword(t_arglist	*arglist)
 	t_argnode	*curr;
 	t_argnode	*temp;
 
+	if (arglist->datasize == 0)
+		return (NULL);//
 	st = calloc(arglist->datasize + 1, sizeof(char)); //null포함
 	str = st;
 	curr = arglist->head->next;
@@ -113,17 +115,34 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 	// while()
 }
 
+void	ft_pushcmd(t_cmdlist *cmdlist, char *str)
+{
+	t_cmdnode *new;
+	t_cmdnode *prev;
+
+	new = calloc(1, sizeof(t_cmdnode));
+	// if(!new)
+	// 	return (NULL); print 함수 만들고 exit 쓰기
+	new->str = str;
+	prev = cmdlist->tail->prev;
+	new->next = cmdlist->tail;
+	new->prev = prev;
+	prev->next = new;
+	cmdlist->tail->prev = new;
+	// printf("%s\n", new->str);
+}
+
 void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 {
 	char	*st;
+	char	*str;
 	int		i;
 	int		swit;
-	int		cnt;
+	t_cmdnode *curr; //
 
 	i = 0;
 	swit = 0;
 	st = par_mdata->origin;
-	cnt = 0;
 	while(len > i)
 	{
 		while(*st)
@@ -177,9 +196,19 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				break ;//
 			// st++;
 		}
-		strarr[i] = ft_makeword(par_mdata->arglist);
-		//printf("%s\n",strarr[i]);
+
+		str = ft_makeword(par_mdata->arglist); //null도 리턴됌..
+		if (str != 0)
+			ft_pushcmd(par_mdata->cmdlist, str);
+		//strarr[i] = ft_makeword(par_mdata->arglist);//
+		// printf("%s\n",strarr[i]);
 		i++;
+	}
+	curr = par_mdata->cmdlist->head->next;
+	while(curr->next)
+	{
+		printf("%s\n",curr->str);
+		curr=curr->next;
 	}
 }
 

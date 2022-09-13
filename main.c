@@ -112,7 +112,8 @@ int	ft_split_util(char *str)
 //    dsaf $ asdf
 // "asdf$aaa$asdf"
 
-//
+// "$aaa '$bbb'"
+// '$aaa "$bbb"'
 //   sadf
 
 // ' $ '
@@ -142,11 +143,11 @@ char	**ft_split2(t_par_mdata *par_mdata)
 		return (NULL);//
 	ft_removeq2(par_mdata, ans, len);
 	//init
-	while(*ans)
-	{
-		printf("%s\n", *ans);// free
-		ans++; //여기서 푸시
-	}
+	// while(*ans)
+	// {
+	// 	printf("%s\n", *ans);// free
+	// 	ans++; //여기서 푸시
+	// }
 	return (0);
 }
 
@@ -172,13 +173,34 @@ void ft_envinit(t_envlist *envlist)
 	envlist->datasize = 0;
 }
 
+t_cmdnode *ft_newcmd(void)
+{
+	t_cmdnode *new;
+
+	new = calloc(1,sizeof(t_cmdnode));
+	if (!new)
+		return (NULL);
+	return new;
+}
+
+void ft_cmdinit(t_cmdlist *cmdlist)
+{
+	cmdlist->head = ft_newcmd();
+	cmdlist->tail = ft_newcmd();
+	cmdlist->head->next = cmdlist->tail;
+	cmdlist->tail->prev = cmdlist->head;
+	cmdlist->datasize = 0;
+}
+
 void ft_init(t_par_mdata *par_mdata)
 {
 	par_mdata->arglist = calloc (1, sizeof(t_arglist));
 	par_mdata->envlist = calloc (1, sizeof(t_envlist));
+	par_mdata->cmdlist = calloc (1, sizeof(t_cmdlist));
 	//cmdlist추가하기랑 null
 	ft_arginit(par_mdata->arglist);
 	ft_envinit(par_mdata->envlist);
+	ft_cmdinit(par_mdata->cmdlist);
 }
 
 
@@ -229,6 +251,23 @@ void ft_set_env(t_envlist *envlist, char **env)
 	}
 }
 
+void	ft_clearcmd(t_cmdlist *cmdlist)
+{
+	t_cmdnode *curr;
+	t_cmdnode *temp;
+
+	curr = cmdlist->head->next;
+	while(curr->next)
+	{
+		temp = curr;//
+		curr = curr->next;
+		free(temp->str);
+		free(temp);
+	}
+	cmdlist->head->next = cmdlist->tail;
+	cmdlist->tail->prev = cmdlist->head;
+}
+
 int main(int argc, char *argv[], char *env[])
 {
 	char *input;
@@ -244,8 +283,8 @@ int main(int argc, char *argv[], char *env[])
     printf("Commands to use: name, ver, exit \n");
 	ft_init(&par_mdata); /// metadata관련된 것.  cmdlist까지 추가로 해줘야함
 	ft_set_env(par_mdata.envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
-
     while(work) {
+		ft_clearcmd(par_mdata.cmdlist);
         input = readline("test:");
         if (!input)
             break;
