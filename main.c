@@ -280,7 +280,6 @@ int main(int argc, char *argv[], char *env[])
 	i = 2;
     int work = 1;
 
-    printf("Commands to use: name, ver, exit \n");
 	ft_init(&par_mdata); /// metadata관련된 것.  cmdlist까지 추가로 해줘야함
 	ft_set_env(par_mdata.envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
     while(work) {
@@ -293,35 +292,6 @@ int main(int argc, char *argv[], char *env[])
         // printf("%d\n",ft_split2(input));
 		par_mdata.origin = input;
 		ft_split2(&par_mdata);
-        if( 0 == strcmp(input, "exit") )
-        {
-            printf("Bye!\n");
-            work = 0;
-        }
-        if( 0 == strcmp(input, "") )
-        {
-            printf("I'm readline example\n");
-        }
-        if( 0 == strcmp(input, "ver") )
-        {
-            printf("My version is 0.1\n");
-        }
-		// if( 0 == strncmp(input, "echo", 4))
-        // {
-		// 	cc=ft_split(input);
-		// 	if (strncmp(cc[0], "echo", 5) == 0)
-		// 	{
-		// 		if (strncmp(cc[1], "-n", 2) == 0 && ft_checksp(*(cc[1] + 2)) == 1)
-		// 		{
-		// 			while(ft_checksp(*(cc[1] + i)) == 1 && (*(cc[1] + i) != '\0'))
-		// 				i++;
-		// 			printf("%s", cc[1] + i);
-		// 		}
-		// 		else
-		// 			printf("%s\n", cc[1]);
-		// 	}
-        //     // printf("%s\n", input);
-        // }
         free(input);
     }
     return 0;
