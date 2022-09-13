@@ -292,7 +292,7 @@ int main(int argc, char *argv[], char *env[])
         // printf("%d\n",ft_split2(input));
 		par_mdata.origin = input;
 		ft_split2(&par_mdata);
-        free(input);
+		free(input);
     }
     return 0;
 }
