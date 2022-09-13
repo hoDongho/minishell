@@ -6,28 +6,28 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/12 15:54:52 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 11:20:52 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-t_list	*ft_newlist(char c)
+t_argnode	*ft_newlist(char c)
 {
-	t_list	*new;
+	t_argnode	*new;
 
-	new = calloc(1, sizeof(t_list));
+	new = calloc(1, sizeof(t_argnode));
 	if (!new)
 		return NULL;
 	new->c = c;
 	return new;
 }
 
-void	ft_push(t_listdata	*data, char c)
+void	ft_push(t_arglist	*data, char c)
 {
-	t_list	*tt;
-	t_list	*new;
+	t_argnode	*tt;
+	t_argnode	*new;
 
 	new = ft_newlist(c);
 	data->tail->prev->next = new;
@@ -37,12 +37,12 @@ void	ft_push(t_listdata	*data, char c)
 	data->datasize++;
 }
 
-char	*ft_makeword(t_listdata	*data)
+char	*ft_makeword(t_arglist	*data)
 {
 	char	*str;
 	char	*st;
-	t_list	*curr;
-	t_list	*temp;
+	t_argnode	*curr;
+	t_argnode	*temp;
 
 	st = calloc(data->datasize + 1, sizeof(char)); //null포함
 	str = st;
@@ -61,12 +61,12 @@ char	*ft_makeword(t_listdata	*data)
 	return (st);
 }
 
-char	*ft_chgenv(char *st, t_listdata *data, t_envdata *envdata) //$ "$ "
+char	*ft_chgenv(char *st, t_arglist *data, t_envlist *envdata) //$ "$ "
 {
 	// char	test[2][1];//
 	char	*key;
 	int		i;
-	t_myenv	*curr;
+	t_envnode	*curr;
 	char	*st_val;
 	// $ // "$"
 	// test[0][0] = 'a';//name
@@ -118,7 +118,7 @@ char	*ft_chgenv(char *st, t_listdata *data, t_envdata *envdata) //$ "$ "
 	// while()
 }
 
-void	ft_removeq2(char *str, char **strarr, int len, t_listdata *data, t_envdata *envdata)
+void	ft_removeq2(char *str, char **strarr, int len, t_arglist *data, t_envlist *envdata)
 {
 	char	*st;
 	int		i;

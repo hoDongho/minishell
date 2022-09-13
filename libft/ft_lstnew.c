@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 18:36:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/01/17 19:26:26 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 11:20:11 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_argnode	*ft_lstnew(void *content)
 {
-	t_list	*new;
+	t_argnode	*new;
 
-	new = (t_list *) malloc (sizeof(t_list));
+	new = (t_argnode *) malloc (sizeof(t_argnode));
 	if (!new)
 		return (NULL);
 	new->content = content;

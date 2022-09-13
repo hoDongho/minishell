@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:10:19 by dhyun             #+#    #+#             */
-/*   Updated: 2022/05/03 11:22:22 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/13 11:20:11 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_argnode *lst)
 {
 	int	count;
 

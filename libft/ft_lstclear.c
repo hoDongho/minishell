@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:09:24 by nhwang            #+#    #+#             */
-/*   Updated: 2022/01/18 12:45:02 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 11:20:11 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void*))
+void	ft_lstclear(t_argnode **lst, void (*del)(void*))
 {
-	struct s_list	*nnext;
-	t_list			*st;
+	struct s_argnode	*nnext;
+	t_argnode			*st;
 
 	st = *lst;
 	if (st || lst)

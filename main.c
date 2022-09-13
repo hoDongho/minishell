@@ -195,7 +195,9 @@ void	ft_removeq(char *str, char **strarr, int len)
 	}
 }
 
-char	**ft_split2(t_listdata *data, char *str, t_envdata *envdata)
+ft_init_cmdlist()
+
+char	**ft_split2(t_arglist *data, char *str, t_envlist *envdata)
 {
 	int	len;
 	char **ans;
@@ -204,10 +206,11 @@ char	**ft_split2(t_listdata *data, char *str, t_envdata *envdata)
 	if (!ans)
 		return (NULL);//
 	ft_removeq2(str, ans, len, data, envdata);
+	//init
 	while(*ans)
 	{
-		printf("%s\n", *ans);
-		ans++;
+		printf("%s\n", *ans);// free
+		ans++; //여기서 푸시
 	}
 	return (0);
 }
@@ -216,7 +219,7 @@ char	**ft_split2(t_listdata *data, char *str, t_envdata *envdata)
 //1
 //test:a bb   c
 
-void ft_init(t_listdata *data)
+void ft_init(t_arglist *data)
 {
 	data->head = ft_newlist(0);
 	data->tail = ft_newlist(0);
@@ -225,7 +228,7 @@ void ft_init(t_listdata *data)
 	data->datasize = 0;
 }
 
-void ft_envinit(t_envdata *envdata)
+void ft_envinit(t_envlist *envdata)
 {
 	envdata->head = ft_newenv();
 	envdata->tail = ft_newenv();
@@ -234,22 +237,22 @@ void ft_envinit(t_envdata *envdata)
 	envdata->datasize = 0;
 }
 
-t_myenv	*ft_newenv(void)
+t_envnode	*ft_newenv(void)
 {
-	t_myenv	*new;
+	t_envnode	*new;
 
-	new = calloc(1, sizeof(t_myenv));
+	new = calloc(1, sizeof(t_envnode));
 	if (!new)
 		return (NULL);//
 	return (new);
 }
 
-void ft_set_env(t_envdata *envdata, char **env)
+void ft_set_env(t_envlist *envdata, char **env)
 {
 	int			i;
 	int			cnt;
 	char		*str;
-	t_myenv		*new;
+	t_envnode		*new;
 
 	i = 0;
 	ft_envinit(envdata);
@@ -287,8 +290,8 @@ int main(int argc, char *argv[], char *env[])
 	char *input;
 	char **cc;
 	int	i;
-	t_listdata	data;
-	t_envdata	envdata;
+	t_arglist	data;
+	t_envlist	envdata;
 
 	i = 2;
     int work = 1;
