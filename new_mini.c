@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_mini.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 13:04:49 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 15:25:12 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,12 +204,12 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 		// printf("%s\n",strarr[i]);
 		i++;
 	}
-	curr = par_mdata->cmdlist->head->next;
-	while(curr->next)
-	{
-		printf("%s\n",curr->str);
-		curr=curr->next;
-	}
+	// curr = par_mdata->cmdlist->head->next;
+	// while(curr->next)
+	// {
+	// 	printf("%s\n",curr->str);
+	// 	curr=curr->next;
+	// }
 }
 
 // "asdf$aaa asdf"

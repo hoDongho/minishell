@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 12:42:24 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 16:28:57 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <string.h>
+#include <unistd.h>
+#include <errno.h>
 
 typedef struct s_argnode
 {
@@ -73,3 +75,14 @@ void		ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len);
 void 		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
 void 		ft_envinit(t_envlist *envlist);
+
+
+
+
+
+
+
+
+int	echo(t_cmdlist *cmdlist, t_envlist *envlist);
+int	pwd(void);
+int	cd(t_cmdlist *cmdlist, t_envlist *envlist);
