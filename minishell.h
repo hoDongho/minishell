@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 12:42:24 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 15:47:59 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,4 @@ void		ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len);
 void 		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
 void 		ft_envinit(t_envlist *envlist);
+void		ft_env(t_envlist *envlist, int b);
