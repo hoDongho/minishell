@@ -6,14 +6,14 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 11:20:52 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 11:47:13 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-t_argnode	*ft_newlist(char c)
+t_argnode	*ft_new_argnode(char c)
 {
 	t_argnode	*new;
 
@@ -24,44 +24,44 @@ t_argnode	*ft_newlist(char c)
 	return new;
 }
 
-void	ft_push(t_arglist	*data, char c)
+void	ft_push(t_arglist	*arglist, char c)
 {
 	t_argnode	*tt;
 	t_argnode	*new;
 
-	new = ft_newlist(c);
-	data->tail->prev->next = new;
-	new->next = data->tail;
-	new->prev = data->tail->prev;
-	data->tail->prev = new;
-	data->datasize++;
+	new = ft_new_argnode(c);
+	arglist->tail->prev->next = new;
+	new->next = arglist->tail;
+	new->prev = arglist->tail->prev;
+	arglist->tail->prev = new;
+	arglist->datasize++;
 }
 
-char	*ft_makeword(t_arglist	*data)
+char	*ft_makeword(t_arglist	*arglist)
 {
 	char	*str;
 	char	*st;
 	t_argnode	*curr;
 	t_argnode	*temp;
 
-	st = calloc(data->datasize + 1, sizeof(char)); //null포함
+	st = calloc(arglist->datasize + 1, sizeof(char)); //null포함
 	str = st;
-	curr = data->head->next;
+	curr = arglist->head->next;
 	while (curr->next)
 	{
 		*str = curr->c;
 		temp = curr;
 		curr = curr->next;
 		free(temp);
-		data->datasize--;
+		arglist->datasize--;
 		str++;
 	}
-	data->head->next = data->tail;
-	data->tail->prev = data->head;
+	arglist->head->next = arglist->tail;
+	arglist->tail->prev = arglist->head;
 	return (st);
 }
 
-char	*ft_chgenv(char *st, t_arglist *data, t_envlist *envdata) //$ "$ "
+char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 {
 	// char	test[2][1];//
 	char	*key;
@@ -75,7 +75,7 @@ char	*ft_chgenv(char *st, t_arglist *data, t_envlist *envdata) //$ "$ "
 	st++;
 	if (ft_switch(*st) != 3)
 	{
-		ft_push(data, '$');
+		ft_push(arglist, '$');
 		return (st);
 	}
 	else
@@ -89,8 +89,8 @@ char	*ft_chgenv(char *st, t_arglist *data, t_envlist *envdata) //$ "$ "
 		}
 		key = calloc(i + 1, sizeof(char));
 		memmove(key, st, i);
-		// curr = envdata->head->next;//
-		curr = envdata->head;
+		// curr = envlist->head->next;//
+		curr = envlist->head;
 		while (curr->next->next)
 		{
 			curr = curr->next;
@@ -99,18 +99,18 @@ char	*ft_chgenv(char *st, t_arglist *data, t_envlist *envdata) //$ "$ "
 				st_val = curr->val;
 				while (*st_val)
 				{
-					ft_push(data, *st_val);
+					ft_push(arglist, *st_val);
 					st_val++;
 				}
 				break ;
 			}
 		}
-		// while (curr != envdata->tail && strcmp(key, curr->key) != 0)//
+		// while (curr != envlist->tail && strcmp(key, curr->key) != 0)//
 		// 	curr = curr->next;
 
-		// if (curr != envdata->tail)
+		// if (curr != envlist->tail)
 		// if (key[0] == 'a') ///반복문으로 구조체 전체 순회하는거
-		// 	ft_push(data, 'b'); /// 여기도 와일문에서 푸시해야함
+		// 	ft_push(arglist, 'b'); /// 여기도 와일문에서 푸시해야함
 		free(key);//
 		st = st + i;
 	}
@@ -118,14 +118,13 @@ char	*ft_chgenv(char *st, t_arglist *data, t_envlist *envdata) //$ "$ "
 	// while()
 }
 
-void	ft_removeq2(char *str, char **strarr, int len, t_arglist *data, t_envlist *envdata)
+void	ft_removeq2(char *str, char **strarr, int len, t_arglist *arglist, t_envlist *envlist)
 {
 	char	*st;
 	int		i;
 	int		swit;
 	int		cnt;
 
-	//ft_switch()
 	i = 0;
 	swit = 0;
 	st = str;
@@ -145,11 +144,11 @@ void	ft_removeq2(char *str, char **strarr, int len, t_arglist *data, t_envlist *
 				while (*st != 0 && ft_switch(*st) == swit)//
 				{
 					if (*st == '$')
-						st = ft_chgenv(st, data, envdata);
+						st = ft_chgenv(st, arglist, envlist);
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함///여기도
 					else //
 					{
-						ft_push(data, *st);//
+						ft_push(arglist, *st);//
 						st++; //치환 시 st에 증가량에 대한 고려
 					}
 				}
@@ -162,16 +161,16 @@ void	ft_removeq2(char *str, char **strarr, int len, t_arglist *data, t_envlist *
 				while (*st != 0 && ft_switch(*st) != swit)//
 				{
 					if (swit == 2 && *st == '$')
-						st = ft_chgenv(st, data, envdata);
+						st = ft_chgenv(st, arglist, envlist);
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함
 					//copy  --> f_return /// 밑에서 담을거임
 					/////
 					else //
 					{
-						ft_push(data, *st);//
+						ft_push(arglist, *st);//
 						st++; //치환 시 st에 증가량에 대한 고려
 					}
-					// ft_push(data, *st);
+					// ft_push(arglist, *st);
 					//담는 함수 abc > 3 a b c
 					//stack.size
 					// st++; //치환 시 st에 증가량에 대한
@@ -183,7 +182,7 @@ void	ft_removeq2(char *str, char **strarr, int len, t_arglist *data, t_envlist *
 				break ;//
 			// st++;
 		}
-		strarr[i] = ft_makeword(data);
+		strarr[i] = ft_makeword(arglist);
 		//printf("%s\n",strarr[i]);
 		i++;
 	}

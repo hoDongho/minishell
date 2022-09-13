@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:31:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/07/18 13:10:50 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/13 11:31:18 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	print_error(char *str, int code)
 		exit(code);
 }
 
-void	free_all(t_data *data, t_cmd *cmds)
+void	free_all(t_data *arglist, t_cmd *cmds)
 {
 	t_cmd	*tmp;
 
-	free_split(data->path);
-	free(data->pid);
+	free_split(arglist->path);
+	free(arglist->pid);
 	while (cmds != 0)
 	{
 		free_split(cmds->s_cmds);
@@ -40,18 +40,18 @@ void	free_all(t_data *data, t_cmd *cmds)
 
 int	main(int argc, char *argv[], char *env[])
 {
-	t_data	data;
+	t_data	arglist;
 	t_cmd	*cmds;
 
-	check_argc(argc, argv, &data);
-	if (data.here_doc == 1)
-		here_doc(&argc, argv, &data);
+	check_argc(argc, argv, &arglist);
+	if (arglist.here_doc == 1)
+		here_doc(&argc, argv, &arglist);
 	cmds = ft_calloc(1, sizeof(t_cmd));
 	if (cmds == 0)
 		print_error("calloc", 1);
-	init(&data, cmds, argc, argv);
-	set_args(argc, argv, env, &data);
-	exec(&data, cmds);
-	free_all(&data, cmds);
+	init(&arglist, cmds, argc, argv);
+	set_args(argc, argv, env, &arglist);
+	exec(&arglist, cmds);
+	free_all(&arglist, cmds);
 	return (0);
 }

@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   args_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:00:44 by dhyun             #+#    #+#             */
-/*   Updated: 2022/07/18 13:38:34 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/13 11:31:18 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	set_path(char *env[], t_data *data)
+void	set_path(char *env[], t_data *arglist)
 {
-	data->env = env;
+	arglist->env = env;
 	while (*env != 0 && ft_strncmp(*env, "PATH=", 5) != 0)
 		env++;
 	if (*env == 0)
 		print_error("Wrong enviroments", 1);
-	data->path = ft_split(*env + 5, ':');
-	if (data->path == 0)
+	arglist->path = ft_split(*env + 5, ':');
+	if (arglist->path == 0)
 		print_error("split", 1);
 }
 
-char	*sel_path(t_data *data, t_cmd *cmds)
+char	*sel_path(t_data *arglist, t_cmd *cmds)
 {
 	int		i;
 	int		ret;
@@ -36,12 +36,12 @@ char	*sel_path(t_data *data, t_cmd *cmds)
 		return (cmds->cmds);
 	else if (ret == -1 && errno == 13)
 		print_error("access", 126);
-	while (data->path[i] != 0)
+	while (arglist->path[i] != 0)
 	{
-		tmp = ft_strjoin_wc(data->path[i], cmds->cmds, '/');
+		tmp = ft_strjoin_wc(arglist->path[i], cmds->cmds, '/');
 		ret = check_access(tmp);
 		if (ret == 0)
-			return (ft_strjoin_wc(data->path[i], cmds->cmds, '/'));
+			return (ft_strjoin_wc(arglist->path[i], cmds->cmds, '/'));
 		else if (ret == -1 && errno == 13)
 			print_error("access", 126);
 		i++;
@@ -86,8 +86,8 @@ void	set_cmds(int argc, char *argv[], t_cmd *cmds)
 	}
 }
 
-void	set_args(int argc, char *argv[], char *env[], t_data *data)
+void	set_args(int argc, char *argv[], char *env[], t_data *arglist)
 {
-	set_path(env, data);
-	set_cmds(argc, argv, data->cmds);
+	set_path(env, arglist);
+	set_cmds(argc, argv, arglist->cmds);
 }

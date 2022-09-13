@@ -195,9 +195,9 @@ void	ft_removeq(char *str, char **strarr, int len)
 	}
 }
 
-ft_init_cmdlist()
+//ft_init_cmdlist()
 
-char	**ft_split2(t_arglist *data, char *str, t_envlist *envdata)
+char	**ft_split2(t_arglist *arglist, char *str, t_envlist *envlist)
 {
 	int	len;
 	char **ans;
@@ -205,7 +205,7 @@ char	**ft_split2(t_arglist *data, char *str, t_envlist *envdata)
 	ans = calloc (len + 1, sizeof(char *));
 	if (!ans)
 		return (NULL);//
-	ft_removeq2(str, ans, len, data, envdata);
+	ft_removeq2(str, ans, len, arglist, envlist);
 	//init
 	while(*ans)
 	{
@@ -219,22 +219,22 @@ char	**ft_split2(t_arglist *data, char *str, t_envlist *envdata)
 //1
 //test:a bb   c
 
-void ft_init(t_arglist *data)
+void ft_init(t_arglist *arglist)
 {
-	data->head = ft_newlist(0);
-	data->tail = ft_newlist(0);
-	data->head->next = data->tail;
-	data->tail->prev = data->head;
-	data->datasize = 0;
+	arglist->head = ft_new_argnode(0);
+	arglist->tail = ft_new_argnode(0);
+	arglist->head->next = arglist->tail;
+	arglist->tail->prev = arglist->head;
+	arglist->datasize = 0;
 }
 
-void ft_envinit(t_envlist *envdata)
+void ft_envinit(t_envlist *envlist)
 {
-	envdata->head = ft_newenv();
-	envdata->tail = ft_newenv();
-	envdata->head->next = envdata->tail;
-	envdata->tail->prev = envdata->head;
-	envdata->datasize = 0;
+	envlist->head = ft_newenv();
+	envlist->tail = ft_newenv();
+	envlist->head->next = envlist->tail;
+	envlist->tail->prev = envlist->head;
+	envlist->datasize = 0;
 }
 
 t_envnode	*ft_newenv(void)
@@ -247,7 +247,7 @@ t_envnode	*ft_newenv(void)
 	return (new);
 }
 
-void ft_set_env(t_envlist *envdata, char **env)
+void ft_set_env(t_envlist *envlist, char **env)
 {
 	int			i;
 	int			cnt;
@@ -255,7 +255,7 @@ void ft_set_env(t_envlist *envdata, char **env)
 	t_envnode		*new;
 
 	i = 0;
-	ft_envinit(envdata);
+	ft_envinit(envlist);
 	while(env[i])
 	{
 		str = env[i];
@@ -273,11 +273,11 @@ void ft_set_env(t_envlist *envdata, char **env)
 		new = ft_newenv();
 		new->key = str;
 		new->val = getenv(env[i]);
-		envdata->tail->prev->next = new;
-		new->next = envdata->tail;
-		new->prev = envdata->tail->prev;
-		envdata->tail->prev = new;
-		envdata->datasize++;
+		envlist->tail->prev->next = new;
+		new->next = envlist->tail;
+		new->prev = envlist->tail->prev;
+		envlist->tail->prev = new;
+		envlist->datasize++;
 		// printf("env : %s\n", env[i]);
 		// printf("key : %s\n", new->key);
 		// printf("val : %s\n\n", new->val);
@@ -290,15 +290,16 @@ int main(int argc, char *argv[], char *env[])
 	char *input;
 	char **cc;
 	int	i;
-	t_arglist	data;
-	t_envlist	envdata;
+	t_arglist	arglist; //
+	t_envlist	envlist; //
+	t_par_mdata	par_mdata;
 
 	i = 2;
     int work = 1;
 
     printf("Commands to use: name, ver, exit \n");
-	ft_init(&data);
-	ft_set_env(&envdata, env);
+	ft_init(&arglist); /// metadata관련된 것.  cmdlist까지 추가로 해줘야함
+	ft_set_env(&envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
 
     while(work) {
         input = readline("test:");
@@ -307,7 +308,7 @@ int main(int argc, char *argv[], char *env[])
         add_history(input);
 		//printf("%d\n",ft_checkq(input)); > 완료
         // printf("%d\n",ft_split2(input));
-		ft_split2(&data, input, &envdata);
+		ft_split2(&arglist, input, &envlist);
         if( 0 == strcmp(input, "exit") )
         {
             printf("Bye!\n");

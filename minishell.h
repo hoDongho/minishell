@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 11:24:12 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/13 12:06:58 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ typedef struct s_arglist
 {
 	t_argnode	*head; /// 초초기화// NULL
 	t_argnode	*tail; // 초기화 //NULL
-	int		datasize; //""
+	int			datasize; //""
 } t_arglist ;
 
 typedef struct s_envnode
 {
-	struct s_envnode		*next;
-	struct s_envnode		*prev;
+	struct s_envnode	*next;
+	struct s_envnode	*prev;
 	char				*key;
 	char				*val;
 } t_envnode ;
@@ -59,9 +59,15 @@ typedef struct s_cmdlist
 	int			datasize; //""
 } t_cmdlist ;
 
-t_argnode	*ft_newlist(char c);
+typedef struct s_par_mdata
+{
+	t_cmdlist	*
+
+} t_par_mdata;
+
+t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);
-void		ft_removeq2(char *str, char **strarr, int len, t_arglist *data, t_envlist *s_envlist);
-void 		ft_set_env(t_envlist *envdata, char **env);
+void		ft_removeq2(char *str, char **strarr, int len, t_arglist *arglist, t_envlist *s_envlist);
+void 		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
-void 		ft_envinit(t_envlist *envdata);
+void 		ft_envinit(t_envlist *envlist);

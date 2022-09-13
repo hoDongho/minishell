@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:32:06 by dhyun             #+#    #+#             */
-/*   Updated: 2022/07/18 12:19:30 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/13 11:31:18 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_opt
 	int		bs;
 }				t_opt;
 
-void	check_argc(int argc, char *argv[], t_data *data);
-void	init(t_data *data, t_cmd *cmds, int argc, char *argv[]);
+void	check_argc(int argc, char *argv[], t_data *arglist);
+void	init(t_data *arglist, t_cmd *cmds, int argc, char *argv[]);
 void	init_cmds(t_cmd *cmds);
 void	init_opt(t_opt *opt);
 
@@ -60,13 +60,13 @@ void	print_error(char *str, int code);
 int		check_access(char *tmp);
 int		check_quote(char *str);
 char	*rm_quote(t_opt *opt, char *str, char *tmp);
-void	open_outfile(t_data *data, char *path);
+void	open_outfile(t_data *arglist, char *path);
 
 void	set_option(t_cmd *cmds, char *str);
-void	set_args(int argc, char *argv[], char *env[], t_data *data);
-char	*sel_path(t_data *data, t_cmd *cmds);
+void	set_args(int argc, char *argv[], char *env[], t_data *arglist);
+char	*sel_path(t_data *arglist, t_cmd *cmds);
 
-void	exec(t_data *data, t_cmd *cmds);
-void	here_doc(int *argc, char *argv[], t_data *data);
+void	exec(t_data *arglist, t_cmd *cmds);
+void	here_doc(int *argc, char *argv[], t_data *arglist);
 
 #endif
