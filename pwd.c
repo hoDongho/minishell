@@ -6,13 +6,13 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:43:25 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/13 16:01:04 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/14 12:45:59 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pwd(void)
+int	ft_pwd(void)
 {
 	char	*pwd;
 

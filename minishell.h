@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 17:26:15 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/14 12:46:39 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void 		ft_envinit(t_envlist *envlist);
 
 
 
-
-int	echo(t_cmdlist *cmdlist, t_envlist *envlist);
-int	pwd(void);
-int	cd(t_cmdlist *cmdlist, t_envlist *envlist);
+int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
+int			ft_pwd(void);
+int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
 void		ft_env(t_envlist *envlist, int b);
+int			ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata);

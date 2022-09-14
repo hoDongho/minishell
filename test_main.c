@@ -237,7 +237,7 @@ void ft_set_env(t_envlist *envlist, char **env)
 		memmove(str, env[i], cnt);
 		new = ft_newenv();
 		new->key = str;
-		new->val = getenv(env[i]);
+		new->val = strdup(getenv(env[i]));
 		envlist->tail->prev->next = new;
 		new->next = envlist->tail;
 		new->prev = envlist->tail->prev;
@@ -277,11 +277,10 @@ int main(int argc, char *argv[], char *env[])
 	t_par_mdata	par_mdata;
 
 	i = 2;
-    int work = 1;
-
 	ft_init(&par_mdata); /// metadata관련된 것.  cmdlist까지 추가로 해줘야함
 	ft_set_env(par_mdata.envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
-    while(work) {
+    while(1)
+	{
 		ft_clearcmd(par_mdata.cmdlist);
         input = readline("test:");
         if (!input)
@@ -294,11 +293,13 @@ int main(int argc, char *argv[], char *env[])
 		par_mdata.origin = input;
 		ft_split2(&par_mdata);
 		if (strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
-			echo(par_mdata.cmdlist, par_mdata.envlist);
+			ft_echo(par_mdata.cmdlist, par_mdata.envlist);
 		else if (strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)
-			pwd();
+			ft_pwd();
 		else if (strcmp(par_mdata.cmdlist->head->next->str, "cd") == 0)
-			cd(par_mdata.cmdlist, par_mdata.envlist);
+			ft_cd(par_mdata.cmdlist, par_mdata.envlist);
+		else if (strcmp(par_mdata.cmdlist->head->next->str, "exit") == 0)
+			ft_exit(par_mdata.cmdlist, &par_mdata);
         free(input);
     }
     return 0;

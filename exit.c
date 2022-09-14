@@ -1,52 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/13 14:56:13 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/14 12:46:16 by dhyun            ###   ########seoul.kr  */
+/*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
+/*   Updated: 2022/09/14 15:34:04 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	chk_option(char *str)
+int	chk_number(char *str)
 {
-	str++;
+	if (*str == '-' || *str == '+')
+		str++;
 	while (*str)
 	{
-		if (*str != 'n')
+		if (*str < '0' || *str >'9')
 			return (1);
 		str++;
 	}
 	return (0);
 }
 
-int	ft_echo(t_cmdlist *cmdlist, t_envlist *envlist)
+int	ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata)
 {
 	t_cmdnode	*arg;
-	int			n_opt;
+	int			status;
 
 	arg = cmdlist->head->next->next;
-	n_opt = 0;
-	while (arg->next && *arg->str == '-')
+
+	if (!arg->next)
+		status = 0;
+	else
 	{
-		if (chk_option(arg->str) == 1)
-			break ;
-		n_opt++;
-		arg = arg->next;
+		if (chk_number(arg->str) != 0)
+		{
+			printf("exit: %s: numeric argument required", arg->str);
+			exit (-1);
+		}
+		status = atoi(arg->str);
 	}
-	while (arg->next)
-	{
-		printf("%s", arg->str);
-		arg = arg->next;
-		if (arg->next)
-			printf(" ");
-	}
-	printf("$");
-	if (n_opt == 0)
-		printf("\n");
-	return (0);
+	exit(status);
 }
+
+// exit ""
+// cd ""
