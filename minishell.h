@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/14 17:31:03 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/14 17:35:13 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,8 @@ int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_pwd(void);
 int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
 void		ft_env(t_envlist *envlist, int b);
-<<<<<<< HEAD
 int			ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata);
-=======
-void	ft_export(t_par_mdata *par_mdata);
-int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata);
-int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
-void	ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata);
->>>>>>> refs/remotes/origin/master
+void		ft_export(t_par_mdata *par_mdata);
+int			ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata);
+int			ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
+void		ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata);
