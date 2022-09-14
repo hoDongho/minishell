@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_mini.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 15:25:12 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/14 11:48:28 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str)
 	new->prev = prev;
 	prev->next = new;
 	cmdlist->tail->prev = new;
+	cmdlist->datasize++; //9.14 nhwang 추가
 	// printf("%s\n", new->str);
 }
 

@@ -3,23 +3,31 @@
 int main(int argc, char *argv[], char *env[])
 {
 	char *input;
-	char **cc;
-	int	i;
-	t_arglist	arglist; //
-	t_envlist	envlist; //
-	t_par_mdata	par_mdata;
+	char *cc;
+	// char *s = "asdfsd=213432";
 
-	i = 2;
-    int work = 1;
-
-    while(work) {
-        input = readline("test:");
-        if (!input)
-            break;
-        add_history(input);
-		printf("$%s$\n",rl_line_buffer);
-		rl_redisplay();
-		free(input);
-    }
+	// input=0;
+	// if (!input)
+	// 	printf("1 input is NULL");
+	//input=calloc(7,sizeof(char));
+	// if (!input)
+	// 	printf("2 input is NULL");
+	// printf("%s\n",input);
+	// printf("%lu\n",strlen(input));
+	// free(input);
+	// input = strdup(""); //leak??
+	// printf("%s\n",input);
+	// printf("%lu\n",strlen(input));
+	// strlcat(input, s, 6);
+	// printf("%s\n",input);
+	// while(*s)
+	// {
+	// 	if (*s =='=')
+	// 		printf("%lu\n",strlen(s));
+	// 	s++;
+	// }
+	input = NULL;
+	cc = strdup(input);
+	// system("leaks a.out");
     return 0;
 }

@@ -266,6 +266,7 @@ void	ft_clearcmd(t_cmdlist *cmdlist)
 	}
 	cmdlist->head->next = cmdlist->tail;
 	cmdlist->tail->prev = cmdlist->head;
+	cmdlist->datasize = 0; //9.14 nhwang 수정
 }
 
 int main(int argc, char *argv[], char *env[])
@@ -292,6 +293,7 @@ int main(int argc, char *argv[], char *env[])
         // printf("%d\n",ft_split2(input));
 		par_mdata.origin = input;
 		ft_split2(&par_mdata);
+		ft_export(&par_mdata);
 		free(input);
     }
     return 0;

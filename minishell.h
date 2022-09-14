@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/13 17:26:15 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/14 12:59:54 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,7 @@ int	echo(t_cmdlist *cmdlist, t_envlist *envlist);
 int	pwd(void);
 int	cd(t_cmdlist *cmdlist, t_envlist *envlist);
 void		ft_env(t_envlist *envlist, int b);
+void	ft_export(t_par_mdata *par_mdata);
+int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata);
+int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
+void	ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata);
