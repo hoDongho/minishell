@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/14 16:29:21 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/15 14:51:20 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,19 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	t_cmdnode	*arg;
 	char		*home;
-	char		*now_pwd;
+	char		*old_pwd;
 	char		*path;
 
 	arg = cmdlist->head->next->next;
 	home = find_val(envlist, "HOME");
-	now_pwd = getcwd(0, 0);
+	old_pwd = getcwd(0, 0);
 	path = home;
 	if (arg->next)
 	{
 		path = arg->str;
-		if (arg->str[0] == '~')
+		if(*arg->str == 0)
+			path = old_pwd;
+		else if (arg->str[0] == '~')
 		{
 			path = ft_strjoin(home, &arg->str[1]);
 		}
@@ -110,7 +112,7 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	errno = 0;
 	if (chdir(path) != 0)
 		printf("errno : %d\n", errno);
-	change_val(envlist, "PWD", strdup(path));
-	change_val(envlist, "OLDPWD", now_pwd);
+	change_val(envlist, "PWD", getcwd(0, 0));
+	change_val(envlist, "OLDPWD", old_pwd);
 	return (0);
 }

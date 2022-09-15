@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:56:13 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/14 12:46:16 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/15 15:16:02 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	chk_option(char *str)
 {
-	str++;
+	if (*str == '-')
+		str++;
 	while (*str)
 	{
 		if (*str != 'n')
@@ -31,7 +32,7 @@ int	ft_echo(t_cmdlist *cmdlist, t_envlist *envlist)
 
 	arg = cmdlist->head->next->next;
 	n_opt = 0;
-	while (arg->next && *arg->str == '-')
+	while (arg->next)
 	{
 		if (chk_option(arg->str) == 1)
 			break ;
@@ -40,7 +41,8 @@ int	ft_echo(t_cmdlist *cmdlist, t_envlist *envlist)
 	}
 	while (arg->next)
 	{
-		printf("%s", arg->str);
+		if (arg->str)
+			printf("%s", arg->str);
 		arg = arg->next;
 		if (arg->next)
 			printf(" ");
@@ -50,3 +52,11 @@ int	ft_echo(t_cmdlist *cmdlist, t_envlist *envlist)
 		printf("\n");
 	return (0);
 }
+
+
+/*
+	echo -n 123		O
+	echo -nn 123	O
+	echo -n-n 123	X
+	echo 123 -n		X
+*/
