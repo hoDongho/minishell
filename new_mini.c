@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/15 16:32:22 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 16:57:41 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,15 +114,21 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 	// while()
 }
 
-void	ft_pushcmd(t_cmdlist *cmdlist, char *str)
+void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 {
-	t_cmdnode *new;
-	t_cmdnode *prev;
+	t_cmdnode	*new;
+	t_cmdnode	*prev;
+	char		*new_str;
 
+	if (type==3 && str==0)
+		return ;
+	new_str = str;
+	if (str == 0)
+		new_str = calloc(1, sizeof(char));
 	new = calloc(1, sizeof(t_cmdnode));
 	// if(!new)
 	// 	return (NULL); print 함수 만들고 exit 쓰기
-	new->str = str;
+	new->str = new_str;
 	prev = cmdlist->tail->prev;
 	new->next = cmdlist->tail;
 	new->prev = prev;
@@ -138,7 +144,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 	char	*str;
 	int		i;
 	int		swit;
-	// int		type;
+	int		type;
 	t_cmdnode *curr; //
 
 	i = 0;
@@ -146,6 +152,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 	st = par_mdata->origin;
 	while(len > i)
 	{
+		type = 0;
 		while(*st)
 		{
 			if (ft_switch(*st) == 0 && swit == 0)
@@ -156,7 +163,8 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 			if (ft_switch(*st) == 3)//
 			{
 				swit = ft_switch(*st);//
-				// type = swit;//
+				if (!type)
+					type = swit;//
 				while (*st != 0 && ft_switch(*st) == swit)//
 				{
 					if (*st == '$')
@@ -173,7 +181,8 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 			else if (ft_switch(*st) == 1 || ft_switch(*st) == 2)//
 			{
 				swit = ft_switch(*st);//
-				// type = swit;//
+				if (!type)
+					type = swit;//
 				st++;//
 				while (*st != 0 && ft_switch(*st) != swit)//
 				{
@@ -199,10 +208,10 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				break ;//
 			// st++;
 		}
-		// printf("%d\n", type);
+		printf("%d\n", type);
 		str = ft_makeword(par_mdata->arglist); //null도 리턴됌..
-		if (str != 0)
-			ft_pushcmd(par_mdata->cmdlist, str);
+		// if (str != 0)
+		ft_pushcmd(par_mdata->cmdlist, str, type);
 		//strarr[i] = ft_makeword(par_mdata->arglist);//
 		// printf("%s\n",strarr[i]);
 		i++;

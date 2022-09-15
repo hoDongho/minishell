@@ -3,6 +3,8 @@ echo $?
 echo ??
 echo ?
 echo $??
+
+
 echo $USERname
 echo $USER name
 echo "$USER na"me
