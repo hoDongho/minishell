@@ -285,7 +285,7 @@ int main(int argc, char *argv[], char *env[])
 	ft_set_env(par_mdata.envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
     while(work) {
 		ft_clearcmd(par_mdata.cmdlist);
-        input = readline("test:");
+        input = readline("\ntest:");
         if (!input)
             break;
         add_history(input);
@@ -293,6 +293,7 @@ int main(int argc, char *argv[], char *env[])
         // printf("%d\n",ft_split2(input));
 		par_mdata.origin = input;
 		ft_split2(&par_mdata);
+		//printf("bf export str : %s\n", par_mdata.cmdlist->head->next->next->str);
 		ft_export(&par_mdata);
 		free(input);
     }

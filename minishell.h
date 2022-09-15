@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/14 17:35:13 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:06:42 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include "./libft/libft.h"
 
 typedef struct s_argnode
 {

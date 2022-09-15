@@ -6,12 +6,11 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/14 11:48:28 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:18:57 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 t_argnode	*ft_new_argnode(char c)
 {
@@ -82,7 +81,7 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 		// if (*st == '?')
 		while(ft_switch(st[i]) == 3)
 		{
-			if (st[i] == '$')
+			if (st[i] == '$' || ft_isalnum(st[i]) == 0)///////****
 				break ;
 			i++;
 		}
@@ -159,7 +158,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				while (*st != 0 && ft_switch(*st) == swit)//
 				{
 					if (*st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함///여기도
 					else //
 					{
@@ -176,7 +175,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				while (*st != 0 && ft_switch(*st) != swit)//
 				{
 					if (swit == 2 && *st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함
 					//copy  --> f_return /// 밑에서 담을거임
 					/////
@@ -211,6 +210,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 	// 	printf("%s\n",curr->str);
 	// 	curr=curr->next;
 	// }
+	// printf("\n\n\n\n\n");
 }
 
 // "asdf$aaa asdf"

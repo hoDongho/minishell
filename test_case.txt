@@ -1,6 +1,5 @@
 // echo 테스트
 echo $?
-echo $?
 echo ??
 echo ?
 echo $??

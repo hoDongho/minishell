@@ -1,5 +1,5 @@
 #include "minishell.h"
-
+#include "./libft/libft.h"
 
 //////////////////////////////////////////////////////// 그대로 가져옴
 int	ft_strncmp(const char *str1, const char *str2, size_t num)
@@ -36,20 +36,15 @@ void	ft_env(t_envlist *envlist, int b) //ft_env(par_mdata->envlist, 0) env로 �
 	curr = envlist->head->next;
 	while(curr->next)
 	{
-		// if (b && curr->key == "_")
-		// {
-		// 	curr = curr->next;
-		// 	continue;
-		// }
+		if (b && curr->key == "_")
+		{
+			curr = curr->next;
+			continue;
+		}
 		printf("%s=%s\n", curr->key, curr->val); //export a >>> =없이 온 것도 처리해서 찍어줘야해서 수정이 필요하다
 		curr = curr->next;
 	}
 }
-
-
-//ft_ex_util2(echk)
-//{
-//}
 
 void	ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata)
 {
@@ -108,15 +103,33 @@ int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
 	}
 	else // 일반적인 입력
 	{
-		printf("here?:::\n\n");
 		if(ft_findenv(tkey, tval, par_mdata) == 0) //찾았더니 없는 경우 있었으면 붙혔으니 끝내야함
 			ft_push_env(tkey, tval, par_mdata);
 	}
 	return (1);
-	// 위의 if 다음 재판단하였었음
-	// if (strlen(tval)==0) //null과 빈문자열 그리고 env를 고려해야함
-	// 	printf("ing....\n"); ///////
-	//ft_ex_util2();//export a 랑 export a= 이랑 >>> echk를 기준으로 판단 후 찾고, 있으면 수정. 없으면 추가//NULL주거나, 빈문자열 주거나 >> 빈문자열 dup하면?? // 차이가 없네..
+}
+
+int	ft_valid(char *str)
+{
+	printf("str :    %s\n", str);
+	if (ft_isalpha(*str)==0)
+	{
+		printf("첫문자\n");
+		return (0);///첫문자 오류
+	}
+	// printf(":::::::::%d\n", ft_isalpha(*str));
+	str++;
+	while(*str && *str!='=')
+	{
+		// printf(";;;;;;;;;%d\n", ft_isalnum(*str));
+		if (ft_isalnum(*str)==0)
+		{
+			// printf("!alnum\n");
+			return (0);///오류
+		}
+		str++;
+	}
+	return (1);
 }
 
 
@@ -131,17 +144,26 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 	t_envnode	*test;//test
 	char		*tempstr;
 
-	size = 0;
 	curr = par_mdata->cmdlist->head->next;
 	if (par_mdata->cmdlist->datasize == 1) //newmini의 cmdpush 부분 추가한 것을 기반으로 함
 	{
+		// printf("curr->str :%s\n",curr->str);
+		// printf("dddd\n");
 		ft_env(par_mdata->envlist, 1); //env에서 분기처리 ::: "export" 인 경우임
 		return ;
 	}
 	curr = curr->next; //판단 기준이 cmd가 아닌 인자부터
+	// printf("curr->str :%s\n",curr->str);
 	while(curr->next)
 	{
+		if (ft_valid(curr->str)==0)
+		{
+			///error 출력 후
+			curr = curr->next;
+			continue;
+		}
 		echk = 0;
+		size = 0;
 		//tkey = calloc(1, sizeof(char*));///이 부분 free 주의 할 것!
 		//tval = calloc(1, sizeof(char*));
 		st = curr->str; //st주의 할 것.
@@ -193,6 +215,15 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 		printf("%s=%s\n",test->key,test->val);
 		test=test->next;
 	}
+	printf("\n--------cmd--------\n\n");
+	printf("input: %s\n\n", par_mdata->origin);
+	t_cmdnode *test2;
+	test2 = par_mdata->cmdlist->head->next;
+	while(test2->next)
+	{
+		printf("%s\n",test2->str);
+		test2=test2->next;
+	}
 }
 
 ///export a=b=c >>> a="b=c" 최초의 =만 찾는것.
@@ -203,7 +234,7 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 ///export "기존에 있는 변수"=0 등 실험
 ///export x=a >>> 이런식으로 1개 단위에서 이슈 없는지 확인해야함
 ///export b==c
-//export a >>> export a=123
+///export a >>> export a=123
 
 ///1. =의 존재를 찾는다? 리스트 자체에는 띄어쓰기는 포함되지 않고 전달되므로 붙어있는 것 중에서 찾는 셈.
 ///2. =전까지를 저장하고 있을 필요가 있겠다. (split이든 리스트이든) =을 만나거나 \0까지가 key인 셈이다.
@@ -219,3 +250,9 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 //export "a    =c"	x >>> 힌트 =의 전을 기점으로 한다면?
 
 //unset의 경우에 없는key 를 찾으면 그냥 무시됌. 에러처리는 없음.
+
+
+///0. key의 첫 문자는 반드시 문자 ft_swit --> 3값 해당 isalpha >>> 그 다음부터는 isalnum을 돌린다.(_포함해서 개량)
+///1. 인자에 해당되는  건 무조건 문자
+///2.
+///3.
