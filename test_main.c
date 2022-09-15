@@ -265,6 +265,7 @@ void	ft_clearcmd(t_cmdlist *cmdlist)
 	}
 	cmdlist->head->next = cmdlist->tail;
 	cmdlist->tail->prev = cmdlist->head;
+	cmdlist->datasize = 0;
 }
 
 int main(int argc, char *argv[], char *env[])
@@ -300,7 +301,20 @@ int main(int argc, char *argv[], char *env[])
 			ft_cd(par_mdata.cmdlist, par_mdata.envlist);
 		else if (strcmp(par_mdata.cmdlist->head->next->str, "exit") == 0)
 			ft_exit(par_mdata.cmdlist, &par_mdata);
+		else if (strcmp(par_mdata.cmdlist->head->next->str, "export") == 0)
+			ft_export(&par_mdata);
+		else if (strcmp(par_mdata.cmdlist->head->next->str, "env") == 0)
+			ft_env(par_mdata.envlist, 0);
+		else if (strcmp(par_mdata.cmdlist->head->next->str, "unset") == 0)
+			ft_unset(&par_mdata);
         free(input);
     }
     return 0;
 }
+
+
+// echo
+// echo ""     ::: export "" vs export
+// echo ''	   ::: export $asdf vs export "$asdf"
+// echo $asdf // 없는경우
+// echo "$asdf"

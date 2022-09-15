@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/15 12:18:57 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 16:32:22 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 	char	*str;
 	int		i;
 	int		swit;
+	// int		type;
 	t_cmdnode *curr; //
 
 	i = 0;
@@ -155,6 +156,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 			if (ft_switch(*st) == 3)//
 			{
 				swit = ft_switch(*st);//
+				// type = swit;//
 				while (*st != 0 && ft_switch(*st) == swit)//
 				{
 					if (*st == '$')
@@ -171,6 +173,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 			else if (ft_switch(*st) == 1 || ft_switch(*st) == 2)//
 			{
 				swit = ft_switch(*st);//
+				// type = swit;//
 				st++;//
 				while (*st != 0 && ft_switch(*st) != swit)//
 				{
@@ -196,7 +199,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				break ;//
 			// st++;
 		}
-
+		// printf("%d\n", type);
 		str = ft_makeword(par_mdata->arglist); //null도 리턴됌..
 		if (str != 0)
 			ft_pushcmd(par_mdata->cmdlist, str);

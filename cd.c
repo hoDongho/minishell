@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/14 16:29:21 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/15 16:32:54 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	errno = 0;
 	if (chdir(path) != 0)
 		printf("errno : %d\n", errno);
-	change_val(envlist, "PWD", strdup(path));
+	change_val(envlist, "PWD", getcwd(0, 0));
 	change_val(envlist, "OLDPWD", now_pwd);
 	return (0);
 }

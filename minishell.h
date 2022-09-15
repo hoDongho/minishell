@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/15 12:06:42 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 16:32:55 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,6 @@ void		ft_export(t_par_mdata *par_mdata);
 int			ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata);
 int			ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
 void		ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata);
+void	ft_popenv(char *tkey, t_par_mdata *par_mdata);
+void	ft_unset(t_par_mdata *par_mdata);
+int	ft_valid(char *str, char key);
