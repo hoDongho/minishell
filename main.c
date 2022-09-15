@@ -277,6 +277,7 @@ int main(int argc, char *argv[], char *env[])
 	t_arglist	arglist; //
 	t_envlist	envlist; //
 	t_par_mdata	par_mdata;
+	t_envnode	*test;///test
 
 	i = 2;
     int work = 1;
@@ -294,7 +295,14 @@ int main(int argc, char *argv[], char *env[])
 		par_mdata.origin = input;
 		ft_split2(&par_mdata);
 		//printf("bf export str : %s\n", par_mdata.cmdlist->head->next->next->str);
-		ft_export(&par_mdata);
+		//ft_export(&par_mdata);
+		ft_unset(&par_mdata);
+		test = par_mdata.envlist->head->next;
+		while(test->next)
+		{
+			printf("%s=%s\n",test->key,test->val);
+			test=test->next;
+		}
 		free(input);
     }
     return 0;

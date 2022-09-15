@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include "./libft/libft.h"
 
 //////////////////////////////////////////////////////// 그대로 가져옴
 int	ft_strncmp(const char *str1, const char *str2, size_t num)
@@ -36,12 +35,16 @@ void	ft_env(t_envlist *envlist, int b) //ft_env(par_mdata->envlist, 0) env로 �
 	curr = envlist->head->next;
 	while(curr->next)
 	{
-		if (b && curr->key == "_")
+		if (b && ft_strncmp(curr->key,"_",1)==0)
 		{
 			curr = curr->next;
 			continue;
 		}
-		printf("%s=%s\n", curr->key, curr->val); //export a >>> =없이 온 것도 처리해서 찍어줘야해서 수정이 필요하다
+		if (curr->val)
+			printf("%s=%s\n", curr->key, curr->val); //export a >>> =없이 온 것도 처리해서 찍어줘야해서 수정이 필요하다
+		else
+			if(b)
+				printf("%s\n", curr->key);
 		curr = curr->next;
 	}
 }
@@ -109,9 +112,8 @@ int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
 	return (1);
 }
 
-int	ft_valid(char *str)
+int	ft_valid(char *str, char key)
 {
-	printf("str :    %s\n", str);
 	if (ft_isalpha(*str)==0)
 	{
 		printf("첫문자\n");
@@ -119,7 +121,7 @@ int	ft_valid(char *str)
 	}
 	// printf(":::::::::%d\n", ft_isalpha(*str));
 	str++;
-	while(*str && *str!='=')
+	while(*str && *str!=key)
 	{
 		// printf(";;;;;;;;;%d\n", ft_isalnum(*str));
 		if (ft_isalnum(*str)==0)
@@ -156,7 +158,7 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 	// printf("curr->str :%s\n",curr->str);
 	while(curr->next)
 	{
-		if (ft_valid(curr->str)==0)
+		if (ft_valid(curr->str,'=')==0)
 		{
 			///error 출력 후
 			curr = curr->next;
@@ -209,21 +211,21 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 		curr = curr->next;
 	}
 	///////test
-	test = par_mdata->envlist->head->next;
-	while(test->next)
-	{
-		printf("%s=%s\n",test->key,test->val);
-		test=test->next;
-	}
-	printf("\n--------cmd--------\n\n");
-	printf("input: %s\n\n", par_mdata->origin);
-	t_cmdnode *test2;
-	test2 = par_mdata->cmdlist->head->next;
-	while(test2->next)
-	{
-		printf("%s\n",test2->str);
-		test2=test2->next;
-	}
+	// test = par_mdata->envlist->head->next;
+	// while(test->next)
+	// {
+	// 	printf("%s=%s\n",test->key,test->val);
+	// 	test=test->next;
+	// }
+	// printf("\n--------cmd--------\n\n");
+	// printf("input: %s\n\n", par_mdata->origin);
+	// t_cmdnode *test2;
+	// test2 = par_mdata->cmdlist->head->next;
+	// while(test2->next)
+	// {
+	// 	printf("%s\n",test2->str);
+	// 	test2=test2->next;
+	// }
 }
 
 ///export a=b=c >>> a="b=c" 최초의 =만 찾는것.
