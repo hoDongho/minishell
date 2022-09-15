@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/15 16:57:41 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 17:36:24 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 			if (strcmp(key, curr->key) == 0)
 			{
 				st_val = curr->val;
+				if (!st_val)
+					break ;
 				while (*st_val)
 				{
 					ft_push(arglist, *st_val);
@@ -208,7 +210,6 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				break ;//
 			// st++;
 		}
-		printf("%d\n", type);
 		str = ft_makeword(par_mdata->arglist); //null도 리턴됌..
 		// if (str != 0)
 		ft_pushcmd(par_mdata->cmdlist, str, type);
@@ -225,20 +226,8 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 	// printf("\n\n\n\n\n");
 }
 
-// "asdf$aaa asdf"
-// "asdf12345 asdf"
-
-//export name=aaa
-//		 val=12345
-
-// "asdf$aaa asdf"
-// "asdf12345 asdf"
 
 
 
 
 
-// struct stack_data {
-// 	stack;
-// 	stack_size;
-// }

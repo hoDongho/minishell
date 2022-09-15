@@ -35,7 +35,7 @@ void	ft_env(t_envlist *envlist, int b) //ft_env(par_mdata->envlist, 0) env로 �
 	curr = envlist->head->next;
 	while(curr->next)
 	{
-		if (b && ft_strncmp(curr->key,"_",1)==0)
+		if (b && strcmp(curr->key,"_")==0)
 		{
 			curr = curr->next;
 			continue;
@@ -77,7 +77,7 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata) //있으면 수�
 	{
 		size = strlen(tkey);
 		//int	ft_strncmp(const char *str1, const char *str2, size_t num)
-		if (ft_strncmp(tkey, curr->key, size) == 0) //기존에 존재하는 경우 여기서 그냥 수정해줄까...//curr->key == tkey
+		if (strcmp(tkey, curr->key) == 0) //기존에 존재하는 경우 여기서 그냥 수정해줄까...//curr->key == tkey
 		{
 			// if (curr->val) // NULL로 들어온 경우
 			// {

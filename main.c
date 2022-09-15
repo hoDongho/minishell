@@ -100,39 +100,6 @@ int	ft_split_util(char *str)
 	return (cnt);
 }
 
-// ehco       abc   'def' "abc   d"
-// "abc"
-// "abc""abc"
-// abc"abc"
-// "abc"abc
-// 'abc'"abc"
-// 'abc' "abc"e
-//   asdf d$ abd
-//"   asdf d$ abd"
-//    dsaf $ asdf
-// "asdf$aaa$asdf"
-
-// "$aaa '$bbb'"
-// '$aaa "$bbb"'
-//   sadf
-
-// ' $ '
-// ' $sadf'
-
-//export sadf = 12345
-
-// " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
-// " $"
-// " $asdf"
-// " $sadf" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
-
-//   $
-//   $sadf
-
-// '\0  "\0  a\0  '''a   \0
-
-//ft_init_cmdlist()
-
 char	**ft_split2(t_par_mdata *par_mdata)
 {
 	int	len;

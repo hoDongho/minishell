@@ -12,7 +12,7 @@ void	ft_popenv(char *tkey, t_par_mdata *par_mdata) //findenv 개량 수정하는
 	size = strlen(tkey);
 	while(curr->next)
 	{
-		if (ft_strncmp(tkey,curr->key,size)==0) // 같은 문자
+		if (strcmp(tkey,curr->key)==0) // 같은 문자
 		{
 			next = curr->next;
 			prev = curr->prev;

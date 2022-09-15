@@ -1,3 +1,50 @@
+// ehco       abc   'def' "abc   d"
+// "abc"
+// "abc""abc"
+// abc"abc"
+// "abc"abc
+// 'abc'"abc"
+// 'abc' "abc"e
+//   asdf d$ abd
+//"   asdf d$ abd"
+//    dsaf $ asdf
+// "asdf$aaa$asdf"
+
+// "$aaa '$bbb'"
+// '$aaa "$bbb"'
+//   sadf
+
+// ' $ '
+// ' $sadf'
+
+//export sadf = 12345
+
+
+:::::::::
+
+// "asdf$aaa asdf"
+// "asdf12345 asdf"
+
+//export name=aaa
+//		 val=12345
+
+// "asdf$aaa asdf"
+// "asdf12345 asdf"
+
+:::::::::
+
+// " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
+// " $"
+// " $asdf"
+// " $sadf" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
+
+//   $
+//   $sadf
+
+// '\0  "\0  a\0  '''a   \0
+
+
+
 // echo 테스트
 echo $?
 echo ??
