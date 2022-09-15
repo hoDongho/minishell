@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/14 15:34:04 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/15 14:53:34 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	chk_number(char *str)
 {
+	if (str == 0)
+		return (1);
 	if (*str == '-' || *str == '+')
 		str++;
 	while (*str)
 	{
-		if (*str < '0' || *str >'9')
+		if (!ft_isdigit(*str))
 			return (1);
 		str++;
 	}

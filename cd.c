@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/15 16:32:54 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 16:35:12 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,19 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	t_cmdnode	*arg;
 	char		*home;
-	char		*now_pwd;
+	char		*old_pwd;
 	char		*path;
 
 	arg = cmdlist->head->next->next;
 	home = find_val(envlist, "HOME");
-	now_pwd = getcwd(0, 0);
+	old_pwd = getcwd(0, 0);
 	path = home;
 	if (arg->next)
 	{
 		path = arg->str;
-		if (arg->str[0] == '~')
+		if(*arg->str == 0)
+			path = old_pwd;
+		else if (arg->str[0] == '~')
 		{
 			path = ft_strjoin(home, &arg->str[1]);
 		}
@@ -111,6 +113,6 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	if (chdir(path) != 0)
 		printf("errno : %d\n", errno);
 	change_val(envlist, "PWD", getcwd(0, 0));
-	change_val(envlist, "OLDPWD", now_pwd);
+	change_val(envlist, "OLDPWD", old_pwd);
 	return (0);
 }

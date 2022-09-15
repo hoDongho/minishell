@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:32:20 by nhwang            #+#    #+#             */
-/*   Updated: 2022/01/12 18:43:51 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/15 14:01:25 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	lendst = 0;
 	while (lensrc + lendst <= min)
 	{
-		if (!ft_strncmp(dst + lendst, little, lensrc))
+		if (!ft_strncmp(dst + lendst, src, lensrc))
 			return (dst + lendst);
 		lendst++;
 	}
