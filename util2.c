@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:09:57 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 14:10:22 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:19:12 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_popenv(char *tkey, t_par_mdata *par_mdata)
 	size = strlen(tkey);
 	while (curr->next)
 	{
-		if (strcmp(tkey, curr->key) == 0)
+		if (ft_strcmp(tkey, curr->key) == 0)
 		{
 			free(curr->key);
 			free(curr->val);

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/16 13:57:34 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:19:12 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*find_val(t_envlist *envlist, char *key)
 	curr = envlist->head->next;
 	while (curr->next)
 	{
-		if (strcmp(curr->key, key) == 0)
+		if (ft_strcmp(curr->key, key) == 0)
 			break ;
 		curr = curr->next;
 	}
@@ -36,7 +36,7 @@ void	change_val(t_envlist *envlist, char *key, char *val)
 	curr = envlist->head->next;
 	while (curr->next)
 	{
-		if (strcmp(curr->key, key) == 0)
+		if (ft_strcmp(curr->key, key) == 0)
 			break ;
 		curr = curr->next;
 	}

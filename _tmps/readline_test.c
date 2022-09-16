@@ -15,7 +15,7 @@ int	main(int argc, char *argv[], char *env[])
 		str = readline("minishell> ");
 		if (str == 0)
 			break ;
-		if (strcmp("echo", str) == 0)
+		if (ft_strcmp("echo", str) == 0)
 		{
 			printf("%s\n", str);
 		}

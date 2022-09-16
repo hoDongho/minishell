@@ -24,16 +24,16 @@ int main(void)
         // Add input to history.
         add_history(input);
         // Command analysis and execution
-        if( 0 == strcmp(input, "exit") )
+        if( 0 == ft_strcmp(input, "exit") )
         {
             printf("Bye!\n");
             work = 0;
         }
-        if( 0 == strcmp(input, "") )
+        if( 0 == ft_strcmp(input, "") )
         {
             printf("I'm readline example\n");
         }
-        if( 0 == strcmp(input, "ver") )
+        if( 0 == ft_strcmp(input, "ver") )
         {
             printf("My version is 0.1\n");
         }

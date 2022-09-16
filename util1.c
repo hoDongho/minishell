@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 14:09:45 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:19:12 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_env(t_envlist *envlist, int b)
 	curr = envlist->head->next;
 	while (curr->next)
 	{
-		if (b && strcmp(curr->key, "_") == 0)
+		if (b && ft_strcmp(curr->key, "_") == 0)
 		{
 			curr = curr->next;
 			continue ;
@@ -61,7 +61,7 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 	while (curr->next)
 	{
 		size = strlen(tkey);
-		if (strcmp(tkey, curr->key) == 0)
+		if (ft_strcmp(tkey, curr->key) == 0)
 		{
 			if (tval)
 			{

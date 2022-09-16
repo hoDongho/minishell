@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 14:03:48 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 15:10:46 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_makeword(t_arglist	*arglist)
 	return (st);
 }
 
-char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmdlist, int type)
+char	*ft_chgenv(char *st, t_par_mdata *par_mdata, int type)
 {
 	char		*key;
 	int			i;
@@ -74,7 +74,7 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 	st++;
 	if (ft_switch(*st) != 3)
 	{
-		ft_push(arglist, '$');
+		ft_push(par_mdata->arglist, '$');
 		return (st);
 	}
 	else
@@ -88,11 +88,11 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 		}
 		key = calloc(i + 1, sizeof(char));
 		memmove(key, st, i);
-		curr = envlist->head;
+		curr = par_mdata->envlist->head;
 		while (curr->next->next)
 		{
 			curr = curr->next;
-			if (strcmp(key, curr->key) == 0)
+			if (ft_strcmp(key, curr->key) == 0)
 			{
 				st_val = curr->val;
 				if (!st_val)
@@ -101,12 +101,12 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 				{
 					if (ft_isspace(*st_val) == 1 && type == 3)
 					{
-						str = ft_makeword(arglist);
-						ft_pushcmd(cmdlist, str, type);
+						str = ft_makeword(par_mdata->arglist);
+						ft_pushcmd(par_mdata->cmdlist, str, type);
 						while (*st_val && ft_isspace(*st_val) == 1)
 							st_val++;
 					}
-					ft_push(arglist, *st_val);
+					ft_push(par_mdata->arglist, *st_val);
 					st_val++;
 				}
 				break ;
@@ -141,79 +141,6 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	cmdlist->datasize++;
 }
 
-void	ft_removeq2(t_par_mdata *par_mdata, int len)
-{
-	char		*st;
-	char		*str;
-	int			i;
-	int			swit;
-	int			type;
-
-	i = 0;
-	swit = 0;
-	st = par_mdata->origin;
-	while (len > i)
-	{
-		type = 0;
-		while (*st)
-		{
-			if (ft_switch(*st) == 0 && swit == 0)
-			{
-				st++;
-				continue ;
-			}
-			if (ft_switch(*st) == 3)
-			{
-				swit = ft_switch(*st);
-				if (!type)
-					type = swit;
-				while (*st != 0 && ft_switch(*st) == swit)
-				{
-					if (*st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);
-					else
-					{
-						ft_push(par_mdata->arglist, *st);
-						st++;
-					}
-				}
-				swit = 0;
-			}
-			else if (ft_switch(*st) == 1 || ft_switch(*st) == 2)
-			{
-				swit = ft_switch(*st);
-				if (!type)
-					type = swit;
-				st++;
-				while (*st != 0 && ft_switch(*st) != swit)
-				{
-					if (swit == 2 && *st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);
-					else
-					{
-						ft_push(par_mdata->arglist, *st);
-						st++;
-					}
-				}
-				swit = 0;
-				st++;
-			}
-			if (ft_switch(*st) == 0)
-				break ;
-		}
-		str = ft_makeword(par_mdata->arglist);
-		ft_pushcmd(par_mdata->cmdlist, str, type);
-		i++;
-	}
-	// t_cmdnode	*curr;
-	// curr = par_mdata->cmdlist->head->next;
-	// while(curr->next)
-	// {
-	// 	printf("%s\n",curr->str);
-	// 	curr=curr->next;
-	// }
-	// printf("\n\n\n\n\n");
-}
 
 
 

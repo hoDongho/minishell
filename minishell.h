@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 14:01:46 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 15:26:22 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <unistd.h>
 # include <errno.h>
 # include "./libft/libft.h"
+
+# define SPACE_NULL 0
+# define QUOTE 1
+# define D_QUOTE 2
+# define WORD 3
 
 typedef struct s_argnode
 {
@@ -76,7 +81,6 @@ typedef struct s_par_mdata
 
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);
-void		ft_removeq2(t_par_mdata *par_mdata, int len);
 void		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
 void		ft_envinit(t_envlist *envlist);
@@ -95,5 +99,19 @@ void		ft_popenv(char *tkey, t_par_mdata *par_mdata);
 void		ft_unset(t_par_mdata *par_mdata);
 int			ft_valid(char *str, char key);
 void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);
+int			ft_strcmp(char	*st1, char *st2);
+
+
+int			ft_parse(t_par_mdata *par_mdata);
+int			ft_cnt_word(char *str);
+void		ft_removeq2(t_par_mdata *par_mdata, int len);
+char		*ft_push_word(t_par_mdata *par_mdata, char *st, int type);
+
+char		*ft_chgenv(char *st, t_par_mdata *par_mdata, int type);
+void		ft_push(t_arglist	*arglist, char c);
+char		*ft_makeword(t_arglist	*arglist);
+
+
+
 
 #endif
