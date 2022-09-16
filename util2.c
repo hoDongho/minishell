@@ -14,6 +14,8 @@ void	ft_popenv(char *tkey, t_par_mdata *par_mdata) //findenv 개량 수정하는
 	{
 		if (strcmp(tkey,curr->key)==0) // 같은 문자
 		{
+			free(curr->key);
+			free(curr->val);
 			next = curr->next;
 			prev = curr->prev;
 			prev->next = next;

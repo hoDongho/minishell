@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/15 16:35:12 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/16 12:14:27 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,28 +90,39 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	arg = cmdlist->head->next->next;
 	home = find_val(envlist, "HOME");
 	old_pwd = getcwd(0, 0);
-	path = home;
+	path = ft_strdup(home);//
 	if (arg->next)
 	{
-		path = arg->str;
+		free(path);//
+		// path = arg->str;
 		if(*arg->str == 0)
-			path = old_pwd;
+			path = ft_strdup(old_pwd);//
 		else if (arg->str[0] == '~')
 		{
 			path = ft_strjoin(home, &arg->str[1]);
 		}
 		else if (arg->str[0] == '-' && arg->str[1] == 0)
 		{
-			path = find_val(envlist, "OLDPWD");
+			path = find_val(envlist, "OLDPWD");//
 			if (path == 0)
 				printf("cd: OLDPWD not set\n");
 			else
+			{
+				path = ft_strdup(path);
 				printf("%s\n", path);
+			}
 		}
+		else
+		{
+			path = ft_strdup(arg->str);
+		}
+
+
 	}
 	errno = 0;
 	if (chdir(path) != 0)
 		printf("errno : %d\n", errno);
+	free(path);
 	change_val(envlist, "PWD", getcwd(0, 0));
 	change_val(envlist, "OLDPWD", old_pwd);
 	return (0);

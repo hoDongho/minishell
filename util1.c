@@ -126,7 +126,7 @@ int	ft_valid(char *str, char key)
 		// printf(";;;;;;;;;%d\n", ft_isalnum(*str));
 		if (ft_isalnum(*str)==0)
 		{
-			// printf("!alnum\n");
+			printf("key:::\n");
 			return (0);///오류
 		}
 		str++;

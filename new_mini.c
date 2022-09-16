@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_mini.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 01:42:25 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/16 11:49:59 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 						str = ft_makeword(arglist);
 						ft_pushcmd(cmdlist, str, type);
 						while(*st_val && ft_isspace(*st_val) == 1) //공백이라면
-						st_val++;
+							st_val++;
 					}
 					ft_push(arglist, *st_val);
 					st_val++;
@@ -148,7 +148,7 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	// printf("%s\n", new->str);
 }
 
-void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
+void	ft_removeq2(t_par_mdata *par_mdata, int len)
 {
 	char	*st;
 	char	*str;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 01:30:04 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/16 11:50:22 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_par_mdata
 
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);
-void		ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len);
+void		ft_removeq2(t_par_mdata *par_mdata, int len);
 void 		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
 void 		ft_envinit(t_envlist *envlist);

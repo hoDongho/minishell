@@ -135,14 +135,10 @@ int	ft_split_util(char *str)
 int ft_split2(t_par_mdata *par_mdata)
 {
 	int	len;
-	char **ans;
 	len = ft_split_util(par_mdata->origin);
 	if (len == 0) /////
 		return (1); //// 09.16 dhyun
-	ans = calloc (len + 1, sizeof(char *));
-	if (!ans)
-		return (0);//
-	ft_removeq2(par_mdata, ans, len);
+	ft_removeq2(par_mdata, len);
 	//init
 	// while(*ans)
 	// {
@@ -312,6 +308,9 @@ int main(int argc, char *argv[], char *env[])
 		else if (strcmp(par_mdata.cmdlist->head->next->str, "unset") == 0)
 			ft_unset(&par_mdata);
         free(input);
+		printf("\n-----------------------------------------------------------------------\n");
+		system("leaks a.out");
+		printf("-----------------------------------------------------------------------\n\n");
     }
     return 0;
 }
