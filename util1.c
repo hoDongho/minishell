@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   util1.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
+/*   Updated: 2022/09/16 14:09:45 by nhwang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_env(t_envlist *envlist, int b)
@@ -6,17 +18,17 @@ void	ft_env(t_envlist *envlist, int b)
 	t_envnode	*temp;
 
 	curr = envlist->head->next;
-	while(curr->next)
+	while (curr->next)
 	{
-		if (b && strcmp(curr->key,"_")==0)
+		if (b && strcmp(curr->key, "_") == 0)
 		{
 			curr = curr->next;
-			continue;
+			continue ;
 		}
 		if (curr->val)
 			printf("%s=%s\n", curr->key, curr->val);
 		else
-			if(b)
+			if (b)
 				printf("%s\n", curr->key);
 		curr = curr->next;
 	}
@@ -46,7 +58,7 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 	size_t		size;
 
 	curr = par_mdata->envlist->head->next;
-	while(curr->next)
+	while (curr->next)
 	{
 		size = strlen(tkey);
 		if (strcmp(tkey, curr->key) == 0)
@@ -58,7 +70,7 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 			}
 			return (1);
 		}
-		curr=curr->next;
+		curr = curr->next;
 	}
 	return (0);
 }
@@ -73,7 +85,7 @@ int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
 	}
 	else
 	{
-		if(ft_findenv(tkey, tval, par_mdata) == 0)
+		if (ft_findenv(tkey, tval, par_mdata) == 0)
 			ft_push_env(tkey, tval, par_mdata);
 	}
 	return (1);
@@ -81,15 +93,15 @@ int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
 
 int	ft_valid(char *str, char key)
 {
-	if (ft_isalpha(*str)==0)
+	if (ft_isalpha(*str) == 0)
 	{
 		printf("첫문자\n");//
 		return (0);
 	}
 	str++;
-	while(*str && *str!=key)
+	while (*str && *str != key)
 	{
-		if (ft_isalnum(*str)==0)
+		if (ft_isalnum(*str) == 0)
 		{
 			printf("key:::\n");//
 			return (0);///오류
@@ -118,21 +130,21 @@ void	ft_export(t_par_mdata *par_mdata)
 		return ;
 	}
 	curr = curr->next;
-	while(curr->next)
+	while (curr->next)
 	{
-		if (ft_valid(curr->str,'=')==0)
+		if (ft_valid(curr->str, '=') == 0)
 		{
 			///error 출력 후
 			curr = curr->next;
-			continue;
+			continue ;
 		}
 		echk = 0;
 		size = 0;
 		st = curr->str;
-		while(*st)
+		while (*st)
 		{
 			size++;
-			if (*st=='=')
+			if (*st == '=')
 			{
 				tkey = calloc(size, sizeof(char));
 				strlcpy(tkey, curr->str, size);
@@ -140,14 +152,14 @@ void	ft_export(t_par_mdata *par_mdata)
 			}
 			st++;
 			if (echk)
-				break;
+				break ;
 		}
 		size = strlen(st);
 		tval = NULL;
 		if (echk)
 		{
 			tval = calloc(size + 1, sizeof(char));
-			strlcpy(tval, st, size+1);
+			strlcpy(tval, st, size + 1);
 		}
 		else
 		{

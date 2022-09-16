@@ -6,32 +6,35 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 12:50:52 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:01:46 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-#include "./libft/libft.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include <stdio.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <string.h>
+# include <unistd.h>
+# include <errno.h>
+# include "./libft/libft.h"
 
 typedef struct s_argnode
 {
 	struct s_argnode	*next;
 	struct s_argnode	*prev;
-	char			c;
-} t_argnode ;
+	char				c;
+}				t_argnode;
 
 typedef struct s_arglist
 {
 	t_argnode	*head;
 	t_argnode	*tail;
 	int			datasize;
-} t_arglist ;
+}				t_arglist;
 
 typedef struct s_envnode
 {
@@ -39,14 +42,14 @@ typedef struct s_envnode
 	struct s_envnode	*prev;
 	char				*key;
 	char				*val;
-} t_envnode ;
+}				t_envnode;
 
 typedef struct s_envlist
 {
 	t_envnode	*head;
 	t_envnode	*tail;
-	int		datasize;
-} t_envlist ;
+	int			datasize;
+}				t_envlist;
 
 typedef struct s_cmdnode
 {
@@ -54,14 +57,14 @@ typedef struct s_cmdnode
 	struct s_cmdnode	*prev;
 	char				*str;
 	// type 추가
-} t_cmdnode ;
+}				t_cmdnode;
 
 typedef struct s_cmdlist
 {
 	t_cmdnode	*head;
 	t_cmdnode	*tail;
 	int			datasize;
-} t_cmdlist ;
+}				t_cmdlist;
 
 typedef struct s_par_mdata
 {
@@ -69,14 +72,14 @@ typedef struct s_par_mdata
 	t_arglist	*arglist;
 	t_envlist	*envlist;
 	char		*origin;
-} t_par_mdata;
+}				t_par_mdata;
 
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);
 void		ft_removeq2(t_par_mdata *par_mdata, int len);
-void 		ft_set_env(t_envlist *envlist, char **env);
+void		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
-void 		ft_envinit(t_envlist *envlist);
+void		ft_envinit(t_envlist *envlist);
 int			ft_isspace(char c);
 int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_pwd(void);
@@ -84,10 +87,13 @@ int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
 void		ft_env(t_envlist *envlist, int b);
 int			ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata);
 void		ft_export(t_par_mdata *par_mdata);
-int			ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata);
+int			ft_ex_util(char *tkey, char *tval, int echk,
+				t_par_mdata *par_mdata);
 int			ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
 void		ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata);
 void		ft_popenv(char *tkey, t_par_mdata *par_mdata);
 void		ft_unset(t_par_mdata *par_mdata);
 int			ft_valid(char *str, char key);
 void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);
+
+#endif

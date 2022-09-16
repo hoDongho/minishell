@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 12:50:56 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 14:03:48 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_argnode	*ft_new_argnode(char c)
 
 	new = calloc(1, sizeof(t_argnode));
 	if (!new)
-		return NULL;
+		return (NULL);
 	new->c = c;
-	return new;
+	return (new);
 }
 
 void	ft_push(t_arglist	*arglist, char c)
@@ -38,8 +38,8 @@ void	ft_push(t_arglist	*arglist, char c)
 
 char	*ft_makeword(t_arglist	*arglist)
 {
-	char	*str;
-	char	*st;
+	char		*str;
+	char		*st;
 	t_argnode	*curr;
 	t_argnode	*temp;
 
@@ -64,11 +64,11 @@ char	*ft_makeword(t_arglist	*arglist)
 
 char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmdlist, int type)
 {
-	char	*key;
-	int		i;
+	char		*key;
+	int			i;
 	t_envnode	*curr;
-	char	*st_val;
-	char	*str;
+	char		*st_val;
+	char		*str;
 
 	i = 0;
 	st++;
@@ -80,7 +80,7 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 	else
 	{
 		// if (*st == '?')
-		while(ft_switch(st[i]) == 3)
+		while (ft_switch(st[i]) == 3)
 		{
 			if (st[i] == '$' || ft_isalnum(st[i]) == 0)
 				break ;
@@ -103,7 +103,7 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 					{
 						str = ft_makeword(arglist);
 						ft_pushcmd(cmdlist, str, type);
-						while(*st_val && ft_isspace(*st_val) == 1)
+						while (*st_val && ft_isspace(*st_val) == 1)
 							st_val++;
 					}
 					ft_push(arglist, *st_val);
@@ -124,7 +124,7 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	t_cmdnode	*prev;
 	char		*new_str;
 
-	if (type==3 && str==0)
+	if (type == 3 && str == 0)
 		return ;
 	new_str = str;
 	if (str == 0)
@@ -143,25 +143,24 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 
 void	ft_removeq2(t_par_mdata *par_mdata, int len)
 {
-	char	*st;
-	char	*str;
-	int		i;
-	int		swit;
-	int		type;
-	t_cmdnode *curr;
+	char		*st;
+	char		*str;
+	int			i;
+	int			swit;
+	int			type;
 
 	i = 0;
 	swit = 0;
 	st = par_mdata->origin;
-	while(len > i)
+	while (len > i)
 	{
 		type = 0;
-		while(*st)
+		while (*st)
 		{
 			if (ft_switch(*st) == 0 && swit == 0)
 			{
 				st++;
-				continue;
+				continue ;
 			}
 			if (ft_switch(*st) == 3)
 			{
@@ -206,6 +205,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, int len)
 		ft_pushcmd(par_mdata->cmdlist, str, type);
 		i++;
 	}
+	// t_cmdnode	*curr;
 	// curr = par_mdata->cmdlist->head->next;
 	// while(curr->next)
 	// {
