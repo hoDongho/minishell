@@ -1,6 +1,6 @@
 #include "minishell.h"
-//int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
-void	ft_popenv(char *tkey, t_par_mdata *par_mdata) //findenv 개량 수정하는 부분때문에 그대로는 쓸수없음
+
+void	ft_popenv(char *tkey, t_par_mdata *par_mdata)
 {
 	t_envnode	*curr;
 	t_envnode	*next;
@@ -12,7 +12,7 @@ void	ft_popenv(char *tkey, t_par_mdata *par_mdata) //findenv 개량 수정하는
 	size = strlen(tkey);
 	while(curr->next)
 	{
-		if (strcmp(tkey,curr->key)==0) // 같은 문자
+		if (strcmp(tkey,curr->key)==0)
 		{
 			free(curr->key);
 			free(curr->val);
@@ -25,7 +25,7 @@ void	ft_popenv(char *tkey, t_par_mdata *par_mdata) //findenv 개량 수정하는
 			free(temp);
 			continue ;
 		}
-		curr = curr->next; //if를 타고 온 경우에도 다음거로 잘 넘어가는지 논리 전개
+		curr = curr->next;
 	}
 }
 
@@ -33,12 +33,12 @@ void	ft_unset(t_par_mdata *par_mdata)
 {
 	t_cmdnode	*curr;
 	curr = par_mdata->cmdlist->head->next;
-	if (par_mdata->cmdlist->datasize == 1) //unset만 온  경경우우
+	if (par_mdata->cmdlist->datasize == 1)
 		return ;
-	curr = curr->next; //unset뒤의 변수명이 되겠따
+	curr = curr->next;
 	while(curr->next)
 	{
-		if (ft_valid(curr->str, 0)==0) ///export랑 같은 방식으로 받아온다. key검사 부분이 같음
+		if (ft_valid(curr->str, 0)==0)
 		{
 			printf("err unset\n");
 			///error 출력 후
@@ -49,8 +49,3 @@ void	ft_unset(t_par_mdata *par_mdata)
 		curr = curr->next;
 	}
 }
-
-
-///unset a=b
-///unset " g"
-///위의 두 가지 경우를 보면 유효성 체크를 이전에 해주듯이 해야겠다

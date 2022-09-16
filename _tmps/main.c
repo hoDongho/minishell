@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+
 int	ft_checkq(char *str)
 {
 	char	*st;
@@ -41,7 +42,7 @@ int	ft_checkq(char *str)
 
 int	ft_isspace(char c)
 {
-	if (((c >= 9 && c <=13) || c == 32))
+	if (((c >= 9 && c <=13) || c == 32))///c != 0 &&
 		return (1);
 	return (0);
 }
@@ -83,12 +84,14 @@ int	ft_split_util(char *str)
 			{
 				while (*(st + 1) != 0 && ft_switch(*(st + 1)) == 3)
 					st++;
+				// cnt++;//
 				swit = 0;
 			}
 		}
 		else if (swit == ft_switch(*st))
 		{
 			swit = 0;
+			// cnt++;//
 		}
 		if (ft_switch(*(st + 1)) == 0 && swit == 0)
 			cnt++;
@@ -97,15 +100,27 @@ int	ft_split_util(char *str)
 	return (cnt);
 }
 
-int ft_split2(t_par_mdata *par_mdata)
+char	**ft_split2(t_par_mdata *par_mdata)
 {
 	int	len;
+	char **ans;
 	len = ft_split_util(par_mdata->origin);
-	if (len == 0)
-		return (1); //에러 처리
-	ft_removeq2(par_mdata, len);
+	ans = calloc (len + 1, sizeof(char *));
+	if (!ans)
+		return (NULL);//
+	ft_removeq2(par_mdata, ans, len);
+	//init
+	// while(*ans)
+	// {
+	// 	printf("%s\n", *ans);// free
+	// 	ans++; //여기서 푸시
+	// }
 	return (0);
 }
+
+//test:a     b
+//1
+//test:a bb   c
 
 void ft_arginit(t_arglist *arglist)
 {
@@ -149,6 +164,7 @@ void ft_init(t_par_mdata *par_mdata)
 	par_mdata->arglist = calloc (1, sizeof(t_arglist));
 	par_mdata->envlist = calloc (1, sizeof(t_envlist));
 	par_mdata->cmdlist = calloc (1, sizeof(t_cmdlist));
+	//cmdlist추가하기랑 null
 	ft_arginit(par_mdata->arglist);
 	ft_envinit(par_mdata->envlist);
 	ft_cmdinit(par_mdata->cmdlist);
@@ -161,7 +177,7 @@ t_envnode	*ft_newenv(void)
 
 	new = calloc(1, sizeof(t_envnode));
 	if (!new)
-		return (NULL);
+		return (NULL);//
 	return (new);
 }
 
@@ -189,7 +205,7 @@ void ft_set_env(t_envlist *envlist, char **env)
 		memmove(str, env[i], cnt);
 		new = ft_newenv();
 		new->key = str;
-		new->val = strdup(getenv(env[i]));
+		new->val = getenv(env[i]);
 		envlist->tail->prev->next = new;
 		new->next = envlist->tail;
 		new->prev = envlist->tail->prev;
@@ -210,14 +226,14 @@ void	ft_clearcmd(t_cmdlist *cmdlist)
 	curr = cmdlist->head->next;
 	while(curr->next)
 	{
-		temp = curr;
+		temp = curr;//
 		curr = curr->next;
 		free(temp->str);
 		free(temp);
 	}
 	cmdlist->head->next = cmdlist->tail;
 	cmdlist->tail->prev = cmdlist->head;
-	cmdlist->datasize = 0;
+	cmdlist->datasize = 0; //9.14 nhwang 수정
 }
 
 int main(int argc, char *argv[], char *env[])
@@ -225,41 +241,36 @@ int main(int argc, char *argv[], char *env[])
 	char *input;
 	char **cc;
 	int	i;
+	t_arglist	arglist; //
+	t_envlist	envlist; //
 	t_par_mdata	par_mdata;
+	t_envnode	*test;///test
 
 	i = 2;
-	ft_init(&par_mdata);
-	ft_set_env(par_mdata.envlist, env);
-    while(1)
-	{
+    int work = 1;
+
+	ft_init(&par_mdata); /// metadata관련된 것.  cmdlist까지 추가로 해줘야함
+	ft_set_env(par_mdata.envlist, env); // envinit 만 분리해서 전체 init이랑 합침 // s_cmdlist
+    while(work) {
 		ft_clearcmd(par_mdata.cmdlist);
-        input = readline("test:");
+        input = readline("\ntest:");
         if (!input)
             break;
         add_history(input);
-		if (!*input)
-			continue ;
+		//printf("%d\n",ft_checkq(input)); > 완료
+        // printf("%d\n",ft_split2(input));
 		par_mdata.origin = input;
-		if (ft_split2(&par_mdata) == 1)
-			continue ;
-		if (strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
-			ft_echo(par_mdata.cmdlist, par_mdata.envlist);
-		else if (strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)
-			ft_pwd();
-		else if (strcmp(par_mdata.cmdlist->head->next->str, "cd") == 0)
-			ft_cd(par_mdata.cmdlist, par_mdata.envlist);
-		else if (strcmp(par_mdata.cmdlist->head->next->str, "exit") == 0)
-			ft_exit(par_mdata.cmdlist, &par_mdata);
-		else if (strcmp(par_mdata.cmdlist->head->next->str, "export") == 0)
-			ft_export(&par_mdata);
-		else if (strcmp(par_mdata.cmdlist->head->next->str, "env") == 0)
-			ft_env(par_mdata.envlist, 0);
-		else if (strcmp(par_mdata.cmdlist->head->next->str, "unset") == 0)
-			ft_unset(&par_mdata);
-        free(input);
-		printf("\n-----------------------------------------------------------------------\n");
-		system("leaks a.out");
-		printf("-----------------------------------------------------------------------\n\n");
+		ft_split2(&par_mdata);
+		//printf("bf export str : %s\n", par_mdata.cmdlist->head->next->next->str);
+		//ft_export(&par_mdata);
+		ft_unset(&par_mdata);
+		test = par_mdata.envlist->head->next;
+		while(test->next)
+		{
+			printf("%s=%s\n",test->key,test->val);
+			test=test->next;
+		}
+		free(input);
     }
     return 0;
 }

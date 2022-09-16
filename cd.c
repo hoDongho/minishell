@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/16 12:14:27 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 12:50:47 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,19 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	arg = cmdlist->head->next->next;
 	home = find_val(envlist, "HOME");
 	old_pwd = getcwd(0, 0);
-	path = ft_strdup(home);//
+	path = ft_strdup(home);
 	if (arg->next)
 	{
-		free(path);//
-		// path = arg->str;
+		free(path);
 		if(*arg->str == 0)
-			path = ft_strdup(old_pwd);//
+			path = ft_strdup(old_pwd);
 		else if (arg->str[0] == '~')
 		{
 			path = ft_strjoin(home, &arg->str[1]);
 		}
 		else if (arg->str[0] == '-' && arg->str[1] == 0)
 		{
-			path = find_val(envlist, "OLDPWD");//
+			path = find_val(envlist, "OLDPWD");
 			if (path == 0)
 				printf("cd: OLDPWD not set\n");
 			else

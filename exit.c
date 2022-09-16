@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/15 14:53:34 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/16 12:50:50 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,3 @@ int	ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata)
 	}
 	exit(status);
 }
-
-// exit ""
-// cd ""

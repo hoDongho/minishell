@@ -1,4 +1,4 @@
-// ehco       abc   'def' "abc   d"
+// echo       abc   'def' "abc   d"
 // "abc"
 // "abc""abc"
 // abc"abc"
@@ -19,6 +19,15 @@
 
 //export sadf = 12345
 
+// " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
+// " $"
+// " $asdf"
+// " $sadf" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
+
+//   $
+//   $sadf
+
+// '\0  "\0  a\0  '''a   \0
 
 :::::::::
 
@@ -111,4 +120,21 @@ pwd
 << eof cat >> infile -> infile 뒤에 추가됨
 
 
-by donpark, joonpark :)
+/*
+	echo -n 123		O
+	echo -nn 123	O
+	echo -n-n 123	X
+	echo 123 -n		X
+*/
+
+
+// echo
+// echo ""     ::: export "" vs export
+// echo ''	   ::: export $asdf vs export "$asdf"
+// echo $asdf // 없는경우
+// echo "$asdf"
+
+
+///unset a=b
+///unset " g"
+

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 11:49:59 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 12:50:56 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char	*ft_makeword(t_arglist	*arglist)
 	t_argnode	*temp;
 
 	if (arglist->datasize == 0)
-		return (NULL);//
-	st = calloc(arglist->datasize + 1, sizeof(char)); //null포함
+		return (NULL);
+	st = calloc(arglist->datasize + 1, sizeof(char));
 	str = st;
 	curr = arglist->head->next;
 	while (curr->next)
@@ -62,14 +62,14 @@ char	*ft_makeword(t_arglist	*arglist)
 	return (st);
 }
 
-char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmdlist, int type) //$ "$ "
+char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmdlist, int type)
 {
 	char	*key;
 	int		i;
 	t_envnode	*curr;
 	char	*st_val;
 	char	*str;
-	// $ // "$"
+
 	i = 0;
 	st++;
 	if (ft_switch(*st) != 3)
@@ -82,13 +82,12 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 		// if (*st == '?')
 		while(ft_switch(st[i]) == 3)
 		{
-			if (st[i] == '$' || ft_isalnum(st[i]) == 0)///////****
+			if (st[i] == '$' || ft_isalnum(st[i]) == 0)
 				break ;
 			i++;
 		}
 		key = calloc(i + 1, sizeof(char));
 		memmove(key, st, i);
-		// curr = envlist->head->next;//
 		curr = envlist->head;
 		while (curr->next->next)
 		{
@@ -104,7 +103,7 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 					{
 						str = ft_makeword(arglist);
 						ft_pushcmd(cmdlist, str, type);
-						while(*st_val && ft_isspace(*st_val) == 1) //공백이라면
+						while(*st_val && ft_isspace(*st_val) == 1)
 							st_val++;
 					}
 					ft_push(arglist, *st_val);
@@ -113,15 +112,10 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmd
 				break ;
 			}
 		}
-		// while (curr != envlist->tail && strcmp(key, curr->key) != 0)//
-		// 	curr = curr->next;
-
-		// if (curr != envlist->tail)
-		free(key);//
+		free(key);
 		st = st + i;
 	}
 	return (st);
-	// while()
 }
 
 void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
@@ -144,8 +138,7 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	new->prev = prev;
 	prev->next = new;
 	cmdlist->tail->prev = new;
-	cmdlist->datasize++; //9.14 nhwang 추가
-	// printf("%s\n", new->str);
+	cmdlist->datasize++;
 }
 
 void	ft_removeq2(t_par_mdata *par_mdata, int len)
@@ -155,7 +148,7 @@ void	ft_removeq2(t_par_mdata *par_mdata, int len)
 	int		i;
 	int		swit;
 	int		type;
-	t_cmdnode *curr; //
+	t_cmdnode *curr;
 
 	i = 0;
 	swit = 0;
@@ -170,61 +163,47 @@ void	ft_removeq2(t_par_mdata *par_mdata, int len)
 				st++;
 				continue;
 			}
-			if (ft_switch(*st) == 3)//
+			if (ft_switch(*st) == 3)
 			{
-				swit = ft_switch(*st);//
+				swit = ft_switch(*st);
 				if (!type)
-					type = swit;//
-				while (*st != 0 && ft_switch(*st) == swit)//
+					type = swit;
+				while (*st != 0 && ft_switch(*st) == swit)
 				{
 					if (*st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);///
-						// st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
-					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함///여기도
-					else //
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);
+					else
 					{
-						ft_push(par_mdata->arglist, *st);//
-						st++; //치환 시 st에 증가량에 대한 고려
+						ft_push(par_mdata->arglist, *st);
+						st++;
 					}
 				}
-				swit = 0;//
+				swit = 0;
 			}
-			else if (ft_switch(*st) == 1 || ft_switch(*st) == 2)//
+			else if (ft_switch(*st) == 1 || ft_switch(*st) == 2)
 			{
-				swit = ft_switch(*st);//
+				swit = ft_switch(*st);
 				if (!type)
-					type = swit;//
-				st++;//
-				while (*st != 0 && ft_switch(*st) != swit)//
+					type = swit;
+				st++;
+				while (*st != 0 && ft_switch(*st) != swit)
 				{
 					if (swit == 2 && *st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);///
-						// st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
-					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함
-					//copy  --> f_return /// 밑에서 담을거임
-					/////
-					else //
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);
+					else
 					{
-						ft_push(par_mdata->arglist, *st);//
-						st++; //치환 시 st에 증가량에 대한 고려
+						ft_push(par_mdata->arglist, *st);
+						st++;
 					}
-					// ft_push(arglist, *st);
-					//담는 함수 abc > 3 a b c
-					//stack.size
-					// st++; //치환 시 st에 증가량에 대한
 				}
-				swit = 0;//
-				st++;//
+				swit = 0;
+				st++;
 			}
-			if (ft_switch(*st) == 0)//
-				break ;//
-			// st++;
+			if (ft_switch(*st) == 0)
+				break ;
 		}
-		str = ft_makeword(par_mdata->arglist); //null도 리턴됌..
-		// if (str != 0)
+		str = ft_makeword(par_mdata->arglist);
 		ft_pushcmd(par_mdata->cmdlist, str, type);
-		//strarr[i] = ft_makeword(par_mdata->arglist);//
-		// printf("%s\n",strarr[i]);
 		i++;
 	}
 	// curr = par_mdata->cmdlist->head->next;

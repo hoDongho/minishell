@@ -1,33 +1,6 @@
 #include "minishell.h"
 
-//////////////////////////////////////////////////////// 그대로 가져옴
-int	ft_strncmp(const char *str1, const char *str2, size_t num)
-{
-	size_t				i;
-	const unsigned char	*st1;
-	const unsigned char	*st2;
-
-	i = 0;
-	st1 = (const unsigned char *) str1;
-	st2 = (const unsigned char *) str2;
-	while ((i < num) && ((*st1 != '\0') || (*st2 != '\0')))
-	{
-		if (*st1 == *st2)
-		{
-			st1++;
-			st2++;
-			i++;
-		}
-		else
-		{
-			return (*st1 - *st2);
-		}
-	}
-	return (0);
-}
-////////////////////////////////////////////////////////
-
-void	ft_env(t_envlist *envlist, int b) //ft_env(par_mdata->envlist, 0) env로 명령어가 확실하면 이렇게 호출한다.
+void	ft_env(t_envlist *envlist, int b)
 {
 	t_envnode	*curr;
 	t_envnode	*temp;
@@ -41,7 +14,7 @@ void	ft_env(t_envlist *envlist, int b) //ft_env(par_mdata->envlist, 0) env로 �
 			continue;
 		}
 		if (curr->val)
-			printf("%s=%s\n", curr->key, curr->val); //export a >>> =없이 온 것도 처리해서 찍어줘야해서 수정이 필요하다
+			printf("%s=%s\n", curr->key, curr->val);
 		else
 			if(b)
 				printf("%s\n", curr->key);
@@ -56,7 +29,7 @@ void	ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata)
 
 	new = ft_newenv();
 	new->key = strdup(tkey);
-	if (tval)///NULL을 dup할 수 있는지 확인 필요함
+	if (tval)
 		new->val = strdup(tval);
 	prev = par_mdata->envlist->tail->prev;
 	new->next = par_mdata->envlist->tail;
@@ -67,7 +40,7 @@ void	ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata)
 }
 
 
-int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata) //있으면 수정 후 1, 없으면 0리턴
+int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 {
 	t_envnode	*curr;
 	size_t		size;
@@ -76,26 +49,20 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata) //있으면 수�
 	while(curr->next)
 	{
 		size = strlen(tkey);
-		//int	ft_strncmp(const char *str1, const char *str2, size_t num)
-		if (strcmp(tkey, curr->key) == 0) //기존에 존재하는 경우 여기서 그냥 수정해줄까...//curr->key == tkey
+		if (strcmp(tkey, curr->key) == 0)
 		{
-			// if (curr->val) // NULL로 들어온 경우
-			// {
 			if (tval)
 			{
-				free(curr->val); // > 찍어낼 때는 NULL인경우 그냥 표시만 하고 빈문자일땐 같이 보내야한다.////????????????????
-				curr->val = strdup(tval); // >>> 이것도 동단의 if문에 들어가야 할 수도 있다. export a하면 세그폴트일듯
+				free(curr->val);
+				curr->val = strdup(tval);
 			}
-			/// curr->val이 NULL vs "" 에 따라 다르게 동작하도록 조건문 분기
-			 ///오류 날 수도 있음 main에서 getenv 부분...
 			return (1);
 		}
 		curr=curr->next;
 	}
-	return (0); //기존에 없는 경우
+	return (0);
 }
 
-///선 판단을 하고 해도될지 봐야함ok
 int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
 {
 	t_envnode	*prev_tail;
@@ -104,9 +71,9 @@ int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
 	{
 		return (0); //free를 해주는건 그 전단에서 해주니 문제없을것 같긴하다/////
 	}
-	else // 일반적인 입력
+	else
 	{
-		if(ft_findenv(tkey, tval, par_mdata) == 0) //찾았더니 없는 경우 있었으면 붙혔으니 끝내야함
+		if(ft_findenv(tkey, tval, par_mdata) == 0)
 			ft_push_env(tkey, tval, par_mdata);
 	}
 	return (1);
@@ -116,17 +83,15 @@ int	ft_valid(char *str, char key)
 {
 	if (ft_isalpha(*str)==0)
 	{
-		printf("첫문자\n");
-		return (0);///첫문자 오류
+		printf("첫문자\n");//
+		return (0);
 	}
-	// printf(":::::::::%d\n", ft_isalpha(*str));
 	str++;
 	while(*str && *str!=key)
 	{
-		// printf(";;;;;;;;;%d\n", ft_isalnum(*str));
 		if (ft_isalnum(*str)==0)
 		{
-			printf("key:::\n");
+			printf("key:::\n");//
 			return (0);///오류
 		}
 		str++;
@@ -135,7 +100,7 @@ int	ft_valid(char *str, char key)
 }
 
 
-void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 체크하고 분기처리하는게 맞아보인다
+void	ft_export(t_par_mdata *par_mdata)
 {
 	t_cmdnode	*curr;
 	char		*st;
@@ -147,15 +112,12 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 	char		*tempstr;
 
 	curr = par_mdata->cmdlist->head->next;
-	if (par_mdata->cmdlist->datasize == 1) //newmini의 cmdpush 부분 추가한 것을 기반으로 함
+	if (par_mdata->cmdlist->datasize == 1)
 	{
-		// printf("curr->str :%s\n",curr->str);
-		// printf("dddd\n");
-		ft_env(par_mdata->envlist, 1); //env에서 분기처리 ::: "export" 인 경우임
+		ft_env(par_mdata->envlist, 1);
 		return ;
 	}
-	curr = curr->next; //판단 기준이 cmd가 아닌 인자부터
-	// printf("curr->str :%s\n",curr->str);
+	curr = curr->next;
 	while(curr->next)
 	{
 		if (ft_valid(curr->str,'=')==0)
@@ -166,9 +128,7 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 		}
 		echk = 0;
 		size = 0;
-		//tkey = calloc(1, sizeof(char*));///이 부분 free 주의 할 것!
-		//tval = calloc(1, sizeof(char*));
-		st = curr->str; //st주의 할 것.
+		st = curr->str;
 		while(*st)
 		{
 			size++;
@@ -182,29 +142,21 @@ void	ft_export(t_par_mdata *par_mdata) //cmd도 필요함 =의 유무를 그냥 
 			if (echk)
 				break;
 		}
-		// if (size == 1 )
-		// {
-		// 	//에러처리 export a
-		// 	curr = curr->next;
-		// 	continue ;
-		// }
-
-		size = strlen(st); //변수 재활용
+		size = strlen(st);
 		tval = NULL;
 		if (echk)
 		{
 			tval = calloc(size + 1, sizeof(char));
-			strlcpy(tval, st, size+1); //=을 건너뛴 상태이므로
+			strlcpy(tval, st, size+1);
 		}
-		else//코드가 중복으로 더럽긴 하다
+		else
 		{
 			size = strlen(curr->str);
 			tkey = calloc(size + 1, sizeof(char));
-			strlcpy(tkey, curr->str, size + 1); ///size 쓰면 안됨
+			strlcpy(tkey, curr->str, size + 1);
 		}
-		ft_ex_util(tkey, tval, echk, par_mdata); //key가 널문자일 경우 >> push하면 된다.
-		//tval과 tkey를 free하는 함수 필요함 >> while안에서 calloc 재할당을 해야하는지는 좀 더 보자....
-		if (tkey) ///test
+		ft_ex_util(tkey, tval, echk, par_mdata);
+		if (tkey)
 			free(tkey);
 		if (tval)
 			free(tval);

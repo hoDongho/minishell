@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 11:50:22 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 12:50:52 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@
 typedef struct s_argnode
 {
 	struct s_argnode	*next;
-	struct s_argnode	*prev;///
+	struct s_argnode	*prev;
 	char			c;
 } t_argnode ;
 
 typedef struct s_arglist
 {
-	t_argnode	*head; /// 초초기화// NULL
-	t_argnode	*tail; // 초기화 //NULL
-	int			datasize; //""
+	t_argnode	*head;
+	t_argnode	*tail;
+	int			datasize;
 } t_arglist ;
 
 typedef struct s_envnode
@@ -43,9 +43,9 @@ typedef struct s_envnode
 
 typedef struct s_envlist
 {
-	t_envnode	*head; /// 초초기화// NULL
-	t_envnode	*tail; // 초기화 //NULL
-	int		datasize; //""
+	t_envnode	*head;
+	t_envnode	*tail;
+	int		datasize;
 } t_envlist ;
 
 typedef struct s_cmdnode
@@ -53,13 +53,14 @@ typedef struct s_cmdnode
 	struct s_cmdnode	*next;
 	struct s_cmdnode	*prev;
 	char				*str;
+	// type 추가
 } t_cmdnode ;
 
 typedef struct s_cmdlist
 {
-	t_cmdnode	*head; /// 초초기화// NULL
-	t_cmdnode	*tail; // 초기화 //NULL
-	int			datasize; //""
+	t_cmdnode	*head;
+	t_cmdnode	*tail;
+	int			datasize;
 } t_cmdlist ;
 
 typedef struct s_par_mdata
@@ -76,7 +77,7 @@ void		ft_removeq2(t_par_mdata *par_mdata, int len);
 void 		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
 void 		ft_envinit(t_envlist *envlist);
-int	ft_isspace(char c);
+int			ft_isspace(char c);
 int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_pwd(void);
 int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
@@ -86,7 +87,7 @@ void		ft_export(t_par_mdata *par_mdata);
 int			ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata);
 int			ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
 void		ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata);
-void	ft_popenv(char *tkey, t_par_mdata *par_mdata);
-void	ft_unset(t_par_mdata *par_mdata);
-int	ft_valid(char *str, char key);
-void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);
+void		ft_popenv(char *tkey, t_par_mdata *par_mdata);
+void		ft_unset(t_par_mdata *par_mdata);
+int			ft_valid(char *str, char key);
+void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);

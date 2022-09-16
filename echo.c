@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:56:13 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/16 10:51:15 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/16 12:50:49 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,7 @@ int	ft_echo(t_cmdlist *cmdlist, t_envlist *envlist)
 		if (arg->next)
 			printf(" ");
 	}
-	printf("$");
 	if (n_opt == 0)
 		printf("\n");
 	return (0);
 }
-
-
-/*
-	echo -n 123		O
-	echo -nn 123	O
-	echo -n-n 123	X
-	echo 123 -n		X
-*/
