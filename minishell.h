@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/15 16:32:55 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 01:30:04 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,7 @@ void		ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len);
 void 		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
 void 		ft_envinit(t_envlist *envlist);
-
-
-
-
-
-
-
+int	ft_isspace(char c);
 int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_pwd(void);
 int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
@@ -95,3 +89,4 @@ void		ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata);
 void	ft_popenv(char *tkey, t_par_mdata *par_mdata);
 void	ft_unset(t_par_mdata *par_mdata);
 int	ft_valid(char *str, char key);
+void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);

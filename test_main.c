@@ -132,14 +132,16 @@ int	ft_split_util(char *str)
 
 //ft_init_cmdlist()
 
-char	**ft_split2(t_par_mdata *par_mdata)
+int ft_split2(t_par_mdata *par_mdata)
 {
 	int	len;
 	char **ans;
 	len = ft_split_util(par_mdata->origin);
+	if (len == 0) /////
+		return (1); //// 09.16 dhyun
 	ans = calloc (len + 1, sizeof(char *));
 	if (!ans)
-		return (NULL);//
+		return (0);//
 	ft_removeq2(par_mdata, ans, len);
 	//init
 	// while(*ans)
@@ -289,10 +291,12 @@ int main(int argc, char *argv[], char *env[])
         add_history(input);
 		if (!*input)
 			continue ;
+		// printf ("input :%s$\n", input);
 		//printf("%d\n",ft_checkq(input)); > 완료
         // printf("%d\n",ft_split2(input));
 		par_mdata.origin = input;
-		ft_split2(&par_mdata);
+		if (ft_split2(&par_mdata) == 1)
+			continue ; ////
 		if (strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
 			ft_echo(par_mdata.cmdlist, par_mdata.envlist);
 		else if (strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)

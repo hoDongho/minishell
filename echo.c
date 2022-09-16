@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:56:13 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/15 15:16:02 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/16 10:51:15 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	chk_option(char *str)
 {
-	if (*str == '-')
-		str++;
+	str++;
 	while (*str)
 	{
 		if (*str != 'n')
@@ -32,7 +31,7 @@ int	ft_echo(t_cmdlist *cmdlist, t_envlist *envlist)
 
 	arg = cmdlist->head->next->next;
 	n_opt = 0;
-	while (arg->next)
+	while (arg->next && *arg->str == '-')
 	{
 		if (chk_option(arg->str) == 1)
 			break ;

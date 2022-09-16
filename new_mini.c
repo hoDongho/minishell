@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_mini.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/15 17:36:24 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/16 01:42:25 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ char	*ft_makeword(t_arglist	*arglist)
 	return (st);
 }
 
-char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
+char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist, t_cmdlist *cmdlist, int type) //$ "$ "
 {
 	char	*key;
 	int		i;
 	t_envnode	*curr;
 	char	*st_val;
+	char	*str;
 	// $ // "$"
 	i = 0;
 	st++;
@@ -99,6 +100,13 @@ char	*ft_chgenv(char *st, t_arglist *arglist, t_envlist *envlist) //$ "$ "
 					break ;
 				while (*st_val)
 				{
+					if (ft_isspace(*st_val) == 1 && type == 3)
+					{
+						str = ft_makeword(arglist);
+						ft_pushcmd(cmdlist, str, type);
+						while(*st_val && ft_isspace(*st_val) == 1) //공백이라면
+						st_val++;
+					}
 					ft_push(arglist, *st_val);
 					st_val++;
 				}
@@ -170,7 +178,8 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				while (*st != 0 && ft_switch(*st) == swit)//
 				{
 					if (*st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);///
+						// st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함///여기도
 					else //
 					{
@@ -189,7 +198,8 @@ void	ft_removeq2(t_par_mdata *par_mdata, char **strarr, int len)
 				while (*st != 0 && ft_switch(*st) != swit)//
 				{
 					if (swit == 2 && *st == '$')
-						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
+						st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist, par_mdata->cmdlist, type);///
+						// st = ft_chgenv(st, par_mdata->arglist, par_mdata->envlist);///
 					//$를 치환해서 던지는 문자열로 던져주는 함수 //(*st)ㅇㅕ기서 전전진진함함
 					//copy  --> f_return /// 밑에서 담을거임
 					/////
