@@ -6,9 +6,10 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/19 12:21:18 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:25:41 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -205,4 +206,3 @@ void	ft_export(t_par_mdata *par_mdata)
 	// {
 	// 	printf("%s\n",test2->str);
 	// 	test2=test2->next;
-	// }

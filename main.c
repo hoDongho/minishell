@@ -6,9 +6,10 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/19 12:21:25 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:26:28 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -88,6 +89,14 @@ int main(int argc, char *argv[], char *env[])
 			free(input);
 			continue ;
 		}
+		t_cmdnode *arg;
+		arg = par_mdata.cmdlist->head->next;
+		while (arg->next)
+		{
+			if (ft_strcmp(par_mdata.cmdlist->head->next->str, "|") == 0)
+				ft_pipe(par_mdata.cmdlist, par_mdata.envlist);
+			arg = arg->next;
+		}
 		if (ft_strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
 			ft_echo(par_mdata.cmdlist, par_mdata.envlist);
 		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)
@@ -103,9 +112,9 @@ int main(int argc, char *argv[], char *env[])
 		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "unset") == 0)
 			ft_unset(&par_mdata);
 		free(input);
-		printf("\n-----------------------------------------------------------------------\n");
-		system("leaks a.out");
-		printf("-----------------------------------------------------------------------\n\n");
+		// printf("\n-----------------------------------------------------------------------\n");
+		// system("leaks a.out");
+		// printf("-----------------------------------------------------------------------\n\n");
 	}
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/16 13:57:53 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/19 11:46:38 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ int	ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata)
 	int			status;
 
 	arg = cmdlist->head->next->next;
-
 	if (!arg->next)
 		status = 0;
-	else
+	else if (cmdlist->datasize == 2)
 	{
 		if (chk_number(arg->str) != 0)
 		{
@@ -45,5 +44,7 @@ int	ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata)
 		}
 		status = atoi(arg->str);
 	}
+	else
+		printf("exit: too many arguments\n");
 	exit(status);
 }
