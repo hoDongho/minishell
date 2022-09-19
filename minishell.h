@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 17:13:13 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:15:06 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
 void		ft_env(t_envlist *envlist, int b);
 int			ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata);
 void		ft_export(t_par_mdata *par_mdata);
-int			ft_ex_util(char *tkey, char *tval, int echk,
-				t_par_mdata *par_mdata);
+int			ft_ex_util(char *tkey, char *tval, t_par_mdata *par_mdata);
+void		ft_ex_util2(t_par_mdata *par_mdata, t_cmdnode *curr);
+char		*ft_echk(char *st,int *sz_ek, char *str, char **tkey);
 int			ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
 void		ft_push_env(char *tkey, char *tval, t_envlist *envlist);
 void		ft_popenv(char *tkey, t_par_mdata *par_mdata);

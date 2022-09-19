@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util1.c                                            :+:      :+:    :+:   */
+/*   util1_export_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 17:12:57 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/19 12:21:18 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 	envlist->datasize++;
 }
 
-
 int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 {
 	t_envnode	*curr;
@@ -75,12 +74,14 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 	return (0);
 }
 
-int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
+int	ft_ex_util(char *tkey, char *tval, t_par_mdata *par_mdata)
 {
 	t_envnode	*prev_tail;
 
 	if (!tkey) //key가 없는 경우 >>> err msg를 띄워야 함
 	{
+		if (tval) //
+			free(tval); //
 		return (0); //free를 해주는건 그 전단에서 해주니 문제없을것 같긴하다/////
 	}
 	else
@@ -88,6 +89,10 @@ int	ft_ex_util(char *tkey, char *tval, int echk, t_par_mdata *par_mdata)
 		if (ft_findenv(tkey, tval, par_mdata) == 0)
 			ft_push_env(tkey, tval, par_mdata->envlist);
 	}
+	if (tkey) //
+		free(tkey); //
+	if (tval) //
+		free(tval); //
 	return (1);
 }
 
@@ -111,17 +116,54 @@ int	ft_valid(char *str, char key)
 	return (1);
 }
 
+char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey)
+{
+	st = str; //echk의 값을 바꿔야하며, return 은 st를 해야한다
+	while (*st)
+	{
+		sz_ek[0]++;
+		if (*st == '=')
+		{
+			(*tkey) = calloc(sz_ek[0], sizeof(char)); //size
+			strlcpy((*tkey), str, sz_ek[0]); //size
+			sz_ek[1] = 1;
+		}
+		st++;
+		if (sz_ek[1]) //(echk)
+			break ;
+	}
+	return (st);
+}
+
+void	ft_ex_util2(t_par_mdata *par_mdata, t_cmdnode *curr)
+{
+	char		*st; //st도 필요없음
+	char		*tkey; //마찬가지
+	char		*tval; //필요없어짐
+	int			sz_ek[2];  //[0]==sz [1] = echk
+
+	sz_ek[0] = 0; ///par_mdata, curr,
+	sz_ek[1] = 0;
+	st = ft_echk(st, sz_ek, curr->str, &tkey);
+	sz_ek[0] = strlen(st);//size
+	tval = NULL;
+	if (sz_ek[1]) //echk
+	{
+		tval = calloc(sz_ek[0] + 1, sizeof(char));//size
+		strlcpy(tval, st, sz_ek[0] + 1);//size
+	}
+	else
+	{
+		sz_ek[0] = strlen(curr->str);//size
+		tkey = calloc(sz_ek[0] + 1, sizeof(char));//size
+		strlcpy(tkey, curr->str, sz_ek[0] + 1);//size
+	}
+	ft_ex_util(tkey, tval, par_mdata);//echk->삭제 가능해서 지움..
+}
 
 void	ft_export(t_par_mdata *par_mdata)
 {
 	t_cmdnode	*curr;
-	char		*st;
-	char		*tkey;
-	char		*tval;
-	int			echk;
-	int			size;
-	t_envnode	*test;//test
-	char		*tempstr;
 
 	curr = par_mdata->cmdlist->head->next;
 	if (par_mdata->cmdlist->datasize == 1)
@@ -138,43 +180,17 @@ void	ft_export(t_par_mdata *par_mdata)
 			curr = curr->next;
 			continue ;
 		}
-		echk = 0;
-		size = 0;
-		st = curr->str;
-		while (*st)
-		{
-			size++;
-			if (*st == '=')
-			{
-				tkey = calloc(size, sizeof(char));
-				strlcpy(tkey, curr->str, size);
-				echk = 1;
-			}
-			st++;
-			if (echk)
-				break ;
-		}
-		size = strlen(st);
-		tval = NULL;
-		if (echk)
-		{
-			tval = calloc(size + 1, sizeof(char));
-			strlcpy(tval, st, size + 1);
-		}
-		else
-		{
-			size = strlen(curr->str);
-			tkey = calloc(size + 1, sizeof(char));
-			strlcpy(tkey, curr->str, size + 1);
-		}
-		ft_ex_util(tkey, tval, echk, par_mdata);
-		if (tkey)
-			free(tkey);
-		if (tval)
-			free(tval);
+		ft_ex_util2(par_mdata, curr);
 		curr = curr->next;
 	}
-	///////test
+}
+
+
+
+
+
+///////
+	///////test ft_export
 	// test = par_mdata->envlist->head->next;
 	// while(test->next)
 	// {
@@ -190,35 +206,3 @@ void	ft_export(t_par_mdata *par_mdata)
 	// 	printf("%s\n",test2->str);
 	// 	test2=test2->next;
 	// }
-}
-
-///export a=b=c >>> a="b=c" 최초의 =만 찾는것.
-
-///export a= c >> a에 빈문자열 저장, c는 c만 저장
-///export를 그냥할 것이 아니라, 기존에 저장해둔 환경변수 내에서 찾은 다음 덮어쓸지, 새로 만들지를 결정해야한다.
-///export x=10 한 뒤에 export x 이렇게해도 값을 유지하는게 현재.
-///export "기존에 있는 변수"=0 등 실험
-///export x=a >>> 이런식으로 1개 단위에서 이슈 없는지 확인해야함
-///export b==c
-///export a >>> export a=123
-
-///1. =의 존재를 찾는다? 리스트 자체에는 띄어쓰기는 포함되지 않고 전달되므로 붙어있는 것 중에서 찾는 셈.
-///2. =전까지를 저장하고 있을 필요가 있겠다. (split이든 리스트이든) =을 만나거나 \0까지가 key인 셈이다.
-///3. 2에 의해서 case가 나
-
-
-//as-is
-///export a =c >> a저장, =c에선 key 없음으로 오류메시지 띄우고 저장하지 않음 |||| ing
-
-//export 1234 		x >>> 맨 앞에 숫자면 안된다.
-//export "a =c"		x
-//export "'a'=c"	x
-//export "a    =c"	x >>> 힌트 =의 전을 기점으로 한다면?
-
-//unset의 경우에 없는key 를 찾으면 그냥 무시됌. 에러처리는 없음.
-
-
-///0. key의 첫 문자는 반드시 문자 ft_swit --> 3값 해당 isalpha >>> 그 다음부터는 isalnum을 돌린다.(_포함해서 개량)
-///1. 인자에 해당되는  건 무조건 문자
-///2.
-///3.
