@@ -4,6 +4,9 @@
 		"readline.h": "c",
 		"errno.h": "c",
 		"history.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"pipex.h": "c",
+		"stdio.h": "c",
+		"ft_pipe_exec": "c"
 	}
 }

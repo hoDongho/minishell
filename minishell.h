@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/19 12:15:06 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/19 15:30:04 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include "./libft/libft.h"
+# include "./pipex.h"
 
 # define SPACE_NULL 0
 # define QUOTE 1
@@ -119,6 +120,12 @@ char		*ft_chgenv(char *st, t_par_mdata *par_mdata, int type);
 void		ft_push(t_arglist	*arglist, char c);
 char		*ft_makeword(t_arglist	*arglist);
 void		ft_init(t_par_mdata *par_mdata);
+
+int			ft_pipe(t_cmdlist *cmdlist, t_envlist *envlist);
+int			convert_cmd(t_cmdlist *cmdlist, t_pipe_data *pipe_data);
+int			convert_env(t_envlist *envlist, t_pipe_data *pipe_data);
+int			ft_pipe_exec(t_pipe_data *pipe_data, t_pipe_cmds *pipe_cmds);
+
 
 t_cmdnode	*ft_newcmd(void);
 t_envnode	*ft_newenv(void);

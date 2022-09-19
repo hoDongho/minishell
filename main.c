@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/19 12:26:28 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/19 17:06:27 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ int main(int argc, char *argv[], char *env[])
 		ft_clearcmd(par_mdata.cmdlist);
 		input = readline("test:");
 		if (!input)
+		{
 			break ;
+		}
 		add_history(input);
 		if (!*input)
 		{
@@ -91,12 +93,19 @@ int main(int argc, char *argv[], char *env[])
 		}
 		t_cmdnode *arg;
 		arg = par_mdata.cmdlist->head->next;
+		int a = 0;
 		while (arg->next)
 		{
-			if (ft_strcmp(par_mdata.cmdlist->head->next->str, "|") == 0)
+			if (ft_strcmp(arg->str, "|") == 0)
+			{
 				ft_pipe(par_mdata.cmdlist, par_mdata.envlist);
+				a = 1;
+				break;
+			}
 			arg = arg->next;
 		}
+		if (a==1)
+			continue ;
 		if (ft_strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
 			ft_echo(par_mdata.cmdlist, par_mdata.envlist);
 		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)
