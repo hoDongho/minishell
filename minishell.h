@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/19 15:30:04 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 12:13:51 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <errno.h>
+# include <sys/stat.h>
 # include "./libft/libft.h"
 # include "./pipex.h"
 

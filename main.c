@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/19 17:06:27 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 14:52:54 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int main(int argc, char *argv[], char *env[])
 		}
 		t_cmdnode *arg;
 		arg = par_mdata.cmdlist->head->next;
-		int a = 0;
+		int a;
+		a = 0;
 		while (arg->next)
 		{
 			if (ft_strcmp(arg->str, "|") == 0)
@@ -105,7 +106,10 @@ int main(int argc, char *argv[], char *env[])
 			arg = arg->next;
 		}
 		if (a==1)
+		{
+			printf("ccccccccccc\n");
 			continue ;
+		}
 		if (ft_strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
 			ft_echo(par_mdata.cmdlist, par_mdata.envlist);
 		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)
@@ -120,6 +124,13 @@ int main(int argc, char *argv[], char *env[])
 			ft_env(par_mdata.envlist, 0);
 		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "unset") == 0)
 			ft_unset(&par_mdata);
+		else
+			a = 2;
+		int	pid;
+		if (a == 2)
+		{
+			ft_pipe(par_mdata.cmdlist, par_mdata.envlist);
+		}
 		free(input);
 		// printf("\n-----------------------------------------------------------------------\n");
 		// system("leaks a.out");

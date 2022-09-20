@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/19 15:37:14 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 12:24:06 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	check_access(char *tmp)
 
 char	*sel_path(t_pipe_data *pipe_data, t_pipe_cmds *pipe_cmds)
 {
-	int		i;
-	int		ret;
-	char	*tmp;
+	int			i;
+	int			ret;
+	char		*tmp;
 
 	i = 0;
 	ret = access(pipe_cmds->cmds, X_OK);
