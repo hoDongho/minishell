@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/20 21:58:56 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 11:34:44 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,6 @@ void	print_error(char *str, int code)
 		exit(code);
 }
 
-int	check_access(char *tmp)
-{
-	int	ret;
-
-	ret = open(tmp, O_RDONLY);
-	close(ret);
-	return (ret);
-}
-
 char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
 	int			i;
@@ -63,12 +54,13 @@ char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 		return (exec_cmds->cmds);
 	else if (ret == -1 && errno == 13)
 		print_error("access", 126);
-	while (exec_data->path[i] != 0)
+	while (exec_data->path[i])
 	{
 		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmds, '/');
 		// if (tmp == 0)
 			//error;
-		ret = check_access(tmp);
+		ret = open(tmp, O_RDONLY);
+		close(ret);
 		if (ret > 0)
 			return (tmp);
 		else if (ret == -1 && errno == 13)
