@@ -7,7 +7,7 @@
 		"libft.h": "c",
 		"pipex.h": "c",
 		"stdio.h": "c",
-		"ft_pipe_exec": "c",
+		"ft_main_exec": "c",
 		"stdlib.h": "c"
 	}
 }

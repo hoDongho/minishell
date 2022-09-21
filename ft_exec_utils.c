@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipe_utils.c                                    :+:      :+:    :+:   */
+/*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/20 12:24:06 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 21:58:56 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,32 @@ int	check_access(char *tmp)
 {
 	int	ret;
 
-	ret = access(tmp, X_OK);
-	if (ret == 0)
-	{
-		free(tmp);
-		return (ret);
-	}
-	return (1);
+	ret = open(tmp, O_RDONLY);
+	close(ret);
+	return (ret);
 }
 
-char	*sel_path(t_pipe_data *pipe_data, t_pipe_cmds *pipe_cmds)
+char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
 	int			i;
 	int			ret;
 	char		*tmp;
 
 	i = 0;
-	ret = access(pipe_cmds->cmds, X_OK);
-	if (ret == 0)
-		return (pipe_cmds->cmds);
+	ret = open(exec_cmds->cmds, O_RDONLY);
+	close(ret);
+	if (ret > 0)
+		return (exec_cmds->cmds);
 	else if (ret == -1 && errno == 13)
 		print_error("access", 126);
-	while (pipe_data->path[i] != 0)
+	while (exec_data->path[i] != 0)
 	{
-		tmp = ft_strjoin_wc(pipe_data->path[i], pipe_cmds->cmds, '/');
+		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmds, '/');
+		// if (tmp == 0)
+			//error;
 		ret = check_access(tmp);
-		if (ret == 0)
-			return (ft_strjoin_wc(pipe_data->path[i], pipe_cmds->cmds, '/'));
+		if (ret > 0)
+			return (tmp);
 		else if (ret == -1 && errno == 13)
 			print_error("access", 126);
 		i++;

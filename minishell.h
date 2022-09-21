@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/20 12:13:51 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 20:18:52 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,16 @@ void		ft_push(t_arglist	*arglist, char c);
 char		*ft_makeword(t_arglist	*arglist);
 void		ft_init(t_par_mdata *par_mdata);
 
-int			ft_pipe(t_cmdlist *cmdlist, t_envlist *envlist);
-int			convert_cmd(t_cmdlist *cmdlist, t_pipe_data *pipe_data);
-int			convert_env(t_envlist *envlist, t_pipe_data *pipe_data);
-int			ft_pipe_exec(t_pipe_data *pipe_data, t_pipe_cmds *pipe_cmds);
+int			ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
+int			ft_exec_built_in(t_par_mdata *par_mdata);
+int			ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
+int			check_built_in(t_par_mdata *par_mdata);
+int			check_pipe(t_cmdlist *cmdlist, t_envlist *envlist);
+
+int			convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data);
+int			convert_env(t_envlist *envlist, t_exec_data *exec_data);
+
+int			ft_exec(t_par_mdata *par_mdata);
 
 
 t_cmdnode	*ft_newcmd(void);

@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/20 14:34:04 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 11:02:18 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_pipe(t_cmdlist *cmdlist, t_envlist *envlist)
 	return (0);
 }
 
-int exec_built_in(t_par_mdata *par_mdata)
+int ft_exec_built_in(t_par_mdata *par_mdata)
 {
 	t_cmdnode	*cmd;
 
@@ -78,6 +78,10 @@ int	ft_exec(t_par_mdata *par_mdata)
 
 	ret = check_cmds(par_mdata);
 	if (ret == 1)
-		ft_pipe(par_mdata->cmdlist, par_mdata->envlist);
+		ft_exec_n_built_in(par_mdata->cmdlist, par_mdata->envlist);
+	else if (ret == 2)
+		ft_exec_built_in(par_mdata);
+	else
+		ft_exec_n_built_in(par_mdata->cmdlist, par_mdata->envlist);
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipe_exec.c                                     :+:      :+:    :+:   */
+/*   ft_exec_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/20 14:45:14 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 21:41:12 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,38 @@ int	set_std(int new_in, int new_out)
 	return (0);
 }
 
-int	exec_cmds(t_pipe_data *pipe_data, t_pipe_cmds *pipe_cmds, int i)
+int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 {
-	pipe_data->pid[i] = fork();
-	if (pipe_data->pid[i] == -1)
+	exec_data->pid[i] = fork();
+	if (exec_data->pid[i] == -1)
 		return (1);
-	else if (pipe_data->pid[i] == 0)
+	else if (exec_data->pid[i] == 0)
 	{
-		pipe_cmds->p_cmds = sel_path(pipe_data, pipe_cmds);
-		if (pipe_cmds->p_cmds == 0)
-			return (1);
-		close(pipe_data->pipe_fd[0]);
-		if (pipe_cmds->next != 0)
-			set_std(STDIN_FILENO, pipe_data->pipe_fd[1]);
-		// if (pipe_cmds->cmds == b-in)
-		if (execve(pipe_cmds->p_cmds, pipe_cmds->s_cmds, pipe_data->env) == -1)
+		exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
+		if (exec_cmds->p_cmds == 0 || ft_strchr(exec_cmds->p_cmds, '/') == 0)
+		{
+			printf("command not found: %s\n", exec_cmds->cmds);
+			exit(127);
+		}
+		close(exec_data->pipe_fd[0]);
+		if (exec_cmds->next != 0)
+			set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
+		// if (exec_cmds->cmds == b-in)
+		if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
 			return (1);
 	}
 	return (0);
 }
 
-int	check_child(t_pipe_data *pipe_data)
+int	check_child(t_exec_data *exec_data)
 {
 	int	i;
 	int	statloc;
 
 	i = 0;
-	while (pipe_data->pid[i] != 0)
+	while (exec_data->pid[i] != 0)
 	{
-		if (waitpid(pipe_data->pid[i], &statloc, 0) == -1)
+		if (waitpid(exec_data->pid[i], &statloc, 0) == -1)
 			return (1);
 		i++;
 	}
@@ -67,30 +70,30 @@ int	check_child(t_pipe_data *pipe_data)
 	return (0);
 }
 
-int	ft_pipe_exec(t_pipe_data *pipe_data, t_pipe_cmds *pipe_cmds)
+int	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
 	int	i;
 	int	tmp_in;
 
 	i = 0;
 	tmp_in = dup(STDIN_FILENO);
-	while (pipe_cmds)
+	while (exec_cmds)
 	{
-		if (pipe(pipe_data->pipe_fd) == -1)
+		if (pipe(exec_data->pipe_fd) == -1)
 			return (1);
-		if (exec_cmds(pipe_data, pipe_cmds, i) != 0)
+		if (ft_exec_child(exec_data, exec_cmds, i) != 0)
 			return (1);
-		if (pipe_cmds->next != 0)
-			dup2(pipe_data->pipe_fd[0], STDIN_FILENO);
+		if (exec_cmds->next != 0)
+			dup2(exec_data->pipe_fd[0], STDIN_FILENO);
 		else
 		{
 			dup2(tmp_in, STDIN_FILENO);
 			close(tmp_in);
 		}
-		close(pipe_data->pipe_fd[0]);
-		close(pipe_data->pipe_fd[1]);
-		pipe_cmds = pipe_cmds->next;
+		close(exec_data->pipe_fd[0]);
+		close(exec_data->pipe_fd[1]);
+		exec_cmds = exec_cmds->next;
 		i++;
 	}
-	return (check_child(pipe_data));
+	return (check_child(exec_data));
 }

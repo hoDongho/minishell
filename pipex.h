@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:32:06 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/20 11:54:15 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 20:03:02 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@
 # include <sys/wait.h>
 # include "./libft/libft.h"
 
-typedef struct s_pipe_cmds{
+typedef struct s_exec_cmds{
 	char				*cmds;
 	char				**s_cmds;
 	char				*p_cmds;
-	struct s_pipe_cmds	*next;
-}				t_pipe_cmds;
+	struct s_exec_cmds	*next;
+}				t_exec_cmds;
 
-typedef struct s_pipe_data{
+typedef struct s_exec_data{
 	char		**path;
 	char		**env;
 	int			pipe_fd[2];
 	pid_t		*pid;
-	t_pipe_cmds	*cmds_head;
-	t_pipe_cmds	*cmds_tail;
-}				t_pipe_data;
+	t_exec_cmds	*cmds_head;
+	t_exec_cmds	*cmds_tail;
+}				t_exec_data;
 
 char	*ft_strjoin_wc(char *s1, char *s2, char c);
 void	print_error(char *str, int code);
 int		check_access(char *tmp);
 
-char	*sel_path(t_pipe_data *arglist, t_pipe_cmds *cmds);
+char	*sel_path(t_exec_data *arglist, t_exec_cmds *cmds);
 
 #endif

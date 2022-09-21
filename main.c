@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/20 14:52:54 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/20 20:00:36 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,47 +91,47 @@ int main(int argc, char *argv[], char *env[])
 			free(input);
 			continue ;
 		}
-		t_cmdnode *arg;
-		arg = par_mdata.cmdlist->head->next;
-		int a;
-		a = 0;
-		while (arg->next)
-		{
-			if (ft_strcmp(arg->str, "|") == 0)
-			{
-				ft_pipe(par_mdata.cmdlist, par_mdata.envlist);
-				a = 1;
-				break;
-			}
-			arg = arg->next;
-		}
-		if (a==1)
-		{
-			printf("ccccccccccc\n");
-			continue ;
-		}
-		if (ft_strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
-			ft_echo(par_mdata.cmdlist, par_mdata.envlist);
-		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)
-			ft_pwd();
-		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "cd") == 0)
-			ft_cd(par_mdata.cmdlist, par_mdata.envlist);
-		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "exit") == 0)
-			ft_exit(par_mdata.cmdlist, &par_mdata);
-		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "export") == 0)
-			ft_export(&par_mdata);
-		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "env") == 0)
-			ft_env(par_mdata.envlist, 0);
-		else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "unset") == 0)
-			ft_unset(&par_mdata);
-		else
-			a = 2;
-		int	pid;
-		if (a == 2)
-		{
-			ft_pipe(par_mdata.cmdlist, par_mdata.envlist);
-		}
+		ft_exec(&par_mdata);
 		free(input);
+		// t_cmdnode *arg;
+		// arg = par_mdata.cmdlist->head->next;
+		// int a;
+		// a = 0;
+		// while (arg->next)
+		// {
+		// 	if (ft_strcmp(arg->str, "|") == 0)
+		// 	{
+		// 		ft_exec_cmds(par_mdata.cmdlist, par_mdata.envlist);
+		// 		a = 1;
+		// 		break;
+		// 	}
+		// 	arg = arg->next;
+		// }
+		// if (a==1)
+		// {
+		// 	continue ;
+		// }
+		// if (ft_strcmp(par_mdata.cmdlist->head->next->str, "echo") == 0)
+		// 	ft_echo(par_mdata.cmdlist, par_mdata.envlist);
+		// else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "pwd") == 0)
+		// 	ft_pwd();
+		// else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "cd") == 0)
+		// 	ft_cd(par_mdata.cmdlist, par_mdata.envlist);
+		// else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "exit") == 0)
+		// 	ft_exit(par_mdata.cmdlist, &par_mdata);
+		// else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "export") == 0)
+		// 	ft_export(&par_mdata);
+		// else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "env") == 0)
+		// 	ft_env(par_mdata.envlist, 0);
+		// else if (ft_strcmp(par_mdata.cmdlist->head->next->str, "unset") == 0)
+		// 	ft_unset(&par_mdata);
+		// else
+		// 	a = 2;
+		// int	pid;
+		// if (a == 2)
+		// {
+		// 	ft_exec_cmds(par_mdata.cmdlist, par_mdata.envlist);
+		// }
 		// printf("\n-----------------------------------------------------------------------\n");
 		// system("leaks a.out");
 		// printf("-----------------------------------------------------------------------\n\n");
