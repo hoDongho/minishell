@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/19 11:46:38 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 12:21:29 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	chk_number(char *str)
 	return (0);
 }
 
-int	ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata)
+int	ft_exit(t_cmdlist *cmdlist)
 {
 	t_cmdnode	*arg;
 	int			status;

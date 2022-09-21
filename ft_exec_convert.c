@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_convert.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 12:07:46 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:01:18 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ int	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 {
 	t_exec_cmds	*exec_cmds;
 	int			cnt;
+	int			i;
 
 	cnt = 0;
+	i = arg_cnt;
 	exec_cmds = new_exec_cmds(exec_data, arg_cnt);
 	if (exec_cmds == 0)
 		return (1);
@@ -47,6 +49,10 @@ int	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 		exec_cmds->s_cmds[arg_cnt] = arg->str;
 	}
 	exec_cmds->cmds = exec_cmds->s_cmds[0];
+	if (check_built_in(exec_cmds->cmds) == 1)
+	{
+		exec_cmds->cmdlist = ft_cpy_cmdlist(arg);
+	}
 	return (0);
 }
 
@@ -104,7 +110,8 @@ int	convert_env(t_envlist *envlist, t_exec_data *exec_data)
 	curr = envlist->head->next;
 	while (curr->next)
 	{
-		exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
+		if (curr->val != 0)
+			exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
 		if (exec_data->env == 0)
 			return (1);
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util1_export_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/19 12:25:41 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:29:26 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 	envlist->datasize++;
 }
 
-int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
+int	ft_findenv(char *tkey, char *tval, t_envlist *envlist)
 {
 	t_envnode	*curr;
 	size_t		size;
 
-	curr = par_mdata->envlist->head->next;
+	curr = envlist->head->next;
 	while (curr->next)
 	{
 		size = strlen(tkey);
@@ -75,7 +75,7 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 	return (0);
 }
 
-int	ft_ex_util(char *tkey, char *tval, t_par_mdata *par_mdata)
+int	ft_ex_util(char *tkey, char *tval, t_envlist *envlist)
 {
 	t_envnode	*prev_tail;
 
@@ -87,8 +87,8 @@ int	ft_ex_util(char *tkey, char *tval, t_par_mdata *par_mdata)
 	}
 	else
 	{
-		if (ft_findenv(tkey, tval, par_mdata) == 0)
-			ft_push_env(tkey, tval, par_mdata->envlist);
+		if (ft_findenv(tkey, tval, envlist) == 0)
+			ft_push_env(tkey, tval, envlist);
 	}
 	if (tkey) //
 		free(tkey); //
@@ -136,7 +136,7 @@ char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey)
 	return (st);
 }
 
-void	ft_ex_util2(t_par_mdata *par_mdata, t_cmdnode *curr)
+void	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
 {
 	char		*st; //st도 필요없음
 	char		*tkey; //마찬가지
@@ -159,17 +159,17 @@ void	ft_ex_util2(t_par_mdata *par_mdata, t_cmdnode *curr)
 		tkey = calloc(sz_ek[0] + 1, sizeof(char));//size
 		strlcpy(tkey, curr->str, sz_ek[0] + 1);//size
 	}
-	ft_ex_util(tkey, tval, par_mdata);//echk->삭제 가능해서 지움..
+	ft_ex_util(tkey, tval, envlist);//echk->삭제 가능해서 지움..
 }
 
-void	ft_export(t_par_mdata *par_mdata)
+void	ft_export(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	t_cmdnode	*curr;
 
-	curr = par_mdata->cmdlist->head->next;
-	if (par_mdata->cmdlist->datasize == 1)
+	curr = cmdlist->head->next;
+	if (cmdlist->datasize == 1)
 	{
-		ft_env(par_mdata->envlist, 1);
+		ft_env(envlist, 1);
 		return ;
 	}
 	curr = curr->next;
@@ -181,7 +181,7 @@ void	ft_export(t_par_mdata *par_mdata)
 			curr = curr->next;
 			continue ;
 		}
-		ft_ex_util2(par_mdata, curr);
+		ft_ex_util2(envlist, curr);
 		curr = curr->next;
 	}
 }

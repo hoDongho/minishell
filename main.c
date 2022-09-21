@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/20 20:00:36 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 12:17:03 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int main(int argc, char *argv[], char *env[])
 			free(input);
 			continue ;
 		}
-		ft_exec(&par_mdata);
+		ft_exec(par_mdata.cmdlist, par_mdata.envlist);
 		free(input);
 		// t_cmdnode *arg;
 		// arg = par_mdata.cmdlist->head->next;

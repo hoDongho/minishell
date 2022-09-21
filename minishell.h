@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 12:07:43 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:08:30 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,29 +81,53 @@ typedef struct s_par_mdata
 	char		*origin;
 }				t_par_mdata;
 
+typedef struct s_exec_cmds{
+	char				*cmds;
+	char				**s_cmds;
+	char				*p_cmds;
+	struct s_exec_cmds	*next;
+	t_cmdlist			*cmdlist;
+}				t_exec_cmds;
+
+typedef struct s_exec_data{
+	char		**path;
+	char		**env;
+	int			pipe_fd[2];
+	pid_t		*pid;
+	t_exec_cmds	*cmds_head;
+	t_exec_cmds	*cmds_tail;
+	t_cmdlist	*cmdlist;
+	t_envlist	*envlist;
+}				t_exec_data;
+
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);
 void		ft_set_env(t_envlist *envlist, char **env);
 t_envnode	*ft_newenv(void);
 void		ft_envinit(t_envlist *envlist);
 int			ft_isspace(char c);
+
 int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_pwd(void);
 int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
+int			ft_exit(t_cmdlist *cmdlist);
+
 void		ft_env(t_envlist *envlist, int b);
-int			ft_exit(t_cmdlist *cmdlist, t_par_mdata *par_mdata);
-void		ft_export(t_par_mdata *par_mdata);
-int			ft_ex_util(char *tkey, char *tval, t_par_mdata *par_mdata);
-void		ft_ex_util2(t_par_mdata *par_mdata, t_cmdnode *curr);
+void		ft_export(t_cmdlist *cmdlist, t_envlist *envlist);
+void		ft_unset(t_cmdlist *cmdlist, t_envlist *envlist);
+int			ft_ex_util(char *tkey, char *tval, t_envlist *envlist);
+void		ft_ex_util2(t_envlist *envlist, t_cmdnode *curr);
 char		*ft_echk(char *st,int *sz_ek, char *str, char **tkey);
-int			ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata);
+int			ft_findenv(char *tkey, char *tval, t_envlist *envlist);
 void		ft_push_env(char *tkey, char *tval, t_envlist *envlist);
-void		ft_popenv(char *tkey, t_par_mdata *par_mdata);
-void		ft_unset(t_par_mdata *par_mdata);
+void		ft_popenv(char *tkey, t_envlist *envlist);
 int			ft_valid(char *str, char key);
 void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);
+
 int			ft_strcmp(char	*st1, char *st2);
 
+t_cmdlist	*ft_cpy_cmdlist(t_cmdnode *arg);
+void		ft_clearcmd(t_cmdlist *cmdlist);
 
 int			ft_parse(t_par_mdata *par_mdata);
 int			ft_cnt_word(char *str);
@@ -115,24 +139,24 @@ void		ft_push_val(char *key, int type, t_par_mdata *par_mdata);
 char		*ft_make_key(int type, t_par_mdata *par_mdata, char *st);
 char		*ft_val_w_space(char *st_val, t_par_mdata *par_mdata, int type);
 
-
-
 char		*ft_chgenv(char *st, t_par_mdata *par_mdata, int type);
 void		ft_push(t_arglist	*arglist, char c);
 char		*ft_makeword(t_arglist	*arglist);
 void		ft_init(t_par_mdata *par_mdata);
 
+int			ft_exec(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
-int			ft_exec_built_in(t_par_mdata *par_mdata);
+int			ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
-int			check_built_in(t_par_mdata *par_mdata);
-int			check_pipe(t_cmdlist *cmdlist, t_envlist *envlist);
+int			check_built_in(char	*str);
+int			check_pipe(t_cmdlist *cmdlist);
 
 int			convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data);
 int			convert_env(t_envlist *envlist, t_exec_data *exec_data);
 
-int			ft_exec(t_par_mdata *par_mdata);
+char		*sel_path(t_exec_data *arglist, t_exec_cmds *cmds);
 
+void		ft_cmdinit(t_cmdlist *cmdlist);
 
 t_cmdnode	*ft_newcmd(void);
 t_envnode	*ft_newenv(void);

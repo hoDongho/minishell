@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 11:34:44 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 15:04:26 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,20 @@ char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 		tmp = 0;
 	}
 	return (0);
+}
+
+t_cmdlist	*ft_cpy_cmdlist(t_cmdnode *arg)
+{
+	t_cmdlist	*new;
+
+	new = ft_calloc(1, sizeof(t_cmdlist));
+	ft_cmdinit(new);
+	while (arg->next)
+	{
+		if (ft_strcmp(arg->str, "|") == 0)
+			break ;
+		ft_pushcmd(new, arg->str, 0);
+		arg = arg->next;
+	}
+	return (new);
 }

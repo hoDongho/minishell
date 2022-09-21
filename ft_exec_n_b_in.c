@@ -15,7 +15,9 @@
 
 void	free_exec_data(t_exec_data *exec_data)
 {
-	int	i;
+	t_cmdnode	*curr;
+	t_cmdnode	*temp;
+	int			i;
 
 	i = 0;
 	while (exec_data->path[i])
@@ -30,17 +32,29 @@ void	free_exec_data(t_exec_data *exec_data)
 	{
 		free(exec_data->cmds_head->s_cmds);
 		free(exec_data->cmds_head->p_cmds);
+		if (check_built_in(exec_data->cmds_head->cmds) == 1)
+		{
+			curr = exec_data->cmds_head->cmdlist->head->next;
+			while (curr->next)
+			{
+				temp = curr;
+				curr = curr->next;
+				free(temp);
+			}
+			free(exec_data->cmds_head->cmdlist->head);
+			free(exec_data->cmds_head->cmdlist->tail);
+			free(exec_data->cmds_head->cmdlist);
+		}
 		exec_data->cmds_head = exec_data->cmds_head->next;
 	}
 	free(exec_data);
 }
 
-int	ft_exec_convert(t_cmdlist *cmdlist, t_envlist *envlist,
-	t_exec_data *exec_data)
+int	ft_exec_convert(t_exec_data *exec_data)
 {
-	if (convert_cmd(cmdlist, exec_data) != 0)
+	if (convert_cmd(exec_data->cmdlist, exec_data) != 0)
 		return (1);
-	if (convert_env(envlist, exec_data) != 0)
+	if (convert_env(exec_data->envlist, exec_data) != 0)
 		return (1);
 	return (0);
 }
@@ -52,7 +66,9 @@ int	ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
 	exec_data = ft_calloc(1, sizeof(t_exec_data));
 	if (exec_data == 0)
 		return (1);
-	if (ft_exec_convert(cmdlist, envlist, exec_data) != 0)
+	exec_data->cmdlist = cmdlist;
+	exec_data->envlist = envlist;
+	if (ft_exec_convert(exec_data) != 0)
 		return (1);
 	if (ft_exec_cmds(exec_data, exec_data->cmds_head) != 0)
 		return (1);

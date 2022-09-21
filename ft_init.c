@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:12:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 16:16:06 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 14:52:14 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_envinit(t_envlist *envlist)
 void	ft_cmdinit(t_cmdlist *cmdlist)
 {
 	cmdlist->head = ft_newcmd();
-	cmdlist->tail = ft_newcmd();
+	cmdlist->tail = ft_newcmd(); // 에러처리
 	cmdlist->head->next = cmdlist->tail;
 	cmdlist->tail->prev = cmdlist->head;
 	cmdlist->datasize = 0;

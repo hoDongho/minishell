@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_command.c                                     :+:      :+:    :+:   */
+/*   ft_make_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 17:02:39 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 14:57:27 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	new_str = str;
 	if (str == 0)
 		new_str = calloc(1, sizeof(char));
-	new = calloc(1, sizeof(t_cmdnode));
+	new = ft_newcmd();
+	// new = calloc(1, sizeof(t_cmdnode));
 	// if(!new)
 	// 	return (NULL); print 함수 만들고 exit 쓰기
 	new->str = new_str;

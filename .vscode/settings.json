@@ -8,6 +8,7 @@
 		"pipex.h": "c",
 		"stdio.h": "c",
 		"ft_main_exec": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"wait.h": "c"
 	}
 }

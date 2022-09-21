@@ -6,13 +6,13 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 11:02:18 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 13:02:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_pipe(t_cmdlist *cmdlist, t_envlist *envlist)
+int	check_pipe(t_cmdlist *cmdlist)
 {
 	t_cmdnode *arg;
 
@@ -26,62 +26,59 @@ int	check_pipe(t_cmdlist *cmdlist, t_envlist *envlist)
 	return (0);
 }
 
-int ft_exec_built_in(t_par_mdata *par_mdata)
+int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	t_cmdnode	*cmd;
 
-	cmd = par_mdata->cmdlist->head->next;
+	cmd = cmdlist->head->next;
 	if (ft_strcmp(cmd->str, "echo") == 0)
-		ft_echo(par_mdata->cmdlist, par_mdata->envlist);
+		ft_echo(cmdlist, envlist);
 	else if (ft_strcmp(cmd->str, "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd->str, "cd") == 0)
-		ft_cd(par_mdata->cmdlist, par_mdata->envlist);
+		ft_cd(cmdlist, envlist);
 	else if (ft_strcmp(cmd->str, "exit") == 0)
-		ft_exit(par_mdata->cmdlist, par_mdata);
+		ft_exit(cmdlist);
 	else if (ft_strcmp(cmd->str, "export") == 0)
-		ft_export(par_mdata);
+		ft_export(cmdlist, envlist);
 	else if (ft_strcmp(cmd->str, "env") == 0)
-		ft_env(par_mdata->envlist, 0);
+		ft_env(envlist, 0);
 	else if (ft_strcmp(cmd->str, "unset") == 0)
-		ft_unset(par_mdata);
+		ft_unset(cmdlist, envlist);
 	else
 		return (0);
 	return (1);
 }
 
-int	check_built_in(t_par_mdata *par_mdata)
+int	check_built_in(char *str)
 {
-	t_cmdnode	*cmd;
-
-	cmd = par_mdata->cmdlist->head->next;
-	if (ft_strcmp(cmd->str, "echo") == 0 || ft_strcmp(cmd->str, "pwd") == 0
-		|| ft_strcmp(cmd->str, "cd") == 0 || ft_strcmp(cmd->str, "exit") == 0
-		|| ft_strcmp(cmd->str, "export") == 0 || ft_strcmp(cmd->str, "env") == 0
-		|| ft_strcmp(cmd->str, "unset") == 0)
+	if (ft_strcmp(str, "echo") == 0 || ft_strcmp(str, "pwd") == 0
+		|| ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "exit") == 0
+		|| ft_strcmp(str, "export") == 0 || ft_strcmp(str, "env") == 0
+		|| ft_strcmp(str, "unset") == 0)
 		return (1);
 	return (0);
 }
 
-int	check_cmds(t_par_mdata *par_mdata)
+int	check_cmds(t_cmdlist *cmdlist)
 {
-	if (check_pipe(par_mdata->cmdlist, par_mdata->envlist) == 1)
+	if (check_pipe(cmdlist) == 1)
 		return (1);
-	if (check_built_in(par_mdata) == 1)
+	if (check_built_in(cmdlist->head->next->str) == 1)
 		return (2);
 	return (0);
 }
 
-int	ft_exec(t_par_mdata *par_mdata)
+int	ft_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	int	ret;
 
-	ret = check_cmds(par_mdata);
+	ret = check_cmds(cmdlist);
 	if (ret == 1)
-		ft_exec_n_built_in(par_mdata->cmdlist, par_mdata->envlist);
+		ft_exec_n_built_in(cmdlist, envlist);
 	else if (ret == 2)
-		ft_exec_built_in(par_mdata);
+		ft_exec_built_in(cmdlist, envlist);
 	else
-		ft_exec_n_built_in(par_mdata->cmdlist, par_mdata->envlist);
+		ft_exec_n_built_in(cmdlist, envlist);
 	return (0);
 }
