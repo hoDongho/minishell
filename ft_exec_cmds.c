@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 16:22:22 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 16:40:04 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,22 @@ int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 		return (1);
 	else if (exec_data->pid[i] == 0)
 	{
-		exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
-		if (exec_cmds->p_cmds == 0 || ft_strchr(exec_cmds->p_cmds, '/') == 0)
-		{
-			printf("command not found: %s\n", exec_cmds->cmds);
-			exit(127);
-		}
 		close(exec_data->pipe_fd[0]);
 		if (exec_cmds->next)
 			set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
 		if (check_built_in(exec_cmds->cmds) == 1)
 		{
 			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist);
-			exit(0);
+			exit(0); //
 		}
-		else if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
-			exit(1);
+		exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
+		if (exec_cmds->p_cmds == 0 || ft_strchr(exec_cmds->p_cmds, '/') == 0)
+		{
+			printf("command not found: %s\n", exec_cmds->cmds);
+			exit(127);
+		}
+		if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
+			exit(errno);
 	}
 	return (0);
 }

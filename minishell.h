@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 16:25:27 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 16:40:28 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,6 @@
 # define QUOTE 1
 # define D_QUOTE 2
 # define WORD 3
-
-typedef struct s_gdata//
-{
-	pid_t		*pidarr;//
-	int			p_size;//
-	t_exec_data	*exec_data;//
-}				t_gdata;//
-
-t_gdata	g_data;//
 
 typedef struct s_argnode
 {
@@ -109,6 +100,15 @@ typedef struct s_exec_data{
 	t_cmdlist	*cmdlist;
 	t_envlist	*envlist;
 }				t_exec_data;
+
+typedef struct s_gdata//
+{
+	pid_t		*pidarr;//
+	int			p_size;//
+	t_exec_data	*exec_data;//
+}				t_gdata;//
+
+t_gdata	g_data;//
 
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);

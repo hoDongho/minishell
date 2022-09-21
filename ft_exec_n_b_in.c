@@ -48,6 +48,9 @@ void	free_exec_data(t_exec_data *exec_data)
 		exec_data->cmds_head = exec_data->cmds_head->next;
 	}
 	free(exec_data);
+	g_data.exec_data = 0;
+	g_data.p_size = 0;
+	g_data.pidarr = 0;
 }
 
 int	ft_exec_convert(t_exec_data *exec_data)
