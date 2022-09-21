@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:30:17 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 16:13:43 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:36:04 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*ft_push_all(t_par_mdata *par_mdata, char *st, int *type, int *swit)
 	if (ft_switch(*st) == WORD)
 	{
 		*swit = ft_switch(*st);
-		if (!(*type))
+		// if (!(*type))
+		if (*type != WORD)
 			*type = *swit;
 		st = ft_push_word(par_mdata, st, *type);
 		*swit = 0;
@@ -25,7 +26,8 @@ char	*ft_push_all(t_par_mdata *par_mdata, char *st, int *type, int *swit)
 	else if (ft_switch(*st) == QUOTE || ft_switch(*st) == D_QUOTE)
 	{
 		*swit = ft_switch(*st);
-		if (!(*type))
+		// if (!(*type))
+		if (*type != *swit)
 			*type = *swit;
 		st++;
 		st = ft_push_quotes(par_mdata, st, *type, *swit);
@@ -58,6 +60,7 @@ void	ft_parse_all(t_par_mdata *par_mdata, int len)
 			if (ft_switch(*st) == SPACE_NULL)
 				break ;
 		}
+		printf("type:%d\n",type);
 		word = ft_makeword(par_mdata->arglist);
 		ft_pushcmd(par_mdata->cmdlist, word, type);
 		len--;

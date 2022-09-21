@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:57:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 16:18:19 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 17:27:41 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	*ft_push_word(t_par_mdata *par_mdata, char *st, int type)
 			st = ft_chgenv(st, par_mdata, type);
 		else if (*st == '|')
 		{
+			// printf("----\n");
+			// printf("type:%d\n",type);
 			word = ft_makeword(par_mdata->arglist);
 			ft_pushcmd(par_mdata->cmdlist, word, type);
 			ft_push(par_mdata->arglist, *st);

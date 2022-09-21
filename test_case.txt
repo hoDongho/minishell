@@ -166,7 +166,10 @@ pwd
 //unset의 경우에 없는key 를 찾으면 그냥 무시됌. 에러처리는 없음.
 
 
-///0. key의 첫 문자는 반드시 문자 ft_swit --> 3값 해당 isalpha >>> 그 다음부터는 isalnum을 돌린다.(_포함해서 개량)
-///1. 인자에 해당되는  건 무조건 문자
-///2.
-///3.
+//pipe parse
+
+echo 123|grep 1
+echo 123 | grep 1
+echo 123 "|" grep 1
+echo 123 '|' grep 1
+echo 123 "| grep 1"
