@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 12:07:43 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:13:48 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <errno.h>
 # include <sys/stat.h>
+# include <signal.h>
 # include "./libft/libft.h"
 # include "./pipex.h"
 
@@ -28,6 +29,15 @@
 # define QUOTE 1
 # define D_QUOTE 2
 # define WORD 3
+
+typedef struct s_gdata//
+{
+	pid_t		*pidarr;//
+	int			p_size;//
+	t_exec_data	*exec_data;//
+}				t_gdata;//
+
+t_gdata	g_data;//
 
 typedef struct s_argnode
 {
@@ -63,7 +73,7 @@ typedef struct s_cmdnode
 	struct s_cmdnode	*next;
 	struct s_cmdnode	*prev;
 	char				*str;
-	// type 추가
+	int					p_type;
 }				t_cmdnode;
 
 typedef struct s_cmdlist
@@ -123,6 +133,7 @@ char		*ft_makeword(t_arglist	*arglist);
 void		ft_init(t_par_mdata *par_mdata);
 
 int			ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
+void		free_exec_data(t_exec_data *exec_data);
 int			ft_exec_built_in(t_par_mdata *par_mdata);
 int			ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
 int			check_built_in(t_par_mdata *par_mdata);

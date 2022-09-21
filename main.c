@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/20 20:00:36 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 14:33:07 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,43 @@ void	ft_clearcmd(t_cmdlist *cmdlist)
 	cmdlist->datasize = 0;
 }
 
+void	ft_ctrl_c(int sig)
+{
+	int t;
+	t = 0;
+	if (g_data.p_size==0)
+	{
+		printf("\n");
+		return;
+	}
+	while(t<g_data.p_size)
+	{
+		printf("c_pid : %d\n",getpid());
+		kill(g_data.pidarr[t],SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
+		t++;
+	}
+	//free_exec_data(g_data.exec_data);
+	g_data.p_size = 0; //ㅈ저ㅂ근을 convert에서 하고있음
+}
+
+void	ft_ctrl_bslash(int sig)
+{
+	int t;
+	t = 0;
+	if (g_data.p_size==0)
+	{
+		return;
+	}
+	while(t<g_data.p_size)
+	{
+		printf("c_pid : %d\n",getpid());
+		kill(g_data.pidarr[t],SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
+		t++;
+	}
+	//free_exec_data(g_data.exec_data);
+	g_data.p_size = 0; //ㅈ저ㅂ근을 convert에서 하고있음
+}
+
 int main(int argc, char *argv[], char *env[])
 {
 	char		*input;
@@ -71,6 +108,8 @@ int main(int argc, char *argv[], char *env[])
 	i = 2;
 	ft_init(&par_mdata);
 	ft_set_env(par_mdata.envlist, env);
+	signal(SIGINT, ft_ctrl_c);
+	signal(SIGQUIT, ft_ctrl_bslash);
 	while (1)
 	{
 		ft_clearcmd(par_mdata.cmdlist);
@@ -92,7 +131,11 @@ int main(int argc, char *argv[], char *env[])
 			continue ;
 		}
 		ft_exec(&par_mdata);
-		free(input);
+		free(input);///원래 free 위치!!
+
+
+
+
 		// t_cmdnode *arg;
 		// arg = par_mdata.cmdlist->head->next;
 		// int a;

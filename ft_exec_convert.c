@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 12:07:46 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:18:15 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
 	pipe_cnt = 0;
 	while (arg->next)
 	{
-		if (ft_strcmp(arg->str, "|") == 0)
+		if (ft_strcmp(arg->str, "|") == 0 && arg->p_type == 3)
 		{
 			if (make_exec_cmds(arg, exec_data, arg_cnt) != 0)
 				return (1);
@@ -76,6 +76,8 @@ int	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
 	exec_data->pid = ft_calloc(pipe_cnt + 1 + 1, sizeof(pid_t));
 	if (exec_data->pid == 0)
 		return (1);
+	g_data.pidarr = exec_data->pid;//nhwang
+	g_data.p_size = pipe_cnt + 1;//nhwang
 	return (0);
 }
 
@@ -104,7 +106,8 @@ int	convert_env(t_envlist *envlist, t_exec_data *exec_data)
 	curr = envlist->head->next;
 	while (curr->next)
 	{
-		exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
+		if (curr->val)
+			exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
 		if (exec_data->env == 0)
 			return (1);
 		i++;

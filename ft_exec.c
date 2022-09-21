@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 11:02:18 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 16:20:46 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int	check_pipe(t_cmdlist *cmdlist, t_envlist *envlist)
 	arg = cmdlist->head->next;
 	while (arg->next)
 	{
-		if (ft_strcmp(arg->str, "|") == 0)
+		if (ft_strcmp(arg->str, "|") == 0 && arg->p_type == 3) //nhwang bf : if (ft_strcmp(arg->str, "|") == 0) |||||| 없는 경우인것 같음 없는 경우일때
+		{
 			return (1);
+		}
 		arg = arg->next;
 	}
 	return (0);

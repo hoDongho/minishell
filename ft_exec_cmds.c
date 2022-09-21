@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 12:13:15 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 12:55:16 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 			set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
 		// if (check_built_in(par_mdata) == 1)
 		// 	ft_exec_built_in(par_mdata);
-		else if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
+		if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
 			return (1);
 	}
 	return (0);
@@ -88,7 +88,7 @@ int	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 			dup2(exec_data->pipe_fd[0], STDIN_FILENO);
 		else
 		{
-			dup2(tmp_in, STDIN_FILENO);
+			dup2(tmp_in, STDIN_FILENO);//cat cat에서 입력이 이상한 부분과 관련 있지 않을지...
 			close(tmp_in);
 		}
 		close(exec_data->pipe_fd[0]);

@@ -52,6 +52,7 @@ int	ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
 	exec_data = ft_calloc(1, sizeof(t_exec_data));
 	if (exec_data == 0)
 		return (1);
+	g_data.exec_data = exec_data;//nhwang :: free_exec_data사용 위함
 	if (ft_exec_convert(cmdlist, envlist, exec_data) != 0)
 		return (1);
 	if (ft_exec_cmds(exec_data, exec_data->cmds_head) != 0)

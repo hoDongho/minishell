@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_command.c                                     :+:      :+:    :+:   */
+/*   ft_make_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 17:02:39 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/21 16:18:18 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_push(t_arglist	*arglist, char c)
 {
-	t_argnode	*tt;
 	t_argnode	*new;
 
 	new = ft_new_argnode(c);
@@ -57,7 +56,7 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	t_cmdnode	*prev;
 	char		*new_str;
 
-	if (type == 3 && str == 0)
+	if (type == 3 && str == 0) //ㄷㅣ포ㄹ트에서도 테스트 해볼 것것.
 		return ;
 	new_str = str;
 	if (str == 0)
@@ -65,6 +64,7 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	new = calloc(1, sizeof(t_cmdnode));
 	// if(!new)
 	// 	return (NULL); print 함수 만들고 exit 쓰기
+	new->p_type = type;//nhwang
 	new->str = new_str;
 	prev = cmdlist->tail->prev;
 	new->next = cmdlist->tail;
