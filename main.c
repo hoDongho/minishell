@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 12:17:03 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 16:28:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,43 @@ void	ft_clearcmd(t_cmdlist *cmdlist)
 	cmdlist->datasize = 0;
 }
 
+void	ft_ctrl_c(int sig)
+{
+	int t;
+	t = 0;
+	if (g_data.p_size==0)
+	{
+		printf("\n");
+		return;
+	}
+	while(t<g_data.p_size)
+	{
+		printf("c_pid : %d\n",getpid());
+		kill(g_data.pidarr[t],SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
+		t++;
+	}
+	//free_exec_data(g_data.exec_data);
+	g_data.p_size = 0; //ㅈ저ㅂ근을 convert에서 하고있음
+}
+
+void	ft_ctrl_bslash(int sig)
+{
+	int t;
+	t = 0;
+	if (g_data.p_size==0)
+	{
+		return;
+	}
+	while(t<g_data.p_size)
+	{
+		printf("c_pid : %d\n",getpid());
+		kill(g_data.pidarr[t],SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
+		t++;
+	}
+	//free_exec_data(g_data.exec_data);
+	g_data.p_size = 0; //ㅈ저ㅂ근을 convert에서 하고있음
+}
+
 int main(int argc, char *argv[], char *env[])
 {
 	char		*input;
@@ -71,6 +108,8 @@ int main(int argc, char *argv[], char *env[])
 	i = 2;
 	ft_init(&par_mdata);
 	ft_set_env(par_mdata.envlist, env);
+	signal(SIGINT, ft_ctrl_c);
+	signal(SIGQUIT, ft_ctrl_bslash);
 	while (1)
 	{
 		ft_clearcmd(par_mdata.cmdlist);

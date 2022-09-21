@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 14:58:56 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 16:22:22 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 			dup2(exec_data->pipe_fd[0], STDIN_FILENO);
 		else
 		{
-			dup2(tmp_in, STDIN_FILENO);
+			dup2(tmp_in, STDIN_FILENO);//cat cat에서 입력이 이상한 부분과 관련 있지 않을지...
 			close(tmp_in);
 		}
 		close(exec_data->pipe_fd[0]);

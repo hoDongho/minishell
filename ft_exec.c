@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 13:02:10 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/21 16:27:30 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int	check_pipe(t_cmdlist *cmdlist)
 	arg = cmdlist->head->next;
 	while (arg->next)
 	{
-		if (ft_strcmp(arg->str, "|") == 0)
+		if (ft_strcmp(arg->str, "|") == 0 && arg->p_type == 3) //nhwang bf : if (ft_strcmp(arg->str, "|") == 0) |||||| 없는 경우인것 같음 없는 경우일때
+		{
 			return (1);
+		}
 		arg = arg->next;
 	}
 	return (0);
