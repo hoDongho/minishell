@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 16:28:10 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/22 12:34:30 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -67,7 +66,11 @@ void	ft_ctrl_c(int sig)
 	t = 0;
 	if (g_data.p_size==0)
 	{
+
 		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
 		return;
 	}
 	while(t<g_data.p_size)
@@ -86,6 +89,9 @@ void	ft_ctrl_bslash(int sig)
 	t = 0;
 	if (g_data.p_size==0)
 	{
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
 		return;
 	}
 	while(t<g_data.p_size)
@@ -112,6 +118,9 @@ int main(int argc, char *argv[], char *env[])
 	signal(SIGQUIT, ft_ctrl_bslash);
 	while (1)
 	{
+		printf("-----\n\n");
+		system("leaks -quiet a.out");
+		printf("-----\n\n");
 		ft_clearcmd(par_mdata.cmdlist);
 		input = readline("test:");
 		if (!input)

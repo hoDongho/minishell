@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/19 11:46:29 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/22 12:56:10 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ char	*set_cd_path(t_cmdlist *cmdlist, t_envlist *envlist, char *old_pwd)
 	else if (home != 0)
 		path = ft_strdup(home);
 	if (cmdlist->datasize > 1)
+	{
+		free(path);
 		path = cd_w_args(arg, envlist, home, old_pwd);
+	}
 	if (path == 0)
 		return (0);
 	return (path);
@@ -114,7 +117,10 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	old_pwd = getcwd(0, 0);
 	path = set_cd_path(cmdlist, envlist, old_pwd);
 	if (path == 0)
+	{
+		free(old_pwd);
 		return (1);
+	}
 	if (chdir(path) != 0)
 		printf("errno :\n");
 	free(path);

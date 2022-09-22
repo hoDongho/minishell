@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 16:27:46 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/22 12:19:24 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ char	*ft_makeword(t_arglist	*arglist)
 	return (st);
 }
 
-void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
+// void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
+void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int swit)
 {
 	t_cmdnode	*new;
 	t_cmdnode	*prev;
 	char		*new_str;
 
-	if (type == 3 && str == 0) //ㄷㅣ포ㄹ트에서도 테스트 해볼 것것.
+	if (swit == 3 && str == 0) //ㄷㅣ포ㄹ트에서도 테스트 해볼 것것.
 		return ;
 	new_str = str;
 	if (str == 0)
@@ -65,7 +66,7 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 	// new = calloc(1, sizeof(t_cmdnode));
 	// if(!new)
 	// 	return (NULL); print 함수 만들고 exit 쓰기
-	new->p_type = type;//nhwang
+	new->p_type = swit;//nhwang
 	new->str = new_str;
 	prev = cmdlist->tail->prev;
 	new->next = cmdlist->tail;

@@ -6,32 +6,34 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:30:17 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 17:36:04 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/22 12:18:30 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_push_all(t_par_mdata *par_mdata, char *st, int *type, int *swit)
+// char	*ft_push_all(t_par_mdata *par_mdata, char *st, int *type, int *swit)
+char	*ft_push_all(t_par_mdata *par_mdata, char *st, int *swit)
 {
+	*swit = ft_switch(*st);
 	if (ft_switch(*st) == WORD)
 	{
-		*swit = ft_switch(*st);
-		// if (!(*type))
-		if (*type != WORD)
-			*type = *swit;
-		st = ft_push_word(par_mdata, st, *type);
-		*swit = 0;
+		// printf("swit :%d\n", *swit);
+		// if (*type != WORD)
+		// 	*type = *swit;
+		// st = ft_push_word(par_mdata, st, *type);
+		st = ft_push_word(par_mdata, st, *swit);
+		// *swit = 0;
 	}
 	else if (ft_switch(*st) == QUOTE || ft_switch(*st) == D_QUOTE)
 	{
-		*swit = ft_switch(*st);
-		// if (!(*type))
-		if (*type != *swit)
-			*type = *swit;
+		// printf("swit :%d\n", *swit);
+		// if (*type != *swit)
+		// 	*type = *swit;
 		st++;
-		st = ft_push_quotes(par_mdata, st, *type, *swit);
-		*swit = 0;
+		// st = ft_push_quotes(par_mdata, st, *type, *swit);
+		st = ft_push_quotes(par_mdata, st, *swit);
+		// *swit = 0;
 		st++;
 	}
 	return (st);
@@ -42,13 +44,14 @@ void	ft_parse_all(t_par_mdata *par_mdata, int len)
 	char		*st;
 	char		*word;
 	int			swit;
-	int			type;
+	// int			type;
 
-	swit = 0;
+	// swit = 0;
 	st = par_mdata->origin;
 	while (len)
 	{
-		type = 0;
+		// type = 0;
+		swit = 0;
 		while (*st)
 		{
 			if (ft_switch(*st) == SPACE_NULL && swit == 0)
@@ -56,13 +59,14 @@ void	ft_parse_all(t_par_mdata *par_mdata, int len)
 				st++;
 				continue ;
 			}
-			st = ft_push_all(par_mdata, st, &type, &swit);
+			// st = ft_push_all(par_mdata, st, &type, &swit);
+			st = ft_push_all(par_mdata, st, &swit);
 			if (ft_switch(*st) == SPACE_NULL)
 				break ;
 		}
-		printf("type:%d\n",type);
 		word = ft_makeword(par_mdata->arglist);
-		ft_pushcmd(par_mdata->cmdlist, word, type);
+		ft_pushcmd(par_mdata->cmdlist, word, swit);
+		// ft_pushcmd(par_mdata->cmdlist, word, type);
 		len--;
 	}
 }

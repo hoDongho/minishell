@@ -15,8 +15,9 @@
 
 void	free_exec_data(t_exec_data *exec_data)
 {
-	t_cmdnode	*curr;
-	t_cmdnode	*temp;
+	t_cmdnode	*cmd_curr;
+	t_cmdnode	*cmd_temp;
+	t_exec_cmds	*exec_tmp;
 	int			i;
 
 	i = 0;
@@ -34,18 +35,20 @@ void	free_exec_data(t_exec_data *exec_data)
 		free(exec_data->cmds_head->p_cmds);
 		if (check_built_in(exec_data->cmds_head->cmds) == 1)
 		{
-			curr = exec_data->cmds_head->cmdlist->head->next;
-			while (curr->next)
+			cmd_curr = exec_data->cmds_head->cmdlist->head->next;
+			while (cmd_curr->next)
 			{
-				temp = curr;
-				curr = curr->next;
-				free(temp);
+				cmd_temp = cmd_curr;
+				cmd_curr = cmd_curr->next;
+				free(cmd_temp);
 			}
 			free(exec_data->cmds_head->cmdlist->head);
 			free(exec_data->cmds_head->cmdlist->tail);
 			free(exec_data->cmds_head->cmdlist);
 		}
+		exec_tmp = exec_data->cmds_head;
 		exec_data->cmds_head = exec_data->cmds_head->next;
+		free(exec_tmp);
 	}
 	free(exec_data);
 	g_data.exec_data = 0;
@@ -74,8 +77,7 @@ int	ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
 	// g_data.exec_data = exec_data;//nhwang :: free_exec_data사용 위함
 	if (ft_exec_convert(exec_data) != 0)
 		return (1);
-	if (ft_exec_cmds(exec_data, exec_data->cmds_head) != 0)
-		return (1);
+	ft_exec_cmds(exec_data, exec_data->cmds_head); //error
 	free_exec_data(exec_data);
 	return (0);
 }

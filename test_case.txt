@@ -1,60 +1,62 @@
-// echo       abc   'def' "abc   d"
-// "abc"
-// "abc""abc"
-// abc"abc"
-// "abc"abc
-// 'abc'"abc"
-// 'abc' "abc"e
-//   asdf d$ abd
-//"   asdf d$ abd"
-//    dsaf $ asdf
-// "asdf$aaa$asdf"
+ echo       abc   'def' "abc   d"
+ "abc"
+ "abc""abc"
+ abc"abc"
+ "abc"abc
+ 'abc'"abc"
+ 'abc' "abc"e
+   asdf d$ abd
+"   asdf d$ abd"
+    dsaf $ asdf
+ "asdf$aaa$asdf"
 
-// "$aaa '$bbb'"
-// '$aaa "$bbb"'
-//   sadf
+ "$aaa '$bbb'"
+ "$bbb '$aaa'"
+ '$aaa "$bbb"'
+ '$aaa "$aaa"'
+   sadf
 
-// ' $ '
-// ' $sadf'
+ ' $ '
+ ' $sadf'
 
-//export sadf = 12345
+export sadf = 12345
 
-// " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
-// " $"
-// " $asdf"
-// " $sadf" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
+ " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
+ " $"
+ " $asdf"
+ " $sadf" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
 
-//   $
-//   $sadf
+   $
+   $sadf
 
-// '\0  "\0  a\0  '''a   \0
-
-:::::::::
-
-// "asdf$aaa asdf"
-// "asdf12345 asdf"
-
-//export name=aaa
-//		 val=12345
-
-// "asdf$aaa asdf"
-// "asdf12345 asdf"
+ '\0  "\0  a\0  '''a   \0
 
 :::::::::
 
-// " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
-// " $"
-// " $asdf"
-// " $sadf" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
+ "asdf$aaa asdf"
+ "asdf12345 asdf"
 
-//   $
-//   $sadf
+export name=aaa
+		 val=12345
 
-// '\0  "\0  a\0  '''a   \0
+ "asdf$aaa asdf"
+ "asdf12345 asdf"
+
+:::::::::
+
+ " $ " >>> sw == 2 and $ㅁㅏㄴ나고 and
+ " $"
+ " $aaa"
+ " $aaa" >>> " 12345" 함수의 인자(swit)의 입장에서 바라보면 뒤에 인자 null이면 $던지게 해주면 될듯
+
+   $
+   $sadf
+
+ '\0  "\0  a\0  '''a   \0
 
 
 
-// echo 테스트
+ echo 테스트
 echo $?
 echo ??
 echo ?
@@ -73,12 +75,12 @@ echo ?$USER
 echo hell"o"" "from " 42"
 echo "$USER ?"
 
-// ls 테스트
+ ls 테스트
 ls
 ls -l
 ls -al
 
-// quit, 반환값 테스트
+ quit, 반환값 테스트
 ./minishell
 quit 113
 echo $?
@@ -87,14 +89,14 @@ echo $?
 ls
 echo $?
 
-// 잡다하게 섞은거
+ 잡다하게 섞은거
 < infile cat
 < infile cat | grep a
 < infile cat | grep a | wc
 < infile cat | grep a | wc -l
 cat < infile
 
-// 환경변수, export, unset
+ 환경변수, export, unset
 env
 env | grep SHLVL
 ./minishell
@@ -105,18 +107,18 @@ export A=B B=C
 unset a
 unset b c A B
 
-// cd
+ cd
 cd ~
 cd
 cd -
 echo $OLDPWD -> OLDPWD가 변경되야됨.
 
-// ctrl + [d, c, \] 테스트
+ ctrl + [d, c, \] 테스트
 
-// pwd 테스트
+ pwd 테스트
 pwd
 
-// heredoc + append
+ heredoc + append
 << eof cat >> infile -> infile 뒤에 추가됨
 
 
@@ -128,48 +130,58 @@ pwd
 */
 
 
-// echo
-// echo ""     ::: export "" vs export
-// echo ''	   ::: export $asdf vs export "$asdf"
-// echo $asdf // 없는경우
-// echo "$asdf"
+ echo
+ echo ""     ::: export "" vs export
+ echo ''	   ::: export $asdf vs export "$asdf"
+ echo $asdf  없는경우
+ echo "$asdf"
 
 
-///unset a=b
-///unset " g"
+/unset a=b
+/unset " g"
 
 [export]
 
-///export a=b=c >>> a="b=c" 최초의 =만 찾는것.
+/export a=b=c >>> a="b=c" 최초의 =만 찾는것.
 
-///export a= c >> a에 빈문자열 저장, c는 c만 저장
-///export를 그냥할 것이 아니라, 기존에 저장해둔 환경변수 내에서 찾은 다음 덮어쓸지, 새로 만들지를 결정해야한다.
-///export x=10 한 뒤에 export x 이렇게해도 값을 유지하는게 현재.
-///export "기존에 있는 변수"=0 등 실험
-///export x=a >>> 이런식으로 1개 단위에서 이슈 없는지 확인해야함
-///export b==c
-///export a >>> export a=123
+/export a= c >> a에 빈문자열 저장, c는 c만 저장
+/export를 그냥할 것이 아니라, 기존에 저장해둔 환경변수 내에서 찾은 다음 덮어쓸지, 새로 만들지를 결정해야한다.
+/export x=10 한 뒤에 export x 이렇게해도 값을 유지하는게 현재.
+/export "기존에 있는 변수"=0 등 실험
+/export x=a >>> 이런식으로 1개 단위에서 이슈 없는지 확인해야함
+/export b==c
+/export a >>> export a=123
 
-///1. =의 존재를 찾는다? 리스트 자체에는 띄어쓰기는 포함되지 않고 전달되므로 붙어있는 것 중에서 찾는 셈.
-///2. =전까지를 저장하고 있을 필요가 있겠다. (split이든 리스트이든) =을 만나거나 \0까지가 key인 셈이다.
-///3. 2에 의해서 case가 나
-
-
-//as-is
-///export a =c >> a저장, =c에선 key 없음으로 오류메시지 띄우고 저장하지 않음 |||| ing
-
-//export 1234 		x >>> 맨 앞에 숫자면 안된다.
-//export "a =c"		x
-//export "'a'=c"	x
-//export "a    =c"	x >>> 힌트 =의 전을 기점으로 한다면?
-
-//unset의 경우에 없는key 를 찾으면 그냥 무시됌. 에러처리는 없음.
+/1. =의 존재를 찾는다? 리스트 자체에는 띄어쓰기는 포함되지 않고 전달되므로 붙어있는 것 중에서 찾는 셈.
+/2. =전까지를 저장하고 있을 필요가 있겠다. (split이든 리스트이든) =을 만나거나 \0까지가 key인 셈이다.
+/3. 2에 의해서 case가 나
 
 
-//pipe parse
+as-is
+/export a =c >> a저장, =c에선 key 없음으로 오류메시지 띄우고 저장하지 않음 |||| ing
+
+export 1234 		x >>> 맨 앞에 숫자면 안된다.
+export "a =c"		x
+export "'a'=c"	x
+export "a    =c"	x >>> 힌트 =의 전을 기점으로 한다면?
+
+unset의 경우에 없는key 를 찾으면 그냥 무시됌. 에러처리는 없음.
+
+
+pipe parse
 
 echo 123|grep 1
 echo 123 | grep 1
 echo 123 "|" grep 1
 echo 123 '|' grep 1
 echo 123 "| grep 1"
+echo "123"|"grep" 1
+
+
+export a="   ls    -al   "
+export a="ls -al"
+>>>
+$a
+"$a"
+
+cat | cat >> signal

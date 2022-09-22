@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 16:40:28 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/22 12:21:28 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,8 @@ int			ft_findenv(char *tkey, char *tval, t_envlist *envlist);
 void		ft_push_env(char *tkey, char *tval, t_envlist *envlist);
 void		ft_popenv(char *tkey, t_envlist *envlist);
 int			ft_valid(char *str, char key);
-void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);
+// void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);
+void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int swit);
 
 int			ft_strcmp(char	*st1, char *st2);
 
@@ -142,14 +143,18 @@ void		ft_clearcmd(t_cmdlist *cmdlist);
 int			ft_parse(t_par_mdata *par_mdata);
 int			ft_cnt_word(char *str);
 void		ft_parse_all(t_par_mdata *par_mdata, int len);
-char		*ft_push_word(t_par_mdata *par_mdata, char *st, int type);
-char		*ft_push_quotes(t_par_mdata *par_mdata, char *st,
-				int type, int swit);
+// char		*ft_push_word(t_par_mdata *par_mdata, char *st, int type);
+char		*ft_push_word(t_par_mdata *par_mdata, char *st, int swit);
+// char		*ft_push_quotes(t_par_mdata *par_mdata, char *st,
+// 				int type, int swit);
+char		*ft_push_quotes(t_par_mdata *par_mdata, char *st, int swit);
 void		ft_push_val(char *key, int type, t_par_mdata *par_mdata);
 char		*ft_make_key(int type, t_par_mdata *par_mdata, char *st);
-char		*ft_val_w_space(char *st_val, t_par_mdata *par_mdata, int type);
+// char		*ft_val_w_space(char *st_val, t_par_mdata *par_mdata, int type);
+char		*ft_val_w_space(char *st_val, t_par_mdata *par_mdata, int swit);
 
-char		*ft_chgenv(char *st, t_par_mdata *par_mdata, int type);
+// char		*ft_chgenv(char *st, t_par_mdata *par_mdata, int type);
+char		*ft_chgenv(char *st, t_par_mdata *par_mdata, int swit);
 void		ft_push(t_arglist	*arglist, char c);
 char		*ft_makeword(t_arglist	*arglist);
 void		ft_init(t_par_mdata *par_mdata);
