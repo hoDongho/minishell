@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/22 12:34:30 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/22 16:57:45 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ int main(int argc, char *argv[], char *env[])
 	signal(SIGQUIT, ft_ctrl_bslash);
 	while (1)
 	{
-		printf("-----\n\n");
-		system("leaks -quiet a.out");
-		printf("-----\n\n");
+		// printf("-----\n\n");
+		// system("leaks -quiet a.out");
+		// printf("-----\n\n");
 		ft_clearcmd(par_mdata.cmdlist);
 		input = readline("test:");
 		if (!input)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 16:27:30 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/22 16:33:54 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
 	t_cmdnode	*cmd;
 
 	cmd = cmdlist->head->next;
+	//if (redirection == 0)
 	if (ft_strcmp(cmd->str, "echo") == 0)
 		ft_echo(cmdlist, envlist);
 	else if (ft_strcmp(cmd->str, "pwd") == 0)

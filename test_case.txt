@@ -185,3 +185,18 @@ $a
 "$a"
 
 cat | cat >> signal
+
+
+cat infile
+ls > infile
+cat < a b c
+ls > a b > c
+ls < a b
+
+
+ls > infile outfile
+
+cat < infile
+cat < ingile > outfile
+wc -l < infile
+cat infile >> outfile

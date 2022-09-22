@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 16:40:04 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/22 16:52:55 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 			set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
 		if (check_built_in(exec_cmds->cmds) == 1)
 		{
-			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist);
+			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist); //0 only b-in, 1 b-in
 			exit(0); //
 		}
 		exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
