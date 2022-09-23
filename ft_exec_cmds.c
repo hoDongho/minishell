@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/23 13:01:30 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 14:41:31 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 		}
 		exec_cmds->cmd = exec_cmds->s_cmds[0];
 			// set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
+		if (exec_cmds->cmd == 0)
+		{
+			exit(0);
+		}
 		if (check_built_in(exec_cmds->cmd) == 1)
 		{
 			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist, 1); //0 only b-in, 1 b-in

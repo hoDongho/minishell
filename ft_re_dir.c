@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:26:21 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 13:05:27 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 15:32:10 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	ft_redir(t_cmdlist *cmdlist)
 	int			new_out;
 	int			cnt;
 
-	new_in = 0;
-	new_out = 0;
+	new_in = STDIN_FILENO;
+	new_out = STDOUT_FILENO;
 	cnt = 0;
 	redir_type = 0;
 	curr = cmdlist->head->next;
@@ -52,21 +52,26 @@ int	ft_redir(t_cmdlist *cmdlist)
 		if(curr->p_type == 3)
 		{
 			redir_type = ft_is_redir(curr->str);
+			// if (redir_type == 1 || redir_type == 3)
+			// 	cnt++;
 			if (redir_type == 1 || redir_type == 3)
-				cnt++;
-			if (redir_type == 1)
 			{
-				if (new_out != 0)
+				if (new_out != STDOUT_FILENO)
 					close(new_out);
-				new_out = open(curr->next->str, O_RDWR | O_CREAT | O_TRUNC, 0644); //
-				dup2(new_out, STDOUT_FILENO); //
+				cnt++;
+				if (redir_type == 1)
+					new_out = open(curr->next->str, O_RDWR | O_CREAT | O_TRUNC, 0644); //
+				else
+					new_out = open(curr->next->str, O_RDWR | O_CREAT | O_APPEND, 0644); //
+				// dup2(new_out, STDOUT_FILENO); //
+				// close(new_out);
 				curr = ft_del_redir(curr);
 				cmdlist->datasize = cmdlist->datasize - 2;
 				continue ;
 			}
 			else if (redir_type == 2)
 			{
-				if (new_in != 0)
+				if (new_in != STDIN_FILENO)
 					close(new_in);
 				new_in = open(curr->next->str, O_RDONLY, 0644); //
 				if (new_in < 0)
@@ -74,19 +79,62 @@ int	ft_redir(t_cmdlist *cmdlist)
 					printf("no f d\n");
 					return (-1);
 				}
-				dup2(new_in, STDIN_FILENO); //
+				// dup2(new_in, STDIN_FILENO); //
+				// close(new_in);
 				curr = ft_del_redir(curr);
 				cmdlist->datasize = cmdlist->datasize - 2;
 				continue ;
 			}
-			// else if (redir_type == 3)
-			// {
-			// }
-			// else if (redir_type == 4)
-			// {
-			// }
+			else if (redir_type == 4)
+			{
+				if (new_in != 0)
+					close(new_in);
+				char	*hd_exit;
+				char	*hd_input;
+
+				hd_exit = ft_strjoin(curr->next->str, "\n");
+				new_in = open("/tmp/.heredoc_tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+				// new_in = open("testest", O_RDWR | O_CREAT | O_TRUNC, 0644);
+				if (new_in == -1)
+					print_error("open", 1);
+				while (1)
+				{
+					write(1, "> ", 2);
+					hd_input = get_next_line(STDIN_FILENO);
+					if (hd_input == 0)
+					{
+						// printf("\n");
+						break ;
+					}
+						// print_error("gnl", 1);
+					if (ft_strcmp(hd_input, hd_exit) == 0)
+						break ;
+					write(new_in, hd_input, ft_strlen(hd_input));
+					free(hd_input);
+				}
+				free(hd_exit);
+				free(hd_input);
+				close(new_in);
+				new_in = open("/tmp/.heredoc_tmp", O_RDONLY, 0644);
+				unlink("/tmp/.heredoc_tmp");
+				// unlink("testest");
+				// dup2(new_in, STDIN_FILENO);
+				curr = ft_del_redir(curr);
+				cmdlist->datasize = cmdlist->datasize - 2;
+				continue ;
+			}
 		}
 		curr = curr->next;
+	}
+	if (new_in != STDIN_FILENO)
+	{
+		dup2(new_in, STDIN_FILENO);
+		close(new_in);
+	}
+	if (new_out != STDOUT_FILENO)
+	{
+		dup2(new_out, STDOUT_FILENO);
+		close(new_out);
 	}
 	return (cnt);
 }
