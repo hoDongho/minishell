@@ -90,7 +90,7 @@ ls
 echo $?
 
  잡다하게 섞은거
-< infile cat
+< infile cat                  //leak
 < infile cat | grep a
 < infile cat | grep a | wc
 < infile cat | grep a | wc -l

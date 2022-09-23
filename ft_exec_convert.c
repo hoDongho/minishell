@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/22 14:21:13 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:53:18 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_exec_cmds	*new_exec_cmds(t_exec_data *exec_data, int size)
 	new = ft_calloc(1, sizeof(t_exec_cmds));
 	if (new == 0)
 		return (0);
-	new->s_cmds = (char **)ft_calloc(size + 1, sizeof(char *));
-	if (new->s_cmds == 0)
-		return (0);
+	// new->s_cmds = (char **)ft_calloc(size + 1, sizeof(char *));
+	// if (new->s_cmds == 0)
+	// 	return (0);
 	if (exec_data->cmds_head == 0)
 		exec_data->cmds_head = new;
 	if (exec_data->cmds_tail != 0)
@@ -42,17 +42,17 @@ int	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 	exec_cmds = new_exec_cmds(exec_data, arg_cnt);
 	if (exec_cmds == 0)
 		return (1);
-	while (arg_cnt)
+	while (arg_cnt)///
 	{
 		arg = arg->prev;
 		arg_cnt--;
-		exec_cmds->s_cmds[arg_cnt] = arg->str;
-	}
-	exec_cmds->cmds = exec_cmds->s_cmds[0];
-	if (check_built_in(exec_cmds->cmds) == 1)
-	{
-		exec_cmds->cmdlist = ft_cpy_cmdlist(arg);
-	}
+		// exec_cmds->s_cmds[arg_cnt] = arg->str;
+	}//
+	// if (check_built_in(exec_cmds->cmds) == 1)
+	// {
+	// 	exec_cmds->cmdlist = ft_cpy_cmdlist(arg);
+	// }
+	exec_cmds->cmdlist = ft_cpy_cmdlist(arg);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/22 16:33:54 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:32:30 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,19 @@ int	check_pipe(t_cmdlist *cmdlist)
 	return (0);
 }
 
-int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
+int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 {
 	t_cmdnode	*cmd;
+	int			origin_in;
+	int			origin_out;
 
 	cmd = cmdlist->head->next;
-	//if (redirection == 0)
+	if (flag == 0)
+	{
+		origin_in = dup(STDIN_FILENO);
+		origin_out = dup(STDOUT_FILENO);
+		ft_redir(cmdlist);
+	}
 	if (ft_strcmp(cmd->str, "echo") == 0)
 		ft_echo(cmdlist, envlist);
 	else if (ft_strcmp(cmd->str, "pwd") == 0)
@@ -48,8 +55,13 @@ int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
 		ft_env(envlist, 0);
 	else if (ft_strcmp(cmd->str, "unset") == 0)
 		ft_unset(cmdlist, envlist);
-	else
-		return (0);
+	if (flag == 0)
+	{
+		dup2(origin_in, STDIN_FILENO);
+		dup2(origin_out, STDOUT_FILENO);
+		close(origin_in);
+		close(origin_out);
+	}
 	return (1);
 }
 
@@ -80,7 +92,7 @@ int	ft_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 	if (ret == 1)
 		ft_exec_n_built_in(cmdlist, envlist);
 	else if (ret == 2)
-		ft_exec_built_in(cmdlist, envlist);
+		ft_exec_built_in(cmdlist, envlist, 0);
 	else
 		ft_exec_n_built_in(cmdlist, envlist);
 	return (0);

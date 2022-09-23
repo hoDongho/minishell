@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/21 15:04:26 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/23 12:54:23 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	char		*tmp;
 
 	i = 0;
-	ret = open(exec_cmds->cmds, O_RDONLY);
+	ret = open(exec_cmds->cmd, O_RDONLY);
 	close(ret);
 	if (ret > 0)
-		return (exec_cmds->cmds);
+		return (exec_cmds->cmd);
 	else if (ret == -1 && errno == 13)
 		print_error("access", 126);
 	while (exec_data->path[i])
 	{
-		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmds, '/');
+		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmd, '/');
 		// if (tmp == 0)
 			//error;
 		ret = open(tmp, O_RDONLY);
@@ -82,7 +82,7 @@ t_cmdlist	*ft_cpy_cmdlist(t_cmdnode *arg)
 	{
 		if (ft_strcmp(arg->str, "|") == 0)
 			break ;
-		ft_pushcmd(new, arg->str, 0);
+		ft_pushcmd(new, arg->str, arg->p_type);
 		arg = arg->next;
 	}
 	return (new);

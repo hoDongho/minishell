@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:30:17 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/22 12:18:30 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:01:26 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,14 @@ int	ft_parse(t_par_mdata *par_mdata)
 	if (len == 0)
 		return (1); //에러 처리
 	ft_parse_all(par_mdata, len);
+	t_cmdnode	*curr;
+	curr = par_mdata->cmdlist->head->next;
+	// printf("====\n");
+	// while(curr->next)
+	// {
+	// 	printf("%s\n",curr->str);
+	// 	curr=curr->next;
+	// }
+	// printf("\n\n\n\n\n");
 	return (0);
 }

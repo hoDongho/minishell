@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/22 12:21:28 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:54:00 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_par_mdata
 }				t_par_mdata;
 
 typedef struct s_exec_cmds{
-	char				*cmds;
+	char				*cmd;
 	char				**s_cmds;
 	char				*p_cmds;
 	struct s_exec_cmds	*next;
@@ -161,7 +161,7 @@ void		ft_init(t_par_mdata *par_mdata);
 
 int			ft_exec(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
-int			ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
+int			ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag);
 int			ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
 int			check_built_in(char	*str);
 int			check_pipe(t_cmdlist *cmdlist);
@@ -176,6 +176,10 @@ void		ft_cmdinit(t_cmdlist *cmdlist);
 t_cmdnode	*ft_newcmd(void);
 t_envnode	*ft_newenv(void);
 t_argnode	*ft_new_argnode(char c);
+
+int			ft_is_redir(char *str);
+int			ft_redir(t_cmdlist *cmdlist);
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/22 16:52:55 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 13:01:30 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,50 @@ int	set_std(int new_in, int new_out)
 
 int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 {
+	int	redir_cnt;
+
+	redir_cnt = 0;
 	exec_data->pid[i] = fork();
 	if (exec_data->pid[i] == -1)
 		return (1);
 	else if (exec_data->pid[i] == 0)
 	{
 		close(exec_data->pipe_fd[0]);
-		if (exec_cmds->next)
-			set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
-		if (check_built_in(exec_cmds->cmds) == 1)
+		// if
+		// re_dir
+		redir_cnt = ft_redir(exec_cmds->cmdlist);
+		if (redir_cnt < 0)
+			exit(1);
+		else if (exec_cmds->next && redir_cnt == 0)
 		{
-			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist); //0 only b-in, 1 b-in
-			exit(0); //
+			dup2(exec_data->pipe_fd[1], STDOUT_FILENO);
+		}
+		close(exec_data->pipe_fd[1]);
+		// d_p
+		exec_cmds->s_cmds = (char **)ft_calloc(exec_cmds->cmdlist->datasize + 1, sizeof(char *));
+		if (exec_cmds->s_cmds == 0)
+			return (0);
+		t_cmdnode	*curr;
+		int			i;
+		i = 0;
+		curr = exec_cmds->cmdlist->head->next;
+		while (curr->next)///
+		{
+			exec_cmds->s_cmds[i] = curr->str;
+			i++;
+			curr = curr->next;
+		}
+		exec_cmds->cmd = exec_cmds->s_cmds[0];
+			// set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
+		if (check_built_in(exec_cmds->cmd) == 1)
+		{
+			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist, 1); //0 only b-in, 1 b-in
+			exit(0);
 		}
 		exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
 		if (exec_cmds->p_cmds == 0 || ft_strchr(exec_cmds->p_cmds, '/') == 0)
 		{
-			printf("command not found: %s\n", exec_cmds->cmds);
+			printf("command not found: %s\n", exec_cmds->cmd);
 			exit(127);
 		}
 		if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)

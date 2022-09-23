@@ -33,19 +33,16 @@ void	free_exec_data(t_exec_data *exec_data)
 	{
 		free(exec_data->cmds_head->s_cmds);
 		free(exec_data->cmds_head->p_cmds);
-		if (check_built_in(exec_data->cmds_head->cmds) == 1)
+		cmd_curr = exec_data->cmds_head->cmdlist->head->next;
+		while (cmd_curr->next)
 		{
-			cmd_curr = exec_data->cmds_head->cmdlist->head->next;
-			while (cmd_curr->next)
-			{
-				cmd_temp = cmd_curr;
-				cmd_curr = cmd_curr->next;
-				free(cmd_temp);
-			}
-			free(exec_data->cmds_head->cmdlist->head);
-			free(exec_data->cmds_head->cmdlist->tail);
-			free(exec_data->cmds_head->cmdlist);
+			cmd_temp = cmd_curr;
+			cmd_curr = cmd_curr->next;
+			free(cmd_temp);
 		}
+		free(exec_data->cmds_head->cmdlist->head);
+		free(exec_data->cmds_head->cmdlist->tail);
+		free(exec_data->cmds_head->cmdlist);
 		exec_tmp = exec_data->cmds_head;
 		exec_data->cmds_head = exec_data->cmds_head->next;
 		free(exec_tmp);
