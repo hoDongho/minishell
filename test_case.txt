@@ -1,20 +1,20 @@
- echo       abc   'def' "abc   d"
- "abc"
- "abc""abc"
- abc"abc"
- "abc"abc
- 'abc'"abc"
- 'abc' "abc"e
-   asdf d$ abd
-"   asdf d$ abd"
-    dsaf $ asdf
- "asdf$aaa$asdf"
+echo       abc   'def' "abc   d"
+echo "abc"
+echo "abc""abc"
+echo abc"abc"
+echo "abc"abc
+echo 'abc'"abc"
+echo 'abc' "abc"e
+echo   asdf d$ abd
+echo "   asdf d$ abd"
+echo    dsaf $ asdf
+echo "asdf$aaa$asdf"
 
- "$aaa '$bbb'"
- "$bbb '$aaa'"
- '$aaa "$bbb"'
- '$aaa "$aaa"'
-   sadf
+echo "$aaa '$bbb'"
+echo "$bbb '$aaa'"
+echo '$aaa "$bbb"'
+echo '$aaa "$aaa"'
+echo  sadf
 
  ' $ '
  ' $sadf'
@@ -90,7 +90,7 @@ ls
 echo $?
 
  잡다하게 섞은거
-< infile cat                  //leak
+< infile cat
 < infile cat | grep a
 < infile cat | grep a | wc
 < infile cat | grep a | wc -l
@@ -200,3 +200,11 @@ cat < infile
 cat < ingile > outfile
 wc -l < infile
 cat infile >> outfile
+
+
+
+
+cat > < >> syntax
+-------
+exit // err
+$?

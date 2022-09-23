@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 12:54:00 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 15:59:39 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_gdata//
 {
 	pid_t		*pidarr;//
 	int			p_size;//
+	int			exit_code;//
 	t_exec_data	*exec_data;//
 }				t_gdata;//
 

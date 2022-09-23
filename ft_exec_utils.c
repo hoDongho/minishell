@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/23 15:26:54 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 16:01:40 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	print_error(char *str, int code)
 	else
 		perror(str);
 	if (code != 0)
+	{
+		// g_data.exit_code = code;
 		exit(code);
+	}
 }
 
 char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)

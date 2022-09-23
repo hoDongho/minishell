@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/23 12:32:30 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 16:49:29 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	check_built_in(char *str)
 
 int	check_cmds(t_cmdlist *cmdlist)
 {
+
 	if (check_pipe(cmdlist) == 1)
 		return (1);
 	if (check_built_in(cmdlist->head->next->str) == 1)

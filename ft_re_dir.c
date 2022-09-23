@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:26:21 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 15:32:10 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 16:43:30 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cmdnode	*ft_del_redir(t_cmdnode *curr)
 	int			i;
 
 	i = 2;
-	while (i)
+	while (curr->next && i)
 	{
 		prev = curr->prev;
 		next = curr->next;
@@ -59,12 +59,18 @@ int	ft_redir(t_cmdlist *cmdlist)
 				if (new_out != STDOUT_FILENO)
 					close(new_out);
 				cnt++;
+				// if (!curr->next->next || ft_isalnum(*curr->next->str))
+					// print_error("syntax error near unexpected token `newline'", 0); //
 				if (redir_type == 1)
 					new_out = open(curr->next->str, O_RDWR | O_CREAT | O_TRUNC, 0644); //
 				else
 					new_out = open(curr->next->str, O_RDWR | O_CREAT | O_APPEND, 0644); //
 				// dup2(new_out, STDOUT_FILENO); //
 				// close(new_out);
+				if (new_out < 0)
+				{
+					// printf("SsSSSSSSSSSSSS\n");
+				}
 				curr = ft_del_redir(curr);
 				cmdlist->datasize = cmdlist->datasize - 2;
 				continue ;

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/22 16:57:45 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/23 17:05:16 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	ft_ctrl_c(int sig)
 		rl_redisplay();
 		return;
 	}
-	while(t<g_data.p_size)
+	// while(t<g_data.p_size)
+	while(g_data.pidarr[t])
 	{
 		printf("c_pid : %d\n",getpid());
 		kill(g_data.pidarr[t],SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
@@ -122,7 +123,7 @@ int main(int argc, char *argv[], char *env[])
 		// system("leaks -quiet a.out");
 		// printf("-----\n\n");
 		ft_clearcmd(par_mdata.cmdlist);
-		input = readline("test:");
+		input = readline("minishell$ ");
 		if (!input)
 		{
 			break ;
