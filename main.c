@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 11:49:35 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 13:13:55 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ int main(int argc, char *argv[], char *env[])
 		{
 			break ;
 		}
-		add_history(input);
 		if (!*input)
 		{
 			free(input);
 			continue ;
 		}
+		add_history(input);
 		par_mdata.origin = input;
 		if (ft_parse(&par_mdata) == 1)
 		{

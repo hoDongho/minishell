@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 12:26:34 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 13:09:10 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,18 @@ void	ft_env(t_envlist *envlist, int b)
 	}
 }
 
-void	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
+int	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 {
 	t_envnode	*new;
 	t_envnode	*prev;
 
 	new = ft_newenv();
 	new->key = strdup(tkey);
+	if (!new || !(new->key))
+	{
+		print_error("insufficient memory",1);
+		return (1);
+	}
 	if (tval)
 		new->val = strdup(tval);
 	prev = envlist->tail->prev;
@@ -50,6 +55,7 @@ void	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 	prev->next = new;
 	envlist->tail->prev = new;
 	envlist->datasize++;
+	return (0);
 }
 
 int	ft_findenv(char *tkey, char *tval, t_envlist *envlist)
@@ -101,15 +107,16 @@ int	ft_valid(char *str, char key)
 {
 	if (ft_isalpha(*str) == 0)
 	{
-		printf("첫문자\n");//
+		// printf("export: '%s':",str);
+		print_error("export: not a valid identifier\n", 1);///첫 문자 > export: `=': not a valid identifier      "export ="
 		return (0);
 	}
 	str++;
 	while (*str && *str != key)
 	{
 		if (ft_isalnum(*str) == 0)
-		{
-			printf("key:::\n");//
+		{//w 2 str 1
+			print_error("export: not a valid identifier",1);//어떤 부분에서 에러인지 str을 붙혀서 내야함
 			return (0);///오류
 		}
 		str++;
@@ -177,7 +184,7 @@ void	ft_export(t_cmdlist *cmdlist, t_envlist *envlist)
 	{
 		if (ft_valid(curr->str, '=') == 0)
 		{
-			///error 출력 후 return ;
+			///error 출력 후 return >> ㅇㅕ러 인인자  받받을  수  있있으으니니까  continue 유지가 맞다;
 
 			curr = curr->next;
 			continue ;
