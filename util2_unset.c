@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util2_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:09:57 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 12:30:41 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/26 16:10:38 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_unset(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	t_cmdnode	*curr;
 
+	g_data.exit_code = 0;
 	curr = cmdlist->head->next;
 	if (cmdlist->datasize == 1)
 		return ;
@@ -53,8 +54,6 @@ void	ft_unset(t_cmdlist *cmdlist, t_envlist *envlist)
 	{
 		if (ft_valid(curr->str, 0) == 0)
 		{
-			printf("err unset\n");
-			///error 출력 후
 			curr = curr->next;
 			continue ;
 		}

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 13:09:10 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:19:18 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_env(t_envlist *envlist, int b)
 	t_envnode	*curr;
 	t_envnode	*temp;
 
+	g_data.exit_code = 0;
 	curr = envlist->head->next;
 	while (curr->next)
 	{
@@ -43,10 +44,7 @@ int	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 	new = ft_newenv();
 	new->key = strdup(tkey);
 	if (!new || !(new->key))
-	{
-		print_error("insufficient memory",1);
 		return (1);
-	}
 	if (tval)
 		new->val = strdup(tval);
 	prev = envlist->tail->prev;
@@ -85,46 +83,49 @@ int	ft_ex_util(char *tkey, char *tval, t_envlist *envlist)
 {
 	t_envnode	*prev_tail;
 
-	if (!tkey) //key가 없는 경우 >>> err msg를 띄워야 함
-	{
-		if (tval) //
-			free(tval); //
-		return (0); //free를 해주는건 그 전단에서 해주니 문제없을것 같긴하다/////
-	}
-	else
-	{
-		if (ft_findenv(tkey, tval, envlist) == 0)
-			ft_push_env(tkey, tval, envlist);
-	}
+	if (ft_findenv(tkey, tval, envlist) == 0)
+		if (ft_push_env(tkey, tval, envlist)==1) //err시 1
+			return (1);
 	if (tkey) //
 		free(tkey); //
 	if (tval) //
 		free(tval); //
-	return (1);
+	return (0);
 }
 
 int	ft_valid(char *str, char key)
 {
 	if (ft_isalpha(*str) == 0)
 	{
-		// printf("export: '%s':",str);
-		print_error("export: not a valid identifier\n", 1);///첫 문자 > export: `=': not a valid identifier      "export ="
+		if (key==0)
+			write(2,"unset: `",9);
+		else
+			write(2,"export: `",10);
+		if (*str)
+			write(2,str,ft_strlen(str));
+		print_error("': not a valid identifier\n", 1);
 		return (0);
 	}
 	str++;
 	while (*str && *str != key)
 	{
 		if (ft_isalnum(*str) == 0)
-		{//w 2 str 1
-			print_error("export: not a valid identifier",1);//어떤 부분에서 에러인지 str을 붙혀서 내야함
-			return (0);///오류
+		{
+			if (key)
+				write(2,"export: `",10);
+			else
+				write(2,"unset: `",9);
+			if (*str)
+				write(2, str,ft_strlen(str));
+			print_error("': not a valid identifier\n", 1);
+			return (0);
 		}
 		str++;
 	}
 	return (1);
 }
 
-char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey)
+char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey) //NULL주는 경우 실실패  처처리
 {
 	st = str; //echk의 값을 바꿔야하며, return 은 st를 해야한다
 	while (*st)
@@ -133,6 +134,8 @@ char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey)
 		if (*st == '=')
 		{
 			(*tkey) = calloc(sz_ek[0], sizeof(char)); //size
+			if (!(*tkey))//
+				return (NULL);//
 			strlcpy((*tkey), str, sz_ek[0]); //size
 			sz_ek[1] = 1;
 		}
@@ -143,7 +146,7 @@ char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey)
 	return (st);
 }
 
-void	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
+int	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
 {
 	char		*st; //st도 필요없음
 	char		*tkey; //마찬가지
@@ -153,26 +156,33 @@ void	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
 	sz_ek[0] = 0; ///par_mdata, curr,
 	sz_ek[1] = 0;
 	st = ft_echk(st, sz_ek, curr->str, &tkey);
+	if (!st)//!st >> 원본
+		return (1);
 	sz_ek[0] = strlen(st);//size
 	tval = NULL;
 	if (sz_ek[1]) //echk
 	{
 		tval = calloc(sz_ek[0] + 1, sizeof(char));//size
+		if (!tval)
+			return (1);
 		strlcpy(tval, st, sz_ek[0] + 1);//size
 	}
 	else
 	{
 		sz_ek[0] = strlen(curr->str);//size
 		tkey = calloc(sz_ek[0] + 1, sizeof(char));//size
+		if (!tkey)
+			return (1);
 		strlcpy(tkey, curr->str, sz_ek[0] + 1);//size
 	}
-	ft_ex_util(tkey, tval, envlist);//echk->삭제 가능해서 지움..
+	return (ft_ex_util(tkey, tval, envlist));
 }
 
 void	ft_export(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	t_cmdnode	*curr;
 
+	g_data.exit_code = 0;
 	curr = cmdlist->head->next;
 	if (cmdlist->datasize == 1)
 	{
@@ -184,12 +194,11 @@ void	ft_export(t_cmdlist *cmdlist, t_envlist *envlist)
 	{
 		if (ft_valid(curr->str, '=') == 0)
 		{
-			///error 출력 후 return >> ㅇㅕ러 인인자  받받을  수  있있으으니니까  continue 유지가 맞다;
-
 			curr = curr->next;
 			continue ;
 		}
-		ft_ex_util2(envlist, curr);
+		if (ft_ex_util2(envlist, curr))
+			print_error("insufficient memory", 1);
 		curr = curr->next;
 	}
 }

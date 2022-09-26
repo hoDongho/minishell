@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 13:13:55 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:22:25 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,21 @@ void	ft_ctrl_c(int sig)
 	{
 
 		printf("\n");
+		g_data.exit_code = 1;//nhwang
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
 		return;
 	}
 	// while(t<g_data.p_size)
+	g_data.is_sig = 1; //fork를 뜨는 경우 exev인 모든 경우 // b-in이 여러개인 경우 == 자식을 만드는 경우에 대한 모든 케이스
 	while(g_data.pidarr[t])
 	{
-		printf("c_pid : %d\n",getpid());
 		kill(g_data.pidarr[t],SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
 		t++;
 	}
-	//free_exec_data(g_data.exec_data);
-	g_data.p_size = 0; //ㅈ저ㅂ근을 convert에서 하고있음
+	g_data.exit_code = 128+sig;
+	g_data.p_size = 0;
 }
 
 void	ft_ctrl_bslash(int sig)
@@ -95,13 +96,13 @@ void	ft_ctrl_bslash(int sig)
 		rl_redisplay();
 		return;
 	}
+	g_data.is_sig = 1;
 	while(t<g_data.p_size)
 	{
-		printf("c_pid : %d\n",getpid());
 		kill(g_data.pidarr[t],SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
 		t++;
 	}
-	//free_exec_data(g_data.exec_data);
+	g_data.exit_code = 128+sig;
 	g_data.p_size = 0; //ㅈ저ㅂ근을 convert에서 하고있음
 }
 
@@ -131,6 +132,7 @@ int main(int argc, char *argv[], char *env[])
 		}
 		if (!*input)
 		{
+			// g_data.exit_code = 0;//nhwang
 			free(input);
 			continue ;
 		}
