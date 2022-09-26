@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 15:59:39 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 11:30:02 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_gdata//
 }				t_gdata;//
 
 t_gdata	g_data;//
+
 
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);

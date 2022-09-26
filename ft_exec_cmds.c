@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/23 14:41:31 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 11:50:32 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,9 @@ int	check_child(t_exec_data *exec_data)
 			return (1);
 		i++;
 	}
-	if (WEXITSTATUS(statloc) != 0)
-		return (WEXITSTATUS(statloc));
+	// if (WEXITSTATUS(statloc) != 0)
+	g_data.exit_code = WEXITSTATUS(statloc);
+		// return (WEXITSTATUS(statloc));
 	return (0);
 }
 

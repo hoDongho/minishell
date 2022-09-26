@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:57:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 11:20:51 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 11:36:01 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,23 @@ char	*ft_chgenv(char *st, t_par_mdata *par_mdata, int swit)
 	}
 	else
 	{
-		// if (*st == '?')
-		// st = ft_make_key(type, par_mdata, st);
-		st = ft_make_key(swit, par_mdata, st);
+		if (*st == '?')
+		{
+			char	*str;
+			int		i;
+
+			str = ft_itoa(g_data.exit_code);
+			i = 0;
+			while (str[i])
+			{
+				ft_push(par_mdata->arglist, str[i]);
+				i++;
+			}
+			free(str);
+			st++;
+		}
+		else // st = ft_make_key(type, par_mdata, st);
+			st = ft_make_key(swit, par_mdata, st);
 	}
 	return (st);
 }

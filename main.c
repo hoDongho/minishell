@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 17:05:16 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 11:49:35 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ int main(int argc, char *argv[], char *env[])
 	ft_set_env(par_mdata.envlist, env);
 	signal(SIGINT, ft_ctrl_c);
 	signal(SIGQUIT, ft_ctrl_bslash);
+	g_data.exit_code = 0; //
 	while (1)
 	{
 		// printf("-----\n\n");
