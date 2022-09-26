@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 16:34:37 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/26 17:41:23 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_gdata//
 	int			p_size;//
 	int			exit_code;//
 	t_exec_data	*exec_data;//
+	int			is_sig;////nhwang
 }				t_gdata;//
 
 t_gdata	g_data;//
@@ -116,7 +117,6 @@ t_gdata	g_data;//
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);
 void		ft_set_env(t_envlist *envlist, char **env);
-t_envnode	*ft_newenv(void);
 void		ft_envinit(t_envlist *envlist);
 int			ft_isspace(char c);
 
@@ -132,10 +132,10 @@ void		ft_env(t_envlist *envlist, int b);
 void		ft_export(t_cmdlist *cmdlist, t_envlist *envlist);
 void		ft_unset(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_ex_util(char *tkey, char *tval, t_envlist *envlist);
-void		ft_ex_util2(t_envlist *envlist, t_cmdnode *curr);
+int			ft_ex_util2(t_envlist *envlist, t_cmdnode *curr);
 char		*ft_echk(char *st,int *sz_ek, char *str, char **tkey);
 int			ft_findenv(char *tkey, char *tval, t_envlist *envlist);
-void		ft_push_env(char *tkey, char *tval, t_envlist *envlist);
+int			ft_push_env(char *tkey, char *tval, t_envlist *envlist);
 void		ft_popenv(char *tkey, t_envlist *envlist);
 int			ft_valid(char *str, char key);
 // void		ft_pushcmd(t_cmdlist *cmdlist, char *str, int type);

@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/26 15:32:07 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/26 17:43:09 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,14 @@ int	check_child(t_exec_data *exec_data)
 	{
 		if (waitpid(exec_data->pid[i], &statloc, 0) == -1)
 			return (1);
+		printf("in exec %d\n",WEXITSTATUS(statloc));
 		i++;
 	}
 	// if (WEXITSTATUS(statloc) != 0)
-	g_data.exit_code = WEXITSTATUS(statloc);
+	if (g_data.is_sig==0)//nhwang
+		g_data.exit_code = WEXITSTATUS(statloc);//nhwang
 		// return (WEXITSTATUS(statloc));
+	g_data.is_sig=0;//nhwang
 	return (0);
 }
 
