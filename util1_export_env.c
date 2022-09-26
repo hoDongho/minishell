@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 12:06:40 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 12:26:34 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,8 @@ void	ft_export(t_cmdlist *cmdlist, t_envlist *envlist)
 	{
 		if (ft_valid(curr->str, '=') == 0)
 		{
-			///error 출력 후
+			///error 출력 후 return ;
+
 			curr = curr->next;
 			continue ;
 		}

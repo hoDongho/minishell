@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/23 16:01:40 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 12:26:46 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	print_error(char *str, int code)
 		ft_putstr_fd(str, 2);
 	else
 		perror(str);
-	if (code != 0)
+	g_data.exit_code = code;
+	if (g_data.p_size != 0)
 	{
-		// g_data.exit_code = code;
 		exit(code);
 	}
 }
