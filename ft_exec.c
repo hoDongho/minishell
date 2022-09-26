@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/23 16:49:29 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 16:26:11 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 	if (ft_strcmp(cmd->str, "echo") == 0)
 		ft_echo(cmdlist, envlist);
 	else if (ft_strcmp(cmd->str, "pwd") == 0)
-		ft_pwd();
+		ft_pwd(envlist);
 	else if (ft_strcmp(cmd->str, "cd") == 0)
 		ft_cd(cmdlist, envlist);
 	else if (ft_strcmp(cmd->str, "exit") == 0)

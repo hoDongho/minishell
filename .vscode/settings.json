@@ -10,5 +10,5 @@
 		"ft_main_exec": "c",
 		"stdlib.h": "c",
 		"wait.h": "c"
-	}
+	},
 }

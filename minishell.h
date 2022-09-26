@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 11:30:02 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 16:34:37 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include <dirent.h>
 # include "./libft/libft.h"
 # include "./pipex.h"
 
@@ -120,9 +121,12 @@ void		ft_envinit(t_envlist *envlist);
 int			ft_isspace(char c);
 
 int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
-int			ft_pwd(void);
+int			ft_pwd(t_envlist *envlist);
 int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_exit(t_cmdlist *cmdlist);
+char		*find_val(t_envlist *envlist, char *key);
+void		change_val(t_envlist *envlist, char *key, char *val);
+char		*get_pwd(t_envlist *envlist);
 
 void		ft_env(t_envlist *envlist, int b);
 void		ft_export(t_cmdlist *cmdlist, t_envlist *envlist);

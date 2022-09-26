@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/22 12:56:10 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:39:34 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ void	change_val(t_envlist *envlist, char *key, char *val)
 	{
 		new = ft_newenv();
 		new->key = strdup(key);
+		if (new->key == 0)
+		{
+			print_error("malloc", 1);
+			return ;
+		}
 		new->val = val;
 		envlist->tail->prev->next = new;
 		new->next = envlist->tail;
@@ -70,17 +75,21 @@ char	*cd_w_args(t_cmdnode *arg, t_envlist *envlist,
 	{
 		path = find_val(envlist, "OLDPWD");
 		if (path == 0)
-			printf("cd: OLDPWD not set\n");
+		{
+			print_error("cd: OLDPWD not set\n", 1);
+			return (0);
+		}
 		else
 		{
 			path = ft_strdup(path);
-			printf("%s\n", path);
+			if (path == 0)
+				print_error("malloc", 1);
 		}
 	}
 	else
 		path = ft_strdup(arg->str);
 	if (path == 0)
-		return (0);
+		print_error("malloc", 1);
 	return (path);
 }
 
@@ -94,7 +103,7 @@ char	*set_cd_path(t_cmdlist *cmdlist, t_envlist *envlist, char *old_pwd)
 	home = find_val(envlist, "HOME");
 	if (home == 0 && cmdlist->datasize == 1)
 	{
-		printf("cd: HOME not set\n");
+		print_error("cd: HOME not set\n", 1);
 		return (0);
 	}
 	else if (home != 0)
@@ -104,8 +113,8 @@ char	*set_cd_path(t_cmdlist *cmdlist, t_envlist *envlist, char *old_pwd)
 		free(path);
 		path = cd_w_args(arg, envlist, home, old_pwd);
 	}
-	if (path == 0)
-		return (0);
+	if (path == 0 && errno != 0)
+		print_error("malloc", 1);
 	return (path);
 }
 
@@ -114,7 +123,25 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	char		*old_pwd;
 	char		*path;
 
-	old_pwd = getcwd(0, 0);
+	old_pwd = find_val(envlist, "PWD");
+	if (old_pwd != 0)
+	{
+		old_pwd = ft_strdup(old_pwd);
+		if(old_pwd == 0)
+		{
+			print_error("malloc", 1);
+			return (1);
+		}
+	}
+	else
+	{
+		old_pwd = getcwd(0, 0);
+		if (old_pwd == 0 && errno != ENOENT)
+		{
+			print_error("getcwd", 1);
+			return (1);
+		}
+	}
 	path = set_cd_path(cmdlist, envlist, old_pwd);
 	if (path == 0)
 	{
@@ -122,12 +149,25 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 		return (1);
 	}
 	if (chdir(path) != 0)
-		printf("errno :\n");
-	free(path);
-	if (path != 0)
 	{
-		change_val(envlist, "PWD", getcwd(0, 0));
-		change_val(envlist, "OLDPWD", old_pwd);
+		write(2, "cd: ", 4);
+		write(2, path, ft_strlen(path));
+		write(2, ": ", 2);
+		print_error("", 1);
+		return (1);
 	}
+	else if (cmdlist->head->next->next->str != 0 && cmdlist->head->next->next->str[0] == '-'
+		&& cmdlist->head->next->next->str[1] == 0)
+		printf("%s\n", path);
+	free(path);
+	change_val(envlist, "OLDPWD", old_pwd);
+	path = getcwd(0, 0);
+	if (path == 0)
+	{
+		print_error("getcwd", 1);
+		return (1);
+	}
+	change_val(envlist, "PWD", path);
+	g_data.exit_code = 0;
 	return (0);
 }

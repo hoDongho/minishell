@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:01:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/01/14 13:00:57 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/26 17:35:06 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	ft_atoi(const char *s)
 	}
 	while (*st && ft_checknum(*st))
 	{
-		if (num * buho > 2147483647)
+		if (num * buho > 9223372036854775807)
 			return (-1);
-		if (num * buho < -2147483648)
+		if (num * buho < -9223372036854775807 - 1)
 			return (0);
 		num = (num * 10) + ((int)(*st) - 48);
 		st++;
