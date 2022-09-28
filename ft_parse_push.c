@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:57:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 11:36:01 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 10:49:27 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,13 @@ char	*ft_push_word(t_par_mdata *par_mdata, char *st, int swit)
 		}
 		else
 		{
+			if (*st == '\\' || *st == ';')
+			{
+				st++;
+				if (ft_switch(*st) == SPACE_NULL)
+					ft_push(par_mdata->arglist, '\0');
+				return (st);
+			}
 			ft_push(par_mdata->arglist, *st);
 			st++;
 		}
