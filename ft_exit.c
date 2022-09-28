@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/27 23:48:45 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 11:39:48 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	ft_exit(t_cmdlist *cmdlist)
 		{
 			write(2, "exit: ", 6);
 			write(2, arg->str, ft_strlen(arg->str));
-			print_error(": numeric argument required", -1);
-			exit(-1);
+			print_error(": numeric argument required", 255);
+			exit(255);
 		}
 		else if (cmdlist->datasize > 2)
 			print_error("exit: too many arguments\n", 1);
@@ -53,15 +53,15 @@ int	ft_exit(t_cmdlist *cmdlist)
 		{
 			write(2, "exit: ", 6);
 			write(2, arg->str, ft_strlen(arg->str));
-			print_error(": numeric argument required", -1);
-			exit(-1);
+			print_error(": numeric argument required", 255);
+			exit(255);
 		}
 		else if (arg->str[0] == '-' && ft_strlen(arg->str) >= 20 && status == 0)
 		{
 			write(2, "exit: ", 6);
 			write(2, arg->str, ft_strlen(arg->str));
-			print_error(": numeric argument required", -1);
-			exit(-1);
+			print_error(": numeric argument required", 255);
+			exit(255);
 		}
 	}
 	if (cmdlist->datasize < 3)

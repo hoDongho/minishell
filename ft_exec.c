@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/26 17:42:04 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 11:49:28 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 	{
 		origin_in = dup(STDIN_FILENO);
 		origin_out = dup(STDOUT_FILENO);
-		ft_redir(cmdlist);
+		if (ft_redir(cmdlist) == -1)
+			return (1);
 	}
 	if (ft_strcmp(cmd->str, "echo") == 0)
 		ft_echo(cmdlist, envlist);
@@ -62,7 +63,7 @@ int ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 		close(origin_in);
 		close(origin_out);
 	}
-	return (1);
+	return (0);
 }
 
 int	check_built_in(char *str)

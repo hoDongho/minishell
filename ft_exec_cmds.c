@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/27 23:55:01 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 13:42:32 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,22 @@ int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 		exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
 		if (exec_cmds->p_cmds == 0 || ft_strchr(exec_cmds->p_cmds, '/') == 0)
 		{
-			printf("command not found: %s\n", exec_cmds->cmd);
+			write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
+			write(2, ": ", 2);
+			write(2, "command not found\n", 18);
+			// printf("command not found: %s\n", exec_cmds->cmd);//
 			exit(127);
 		}
 		if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
-			exit(errno);
+		{
+			if (errno == 13)
+			{
+				write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
+				write(2, ": ", 2);
+				print_error("", 126);
+			}
+			exit(1);
+		}
 	}
 	return (0);
 }

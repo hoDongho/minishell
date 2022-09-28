@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/26 17:42:44 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 13:32:24 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,25 @@ void	print_error(char *str, int code)
 		exit(code);
 	}
 }
-
+#include <sys/stat.h>
+#include <sys/types.h>
 char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
 	int			i;
 	int			ret;
 	char		*tmp;
+	DIR			*dir;
 
 	i = 0;
-	ret = open(exec_cmds->cmd, O_RDONLY);
-	close(ret);
-	if (ret > 0)
-		return (exec_cmds->cmd);
-	else if (ret == -1 && errno == 13)
-		print_error("access", 126);
+	errno = 0;
+	dir = opendir(exec_cmds->cmd);
+	if (dir)
+	{
+		closedir(dir);
+		write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
+		print_error(": is a directory\n", 126);
+	}
+	// printf("%s\n", exec_cmds->cmd);
 	while (exec_data->path[i])
 	{
 		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmd, '/');
@@ -67,10 +72,22 @@ char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 		if (ret > 0)
 			return (tmp);
 		else if (ret == -1 && errno == 13)
-			print_error("access", 126);
+		{
+			write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
+			print_error(": ", 126);
+		}
 		i++;
 		free(tmp);
 		tmp = 0;
+	}
+	ret = open(exec_cmds->cmd, O_RDONLY);
+	close(ret);
+	if (ret > 0)
+		return (exec_cmds->cmd);
+	else if (ret < 0 && errno == 13)
+	{
+		write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
+		print_error(": ", 126);
 	}
 	return (0);
 }

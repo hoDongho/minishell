@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 17:19:18 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 11:07:20 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int	ft_valid(char *str, char key)
 	if (ft_isalpha(*str) == 0)
 	{
 		if (key==0)
-			write(2,"unset: `",9);
+			write(2,"unset: `",8);
 		else
-			write(2,"export: `",10);
+			write(2,"export: `",9);
 		if (*str)
 			write(2,str,ft_strlen(str));
 		print_error("': not a valid identifier\n", 1);
@@ -112,9 +112,9 @@ int	ft_valid(char *str, char key)
 		if (ft_isalnum(*str) == 0)
 		{
 			if (key)
-				write(2,"export: `",10);
+				write(2,"export: `",9);
 			else
-				write(2,"unset: `",9);
+				write(2,"unset: `",8);
 			if (*str)
 				write(2, str,ft_strlen(str));
 			print_error("': not a valid identifier\n", 1);

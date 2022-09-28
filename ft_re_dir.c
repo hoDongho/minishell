@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_re_dir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:26:21 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/27 23:58:54 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 12:04:46 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ int	ft_redir(t_cmdlist *cmdlist)
 				// close(new_out);
 				if (new_out < 0)
 				{
-					// printf("SsSSSSSSSSSSSS\n");
+					write(2, curr->next->str, ft_strlen(curr->next->str));
+					print_error(": ", 1);
+					return (-1);
 				}
 				curr = ft_del_redir(curr);
 				cmdlist->datasize = cmdlist->datasize - 2;
@@ -83,7 +85,7 @@ int	ft_redir(t_cmdlist *cmdlist)
 				if (new_in < 0)
 				{
 					write(2, curr->next->str, ft_strlen(curr->next->str));
-					print_error(": No such file or directory", 1);
+					print_error(": ", 1);
 					return (-1);
 				}
 				// dup2(new_in, STDIN_FILENO); //
