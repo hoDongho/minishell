@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 15:57:10 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 17:28:42 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 
 	new = ft_newenv();
 	new->key = ft_strdup(tkey);
-	if (!new || !(new->key))
-		return (1);
 	if (tval)
 		new->val = ft_strdup(tval);
 	prev = envlist->tail->prev;
@@ -84,39 +82,45 @@ int	ft_ex_util(char *tkey, char *tval, t_envlist *envlist)
 	t_envnode	*prev_tail;
 
 	if (ft_findenv(tkey, tval, envlist) == 0)
-		if (ft_push_env(tkey, tval, envlist)==1) //err시 1
-			return (1);
-	if (tkey) //
-		free(tkey); //
-	if (tval) //
-		free(tval); //
+		ft_push_env(tkey, tval, envlist);
+	if (tkey)
+		free(tkey);
+	if (tval)
+		free(tval);
 	return (0);
+}
+
+int	ft_val_first(char *str, char key)
+{
+	if (ft_isalpha(*str) == 0)
+	{
+		if (key == 0)
+			write(2, "unset: `", 8);
+		else
+			write(2, "export: `", 9);
+		if (*str)
+			write(2, str, ft_strlen(str));
+		print_error("': not a valid identifier\n", 1);
+		return (0);
+	}
+	return (1);
 }
 
 int	ft_valid(char *str, char key)
 {
-	if (ft_isalpha(*str) == 0)
-	{
-		if (key==0)
-			write(2,"unset: `",8);
-		else
-			write(2,"export: `",9);
-		if (*str)
-			write(2,str,ft_strlen(str));
-		print_error("': not a valid identifier\n", 1);
+	if (ft_val_first(str, key) == 0)
 		return (0);
-	}
 	str++;
 	while (*str && *str != key)
 	{
 		if (ft_isalnum(*str) == 0)
 		{
 			if (key)
-				write(2,"export: `",9);
+				write(2, "export: `", 9);
 			else
-				write(2,"unset: `",8);
+				write(2, "unset: `", 8);
 			if (*str)
-				write(2, str,ft_strlen(str));
+				write(2, str, ft_strlen(str));
 			print_error("': not a valid identifier\n", 1);
 			return (0);
 		}
@@ -125,22 +129,23 @@ int	ft_valid(char *str, char key)
 	return (1);
 }
 
-char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey) //NULL주는 경우 실실패  처처리
+char	*ft_echk(char *st,int *echk, char *str, char **tkey)
 {
-	st = str; //echk의 값을 바꿔야하며, return 은 st를 해야한다
+	int	size;
+
+	size = 0;
+	st = str;
 	while (*st)
 	{
-		sz_ek[0]++;
+		size++;//
 		if (*st == '=')
 		{
-			(*tkey) = ft_calloc(sz_ek[0], sizeof(char)); //size
-			if (!(*tkey))//
-				return (NULL);//
-			strlcpy((*tkey), str, sz_ek[0]); //size
-			sz_ek[1] = 1;
+			(*tkey) = ft_calloc(size, sizeof(char));
+			ft_strlcpy((*tkey), str, size);//
+			*echk = 1;
 		}
 		st++;
-		if (sz_ek[1]) //(echk)
+		if (*echk)
 			break ;
 	}
 	return (st);
@@ -148,32 +153,23 @@ char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey) //NULL주는 경우 �
 
 int	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
 {
-	char		*st; //st도 필요없음
-	char		*tkey; //마찬가지
-	char		*tval; //필요없어짐
-	int			sz_ek[2];  //[0]==sz [1] = echk
+	char		*st;
+	char		*tkey;
+	char		*tval;
+	int			echk;
 
-	sz_ek[0] = 0; ///par_mdata, curr,
-	sz_ek[1] = 0;
-	st = ft_echk(st, sz_ek, curr->str, &tkey);
-	if (!st)//!st >> 원본
-		return (1);
-	sz_ek[0] = strlen(st);//size
+	echk = 0;
+	st = ft_echk(st, &echk, curr->str, &tkey);
 	tval = NULL;
-	if (sz_ek[1]) //echk
+	if (echk)
 	{
-		tval = ft_calloc(sz_ek[0] + 1, sizeof(char));//size
-		if (!tval)
-			return (1);
-		strlcpy(tval, st, sz_ek[0] + 1);//size
+		tval = ft_calloc(ft_strlen(st) + 1, sizeof(char));
+		ft_strlcpy(tval, st, ft_strlen(st) + 1);
 	}
 	else
 	{
-		sz_ek[0] = strlen(curr->str);//size
-		tkey = ft_calloc(sz_ek[0] + 1, sizeof(char));//size
-		if (!tkey)
-			return (1);
-		strlcpy(tkey, curr->str, sz_ek[0] + 1);//size
+		tkey = ft_calloc(ft_strlen(curr->str) + 1, sizeof(char));
+		ft_strlcpy(tkey, curr->str, ft_strlen(curr->str) + 1);
 	}
 	return (ft_ex_util(tkey, tval, envlist));
 }
@@ -197,15 +193,10 @@ void	ft_export(t_cmdlist *cmdlist, t_envlist *envlist)
 			curr = curr->next;
 			continue ;
 		}
-		if (ft_ex_util2(envlist, curr))
-			print_error("insufficient memory", 1);
+		ft_ex_util2(envlist, curr);
 		curr = curr->next;
 	}
 }
-
-
-
-
 
 ///////
 	///////test ft_export
