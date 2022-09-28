@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/28 11:39:48 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:45:15 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@ int	ft_exit(t_cmdlist *cmdlist)
 	long long	status;
 
 	arg = cmdlist->head->next->next;
-	// write(2, "exit\n", 5);
+	ft_putstr_fd("exit\n", 2);
 	if (!arg->next)
 		status = 0;
 	else if (cmdlist->datasize > 1)
 	{
-		if (chk_number(arg->str) != 0)
+		status = ft_atoi(arg->str);
+		if (chk_number(arg->str) != 0
+			|| ft_strlen(arg->str) >= 19 && status == -1
+			|| arg->str[0] == '-' && ft_strlen(arg->str) >= 20 && status == 0)
 		{
 			write(2, "exit: ", 6);
 			write(2, arg->str, ft_strlen(arg->str));
@@ -47,22 +50,6 @@ int	ft_exit(t_cmdlist *cmdlist)
 		}
 		else if (cmdlist->datasize > 2)
 			print_error("exit: too many arguments\n", 1);
-		status = ft_atoi(arg->str);
-		// printf("%lld\n", status);
-		if (ft_strlen(arg->str) >= 19 && status == -1) // 수정필요
-		{
-			write(2, "exit: ", 6);
-			write(2, arg->str, ft_strlen(arg->str));
-			print_error(": numeric argument required", 255);
-			exit(255);
-		}
-		else if (arg->str[0] == '-' && ft_strlen(arg->str) >= 20 && status == 0)
-		{
-			write(2, "exit: ", 6);
-			write(2, arg->str, ft_strlen(arg->str));
-			print_error(": numeric argument required", 255);
-			exit(255);
-		}
 	}
 	if (cmdlist->datasize < 3)
 		exit(status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 15:02:16 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 17:21:13 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_set_env(t_envlist *envlist, char **env)
 			key++;
 		}
 		key = 0;
-		key = calloc(cnt + 1, sizeof(char));
-		memmove(key, env[i], cnt);
+		key = ft_calloc(cnt + 1, sizeof(char));
+		ft_memmove(key, env[i], cnt);
 		ft_push_env(key, getenv(key), envlist);
 		free(key);
 		i++;

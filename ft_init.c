@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:12:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/21 14:52:14 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 15:56:21 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	ft_cmdinit(t_cmdlist *cmdlist)
 
 void	ft_init(t_par_mdata *par_mdata)
 {
-	par_mdata->arglist = calloc (1, sizeof(t_arglist));
-	par_mdata->envlist = calloc (1, sizeof(t_envlist));
-	par_mdata->cmdlist = calloc (1, sizeof(t_cmdlist));
+	par_mdata->arglist = ft_calloc (1, sizeof(t_arglist));
+	par_mdata->envlist = ft_calloc (1, sizeof(t_envlist));
+	par_mdata->cmdlist = ft_calloc (1, sizeof(t_cmdlist));
 	ft_arginit(par_mdata->arglist);
 	ft_envinit(par_mdata->envlist);
 	ft_cmdinit(par_mdata->cmdlist);

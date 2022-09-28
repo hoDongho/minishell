@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 14:00:44 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/13 11:31:18 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:56:21 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	set_cmds(int argc, char *argv[], t_cmd *cmds)
 		{
 			cmds->next = ft_calloc(1, sizeof(t_cmd));
 			if (cmds->next == 0)
-				print_error("calloc", 1);
+				print_error("ft_calloc", 1);
 			cmds = cmds->next;
 			init_cmds(cmds);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 14:19:12 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:57:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_push_env(char *tkey, char *tval, t_par_mdata *par_mdata)
 	t_envnode	*prev;
 
 	new = ft_newenv();
-	new->key = strdup(tkey);
+	new->key = ft_strdup(tkey);
 	if (tval)
-		new->val = strdup(tval);
+		new->val = ft_strdup(tval);
 	prev = par_mdata->envlist->tail->prev;
 	new->next = par_mdata->envlist->tail;
 	new->prev = prev;
@@ -66,7 +66,7 @@ int	ft_findenv(char *tkey, char *tval, t_par_mdata *par_mdata)
 			if (tval)
 			{
 				free(curr->val);
-				curr->val = strdup(tval);
+				curr->val = ft_strdup(tval);
 			}
 			return (1);
 		}
@@ -146,7 +146,7 @@ void	ft_export(t_par_mdata *par_mdata)
 			size++;
 			if (*st == '=')
 			{
-				tkey = calloc(size, sizeof(char));
+				tkey = ft_calloc(size, sizeof(char));
 				strlcpy(tkey, curr->str, size);
 				echk = 1;
 			}
@@ -158,13 +158,13 @@ void	ft_export(t_par_mdata *par_mdata)
 		tval = NULL;
 		if (echk)
 		{
-			tval = calloc(size + 1, sizeof(char));
+			tval = ft_calloc(size + 1, sizeof(char));
 			strlcpy(tval, st, size + 1);
 		}
 		else
 		{
 			size = strlen(curr->str);
-			tkey = calloc(size + 1, sizeof(char));
+			tkey = ft_calloc(size + 1, sizeof(char));
 			strlcpy(tkey, curr->str, size + 1);
 		}
 		ft_ex_util(tkey, tval, echk, par_mdata);

@@ -105,7 +105,7 @@ char	**ft_split2(t_par_mdata *par_mdata)
 	int	len;
 	char **ans;
 	len = ft_split_util(par_mdata->origin);
-	ans = calloc (len + 1, sizeof(char *));
+	ans = ft_calloc (len + 1, sizeof(char *));
 	if (!ans)
 		return (NULL);//
 	ft_removeq2(par_mdata, ans, len);
@@ -144,7 +144,7 @@ t_cmdnode *ft_newcmd(void)
 {
 	t_cmdnode *new;
 
-	new = calloc(1,sizeof(t_cmdnode));
+	new = ft_calloc(1,sizeof(t_cmdnode));
 	if (!new)
 		return (NULL);
 	return new;
@@ -161,9 +161,9 @@ void ft_cmdinit(t_cmdlist *cmdlist)
 
 void ft_init(t_par_mdata *par_mdata)
 {
-	par_mdata->arglist = calloc (1, sizeof(t_arglist));
-	par_mdata->envlist = calloc (1, sizeof(t_envlist));
-	par_mdata->cmdlist = calloc (1, sizeof(t_cmdlist));
+	par_mdata->arglist = ft_calloc (1, sizeof(t_arglist));
+	par_mdata->envlist = ft_calloc (1, sizeof(t_envlist));
+	par_mdata->cmdlist = ft_calloc (1, sizeof(t_cmdlist));
 	//cmdlist추가하기랑 null
 	ft_arginit(par_mdata->arglist);
 	ft_envinit(par_mdata->envlist);
@@ -175,7 +175,7 @@ t_envnode	*ft_newenv(void)
 {
 	t_envnode	*new;
 
-	new = calloc(1, sizeof(t_envnode));
+	new = ft_calloc(1, sizeof(t_envnode));
 	if (!new)
 		return (NULL);//
 	return (new);
@@ -201,8 +201,8 @@ void ft_set_env(t_envlist *envlist, char **env)
 			str++;
 		}
 		str = 0;
-		str = calloc(cnt + 1, sizeof(char));
-		memmove(str, env[i], cnt);
+		str = ft_calloc(cnt + 1, sizeof(char));
+		ft_memmove(str, env[i], cnt);
 		new = ft_newenv();
 		new->key = str;
 		new->val = getenv(env[i]);

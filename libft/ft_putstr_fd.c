@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 16:40:52 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 13:19:22 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 16:13:46 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	while (*st)
 	{
-		write(fd, st, 1);
+		if (write(fd, st, 1) < 0)
+			exit(1);
 		st++;
 	}
 }

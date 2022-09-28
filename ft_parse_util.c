@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:10:32 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 16:59:12 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:56:37 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ char	*ft_make_key(int type, t_par_mdata *par_mdata, char *st)
 			break ;
 		i++;
 	}
-	key = calloc(i + 1, sizeof(char));
-	memmove(key, st, i);
+	key = ft_calloc(i + 1, sizeof(char));
+	ft_memmove(key, st, i);
 	st = st + i;
 	ft_push_val(key, type, par_mdata);
 	free(key);

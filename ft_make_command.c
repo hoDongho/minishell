@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/22 12:19:24 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:56:21 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_makeword(t_arglist	*arglist)
 
 	if (arglist->datasize == 0)
 		return (NULL);
-	st = calloc(arglist->datasize + 1, sizeof(char));
+	st = ft_calloc(arglist->datasize + 1, sizeof(char));
 	str = st;
 	curr = arglist->head->next;
 	while (curr->next)
@@ -61,9 +61,9 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int swit)
 		return ;
 	new_str = str;
 	if (str == 0)
-		new_str = calloc(1, sizeof(char));
+		new_str = ft_calloc(1, sizeof(char));
 	new = ft_newcmd();
-	// new = calloc(1, sizeof(t_cmdnode));
+	// new = ft_calloc(1, sizeof(t_cmdnode));
 	// if(!new)
 	// 	return (NULL); print 함수 만들고 exit 쓰기
 	new->p_type = swit;//nhwang

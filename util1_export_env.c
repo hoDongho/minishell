@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util1_export_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 11:07:20 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:57:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 	t_envnode	*prev;
 
 	new = ft_newenv();
-	new->key = strdup(tkey);
+	new->key = ft_strdup(tkey);
 	if (!new || !(new->key))
 		return (1);
 	if (tval)
-		new->val = strdup(tval);
+		new->val = ft_strdup(tval);
 	prev = envlist->tail->prev;
 	new->next = envlist->tail;
 	new->prev = prev;
@@ -70,7 +70,7 @@ int	ft_findenv(char *tkey, char *tval, t_envlist *envlist)
 			if (tval)
 			{
 				free(curr->val);
-				curr->val = strdup(tval);
+				curr->val = ft_strdup(tval);
 			}
 			return (1);
 		}
@@ -133,7 +133,7 @@ char	*ft_echk(char *st,int *sz_ek, char *str, char **tkey) //NULL주는 경우 �
 		sz_ek[0]++;
 		if (*st == '=')
 		{
-			(*tkey) = calloc(sz_ek[0], sizeof(char)); //size
+			(*tkey) = ft_calloc(sz_ek[0], sizeof(char)); //size
 			if (!(*tkey))//
 				return (NULL);//
 			strlcpy((*tkey), str, sz_ek[0]); //size
@@ -162,7 +162,7 @@ int	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
 	tval = NULL;
 	if (sz_ek[1]) //echk
 	{
-		tval = calloc(sz_ek[0] + 1, sizeof(char));//size
+		tval = ft_calloc(sz_ek[0] + 1, sizeof(char));//size
 		if (!tval)
 			return (1);
 		strlcpy(tval, st, sz_ek[0] + 1);//size
@@ -170,7 +170,7 @@ int	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
 	else
 	{
 		sz_ek[0] = strlen(curr->str);//size
-		tkey = calloc(sz_ek[0] + 1, sizeof(char));//size
+		tkey = ft_calloc(sz_ek[0] + 1, sizeof(char));//size
 		if (!tkey)
 			return (1);
 		strlcpy(tkey, curr->str, sz_ek[0] + 1);//size

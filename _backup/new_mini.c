@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_mini.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 15:10:46 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:56:37 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_argnode	*ft_new_argnode(char c)
 {
 	t_argnode	*new;
 
-	new = calloc(1, sizeof(t_argnode));
+	new = ft_calloc(1, sizeof(t_argnode));
 	if (!new)
 		return (NULL);
 	new->c = c;
@@ -45,7 +45,7 @@ char	*ft_makeword(t_arglist	*arglist)
 
 	if (arglist->datasize == 0)
 		return (NULL);
-	st = calloc(arglist->datasize + 1, sizeof(char));
+	st = ft_calloc(arglist->datasize + 1, sizeof(char));
 	str = st;
 	curr = arglist->head->next;
 	while (curr->next)
@@ -86,8 +86,8 @@ char	*ft_chgenv(char *st, t_par_mdata *par_mdata, int type)
 				break ;
 			i++;
 		}
-		key = calloc(i + 1, sizeof(char));
-		memmove(key, st, i);
+		key = ft_calloc(i + 1, sizeof(char));
+		ft_memmove(key, st, i);
 		curr = par_mdata->envlist->head;
 		while (curr->next->next)
 		{
@@ -128,8 +128,8 @@ void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 		return ;
 	new_str = str;
 	if (str == 0)
-		new_str = calloc(1, sizeof(char));
-	new = calloc(1, sizeof(t_cmdnode));
+		new_str = ft_calloc(1, sizeof(char));
+	new = ft_calloc(1, sizeof(t_cmdnode));
 	// if(!new)
 	// 	return (NULL); print 함수 만들고 exit 쓰기
 	new->str = new_str;

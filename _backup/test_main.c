@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 15:13:39 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:57:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cmdnode *ft_newcmd(void)
 {
 	t_cmdnode	*new;
 
-	new = calloc(1, sizeof(t_cmdnode));
+	new = ft_calloc(1, sizeof(t_cmdnode));
 	if (!new)
 		return (NULL);
 	return (new);
@@ -51,9 +51,9 @@ void ft_cmdinit(t_cmdlist *cmdlist)
 
 void ft_init(t_par_mdata *par_mdata)
 {
-	par_mdata->arglist = calloc (1, sizeof(t_arglist));
-	par_mdata->envlist = calloc (1, sizeof(t_envlist));
-	par_mdata->cmdlist = calloc (1, sizeof(t_cmdlist));
+	par_mdata->arglist = ft_calloc (1, sizeof(t_arglist));
+	par_mdata->envlist = ft_calloc (1, sizeof(t_envlist));
+	par_mdata->cmdlist = ft_calloc (1, sizeof(t_cmdlist));
 	ft_arginit(par_mdata->arglist);
 	ft_envinit(par_mdata->envlist);
 	ft_cmdinit(par_mdata->cmdlist);
@@ -64,7 +64,7 @@ t_envnode	*ft_newenv(void)
 {
 	t_envnode	*new;
 
-	new = calloc(1, sizeof(t_envnode));
+	new = ft_calloc(1, sizeof(t_envnode));
 	if (!new)
 		return (NULL);
 	return (new);
@@ -90,11 +90,11 @@ void ft_set_env(t_envlist *envlist, char **env)
 			str++;
 		}
 		str = 0;
-		str = calloc(cnt + 1, sizeof(char));
-		memmove(str, env[i], cnt);
+		str = ft_calloc(cnt + 1, sizeof(char));
+		ft_memmove(str, env[i], cnt);
 		new = ft_newenv();
 		new->key = str;
-		new->val = strdup(getenv(env[i]));
+		new->val = ft_strdup(getenv(env[i]));
 		envlist->tail->prev->next = new;
 		new->next = envlist->tail;
 		new->prev = envlist->tail->prev;

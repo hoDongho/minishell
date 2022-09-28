@@ -9,13 +9,13 @@ int main(int argc, char *argv[], char *env[])
 	// input=0;
 	// if (!input)
 	// 	printf("1 input is NULL");
-	//input=calloc(7,sizeof(char));
+	//input=ft_calloc(7,sizeof(char));
 	// if (!input)
 	// 	printf("2 input is NULL");
 	// printf("%s\n",input);
 	// printf("%lu\n",strlen(input));
 	// free(input);
-	// input = strdup(""); //leak??
+	// input = ft_strdup(""); //leak??
 	// printf("%s\n",input);
 	// printf("%lu\n",strlen(input));
 	// strlcat(input, s, 6);
@@ -27,7 +27,7 @@ int main(int argc, char *argv[], char *env[])
 	// 	s++;
 	// }
 	input = NULL;
-	cc = strdup(input);
+	cc = ft_strdup(input);
 	// system("leaks a.out");
     return 0;
 }

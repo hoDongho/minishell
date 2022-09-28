@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/16 14:19:12 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:57:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	change_val(t_envlist *envlist, char *key, char *val)
 	if (!curr->next)
 	{
 		new = ft_newenv();
-		new->key = strdup(key);
+		new->key = ft_strdup(key);
 		new->val = val;
 		envlist->tail->prev->next = new;
 		new->next = envlist->tail;

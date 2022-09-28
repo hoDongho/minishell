@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:31:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/13 11:31:18 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:56:21 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char *argv[], char *env[])
 		here_doc(&argc, argv, &arglist);
 	cmds = ft_calloc(1, sizeof(t_cmd));
 	if (cmds == 0)
-		print_error("calloc", 1);
+		print_error("ft_calloc", 1);
 	init(&arglist, cmds, argc, argv);
 	set_args(argc, argv, env, &arglist);
 	exec(&arglist, cmds);
