@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_re_dir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:26:21 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 16:43:30 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/27 23:58:54 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	ft_redir(t_cmdlist *cmdlist)
 				new_in = open(curr->next->str, O_RDONLY, 0644); //
 				if (new_in < 0)
 				{
-					printf("no f d\n");
+					write(2, curr->next->str, ft_strlen(curr->next->str));
+					print_error(": No such file or directory", 1);
 					return (-1);
 				}
 				// dup2(new_in, STDIN_FILENO); //

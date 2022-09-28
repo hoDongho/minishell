@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:01:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 17:35:06 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 10:49:53 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_checkbuho(char str)
 		return (0);
 }
 
-int	ft_atoi(const char *s)
+long	long	ft_atoi(const char *s)
 {
 	const char	*st;
 	int			buho;
@@ -55,12 +55,12 @@ int	ft_atoi(const char *s)
 	}
 	while (*st && ft_checknum(*st))
 	{
-		if (num * buho > 9223372036854775807)
-			return (-1);
-		if (num * buho < -9223372036854775807 - 1)
-			return (0);
-		num = (num * 10) + ((int)(*st) - 48);
+		num = (num * 10) + ((long long)(*st) - 48);
 		st++;
 	}
-	return ((int)num * buho);
+	if (buho == 1 && num * buho < 0 && ft_strlen(s) >= 19)
+		return (-1);
+	if (buho == -1 && num * buho > 0 && ft_strlen(s) >= 20)
+		return (0);
+	return ((long long)num * buho);
 }

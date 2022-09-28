@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/26 17:35:57 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/27 23:48:45 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	chk_number(char *str)
 {
-	int	len;
-
-	len = 0;
 	if (str == 0)
 		return (1);
 	if (*str == '-' || *str == '+')
@@ -26,7 +23,6 @@ int	chk_number(char *str)
 		if (!ft_isdigit(*str))
 			return (1);
 		str++;
-		len++;
 	}
 	return (0);
 }
@@ -34,10 +30,10 @@ int	chk_number(char *str)
 int	ft_exit(t_cmdlist *cmdlist)
 {
 	t_cmdnode	*arg;
-	int			status;
+	long long	status;
 
 	arg = cmdlist->head->next->next;
-	write(2, "exit\n", 5);
+	// write(2, "exit\n", 5);
 	if (!arg->next)
 		status = 0;
 	else if (cmdlist->datasize > 1)
@@ -47,30 +43,25 @@ int	ft_exit(t_cmdlist *cmdlist)
 			write(2, "exit: ", 6);
 			write(2, arg->str, ft_strlen(arg->str));
 			print_error(": numeric argument required", -1);
-			exit (-1);
+			exit(-1);
 		}
 		else if (cmdlist->datasize > 2)
 			print_error("exit: too many arguments\n", 1);
 		status = ft_atoi(arg->str);
+		// printf("%lld\n", status);
 		if (ft_strlen(arg->str) >= 19 && status == -1) // 수정필요
 		{
-			if (chk_number(arg->str) != 0)
-			{
-				write(2, "exit: ", 6);
-				write(2, arg->str, ft_strlen(arg->str));
-				print_error(": numeric argument required", -1);
-				exit (-1);
-			}
+			write(2, "exit: ", 6);
+			write(2, arg->str, ft_strlen(arg->str));
+			print_error(": numeric argument required", -1);
+			exit(-1);
 		}
 		else if (arg->str[0] == '-' && ft_strlen(arg->str) >= 20 && status == 0)
 		{
-			if (chk_number(arg->str) != 0)
-			{
-				write(2, "exit: ", 6);
-				write(2, arg->str, ft_strlen(arg->str));
-				print_error(": numeric argument required", -1);
-				exit (-1);
-			}
+			write(2, "exit: ", 6);
+			write(2, arg->str, ft_strlen(arg->str));
+			print_error(": numeric argument required", -1);
+			exit(-1);
 		}
 	}
 	if (cmdlist->datasize < 3)
