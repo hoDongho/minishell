@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:30:17 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/23 12:01:26 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:33:11 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,20 @@ int	ft_parse(t_par_mdata *par_mdata)
 {
 	int	len;
 
+	if (ft_checkq(par_mdata->origin))
+		return (1);
 	len = ft_cnt_word(par_mdata->origin);
 	if (len == 0)
 		return (1); //에러 처리
 	ft_parse_all(par_mdata, len);
 	t_cmdnode	*curr;
 	curr = par_mdata->cmdlist->head->next;
+	if(par_mdata->cmdlist->datasize == 0)
+		return (1);
+	if (ft_check_syntax(par_mdata->cmdlist) != 0)
+		return (1);//syntax code ㅍㅣㄹ요
+	return (0);
+}
 	// printf("====\n");
 	// while(curr->next)
 	// {
@@ -96,5 +104,3 @@ int	ft_parse(t_par_mdata *par_mdata)
 	// 	curr=curr->next;
 	// }
 	// printf("\n\n\n\n\n");
-	return (0);
-}

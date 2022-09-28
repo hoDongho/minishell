@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 12:13:35 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:02:16 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,6 @@ int main(int argc, char *argv[], char *env[])
 			continue ;
 		}
 		free(input);//
-		if (par_mdata.cmdlist->datasize == 0)
-			continue ;
 		ft_exec(par_mdata.cmdlist, par_mdata.envlist);
 		// t_cmdnode *arg;
 		// arg = par_mdata.cmdlist->head->next;

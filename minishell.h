@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 17:41:23 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/28 15:33:04 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,9 @@ t_argnode	*ft_new_argnode(char c);
 
 int			ft_is_redir(char *str);
 int			ft_redir(t_cmdlist *cmdlist);
+
+int			ft_check_syntax(t_cmdlist *cmdlist);
+int			ft_checkq(char *str);
 
 
 

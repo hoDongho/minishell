@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   ft_util.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:13:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/16 14:48:08 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/28 15:12:09 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,45 +48,4 @@ int	ft_switch(char c)
 	else if (ft_isspace(c) == 0 && c != 0)
 		return (WORD);
 	return (SPACE_NULL); //null,공백
-}
-
-int	ft_checkq(char *str)
-{
-	char	*st;
-	int		dchk;
-	int		schk;
-	int		standard;
-
-	standard = 0; // 1 : single , 2 : double
-	st = str;
-	dchk = 0;
-	schk = 0;
-	while (*st)
-	{
-		if ((*st == '\"' || *st == '\'') && standard == 0)
-		{
-			if (*st == '\'')
-				standard = 1;
-			else if (*st == '\"')
-				standard = 2;
-		}
-		if (*st == '\'' && standard == 1)
-		{
-			schk++;
-			if (schk % 2 == 0)
-				standard = 0;
-		}
-		else if (*st == '\"' && standard == 2)
-		{
-			dchk++;
-			if (dchk % 2 == 0)
-				standard = 0;
-		}
-		st++;
-	}
-	if (standard == 1)
-		return (1);
-	else if (standard == 2)
-		return (2);
-	return (0);
 }
