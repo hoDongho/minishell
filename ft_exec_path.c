@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:58:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 14:17:56 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 22:11:36 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*search_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	while (exec_data->path[i])
 	{
 		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmd, '/');
+		printf("search_path :: %s\n", tmp);
 		ret = open(tmp, O_RDONLY);
 		close(ret);
 		if (ret > 0)

@@ -1,3 +1,7 @@
 #!/bin/bash
-
-echo 123
+mkdir aa
+cd aa
+rm -r ../aa
+unset PWD
+cd
+ls

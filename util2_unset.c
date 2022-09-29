@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:09:57 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/26 16:10:38 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/29 22:09:57 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_popenv(char *tkey, t_envlist *envlist)
 			temp = curr;
 			curr = curr->next;
 			free(temp);
-			continue ;
+			return ;
 		}
 		curr = curr->next;
 	}

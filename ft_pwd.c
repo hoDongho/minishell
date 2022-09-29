@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:43:25 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 17:26:33 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 21:10:21 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	ft_pwd(t_envlist *envlist)
 	if (pwd == 0)
 		return (1);
 	printf("%s\n", pwd);
-	free(pwd);
+	// unset PWD -> pwd command, (double free error) occurs
+	// free(pwd);
 	g_data.exit_code = 0;
 	return (0);
 }

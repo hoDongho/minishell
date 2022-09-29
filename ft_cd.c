@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 16:31:47 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 22:36:01 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ char	*set_old_pwd(t_envlist *envlist)
 	else
 	{
 		old_pwd = getcwd(0, 0);
+
+		// 현재 디렉토리가 없는 경우 getcwd가 Null을 리턴, oldpwd에 Null 할당하여 strjoin() 시 join 안됨
+		// if (old_pwd == 0)
+		// 	old_pwd = ft_strdup("");
+
 		if (old_pwd == 0 && errno != 2)
 		{
 			print_error("getcwd", 1);
@@ -100,6 +105,7 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 
 	old_pwd = set_old_pwd(envlist);
 	path = set_cd_path(cmdlist, envlist, old_pwd);
+	printf("old_pwd : %s, path : %s\n", old_pwd, path);
 	if (path == 0)
 	{
 		free(old_pwd);
@@ -111,6 +117,8 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": ", 2);
 		print_error("", 1);
+		free(old_pwd);//
+		free(path);//
 		return (1);
 	}
 	else if (cmdlist->head->next->next->str != 0

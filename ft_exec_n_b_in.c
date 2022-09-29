@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_n_b_in.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:01:36 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 17:59:19 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 22:23:54 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,21 @@ void	free_exec_data(t_exec_data *exec_data)
 	int	i;
 
 	i = 0;
+
 	while (exec_data->path[i])
 		free(exec_data->path[i++]);
 	free(exec_data->path);
 	i = 0;
 	while (exec_data->env[i])
 	{
-		printf("nnnn\n");
+		printf("\n\nidx %d\n\n", i);
+		printf("data :: %s", exec_data->env[i]);
 		free(exec_data->env[i]);
 		i++;
 	}
+	system("leaks minishell");
 	free(exec_data->env);
+	system("leaks minishell");
 	free(exec_data->pid);
 	free_exec_data_list(exec_data);
 	free(exec_data);

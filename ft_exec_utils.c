@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 13:00:00 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 22:25:19 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*ft_strjoin_wc(char *s1, char *s2, char c)
 	new = 0;
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
+	printf("len1 %zu, len2 %zu\n", len1, len2);
 	new = ft_calloc(len1 + len2 + 1 + 1, sizeof(char));
 	if (new == 0)
 		return (0);
