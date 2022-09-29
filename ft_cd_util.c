@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 15:58:44 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 11:10:50 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 16:43:29 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	change_val(t_envlist *envlist, char *key, char *val)
 	if (!curr->next)
 	{
 		ft_push_env(key, val, envlist);
+		free(val);
 		return ;
 	}
 	if (curr->val != 0)

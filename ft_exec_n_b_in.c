@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:01:36 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 14:08:50 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 17:59:19 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	free_exec_data(t_exec_data *exec_data)
 	free(exec_data->path);
 	i = 0;
 	while (exec_data->env[i])
-		free(exec_data->env[i++]);
+	{
+		printf("nnnn\n");
+		free(exec_data->env[i]);
+		i++;
+	}
 	free(exec_data->env);
 	free(exec_data->pid);
 	free_exec_data_list(exec_data);

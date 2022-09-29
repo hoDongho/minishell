@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:43:25 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/26 17:36:22 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 17:26:33 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*get_pwd(t_envlist *envlist)
 		}
 		change_val(envlist, "PWD", pwd);
 	}
+	else
+		pwd = ft_strdup(pwd);
 	return (pwd);
 }
 
@@ -38,6 +40,7 @@ int	ft_pwd(t_envlist *envlist)
 	if (pwd == 0)
 		return (1);
 	printf("%s\n", pwd);
+	free(pwd);
 	g_data.exit_code = 0;
 	return (0);
 }

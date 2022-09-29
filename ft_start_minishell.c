@@ -6,11 +6,29 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:22:45 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 11:23:53 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 15:59:26 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_clearcmd(t_cmdlist *cmdlist)
+{
+	t_cmdnode	*curr;
+	t_cmdnode	*temp;
+
+	curr = cmdlist->head->next;
+	while (curr->next)
+	{
+		temp = curr;
+		curr = curr->next;
+		free(temp->str);
+		free(temp);
+	}
+	cmdlist->head->next = cmdlist->tail;
+	cmdlist->tail->prev = cmdlist->head;
+	cmdlist->datasize = 0;
+}
 
 void	ft_start_minishell(t_par_mdata *par_mdata)
 {

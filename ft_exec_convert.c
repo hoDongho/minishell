@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 14:00:59 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 17:55:29 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ int	convert_env(t_envlist *envlist, t_exec_data *exec_data)
 	{
 		if (curr->val != 0)
 			exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
-		if (exec_data->env == 0)
-			return (1);
+		if (exec_data->env == 0)//
+			return (1);//
 		i++;
 		curr = curr->next;
 	}

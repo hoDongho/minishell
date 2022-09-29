@@ -6,56 +6,11 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 11:26:03 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 17:19:53 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_set_env(t_envlist *envlist, char **env)
-{
-	int				i;
-	int				cnt;
-	char			*key;
-
-	i = 0;
-	while (env[i])
-	{
-		key = env[i];
-		cnt = 0;
-		while (*key)
-		{
-			if (*key == '=')
-				break ;
-			cnt++;
-			key++;
-		}
-		key = 0;
-		key = ft_calloc(cnt + 1, sizeof(char));
-		ft_memmove(key, env[i], cnt);
-		ft_push_env(key, getenv(key), envlist);
-		free(key);
-		i++;
-	}
-}
-
-void	ft_clearcmd(t_cmdlist *cmdlist)
-{
-	t_cmdnode	*curr;
-	t_cmdnode	*temp;
-
-	curr = cmdlist->head->next;
-	while (curr->next)
-	{
-		temp = curr;
-		curr = curr->next;
-		free(temp->str);
-		free(temp);
-	}
-	cmdlist->head->next = cmdlist->tail;
-	cmdlist->tail->prev = cmdlist->head;
-	cmdlist->datasize = 0;
-}
 
 void	ft_ctrl_c(int sig)
 {
@@ -96,6 +51,7 @@ void	ft_ctrl_bslash(int sig)
 	g_data.is_sig = 1;
 	while (t < g_data.p_size)
 	{
+		printf("%d\n",getpid());
 		kill(g_data.pidarr[t], SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
 		t++;
 	}
@@ -107,6 +63,7 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_par_mdata	par_mdata;
 
+	printf("P::%d\n",getpid());
 	ft_init(&par_mdata, argc, argv);
 	ft_set_env(par_mdata.envlist, env);
 	signal(SIGINT, ft_ctrl_c);
