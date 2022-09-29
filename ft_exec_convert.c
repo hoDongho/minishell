@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 11:12:36 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 14:00:59 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_exec_cmds	*new_exec_cmds(t_exec_data *exec_data)
 	return (new);
 }
 
-int	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
+void	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 {
 	t_exec_cmds	*exec_cmds;
 	int			cnt;
@@ -35,18 +35,12 @@ int	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 	cnt = 0;
 	i = arg_cnt;
 	exec_cmds = new_exec_cmds(exec_data);
-	while (arg_cnt)///
+	while (arg_cnt)
 	{
 		arg = arg->prev;
 		arg_cnt--;
-		// exec_cmds->s_cmds[arg_cnt] = arg->str;
-	}//
-	// if (check_built_in(exec_cmds->cmds) == 1)
-	// {
-	// 	exec_cmds->cmdlist = ft_cpy_cmdlist(arg);
-	// }
+	}
 	exec_cmds->cmdlist = ft_cpy_cmdlist(arg);
-	return (0);
 }
 
 int	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
@@ -54,7 +48,6 @@ int	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
 	t_cmdnode	*arg;
 	int			arg_cnt;
 	int			pipe_cnt;
-	int			cmd_cnt;
 
 	arg = cmdlist->head->next;
 	arg_cnt = 0;
@@ -63,24 +56,18 @@ int	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
 	{
 		if (ft_strcmp(arg->str, "|") == 0 && arg->p_type == 3)
 		{
-			if (make_exec_cmds(arg, exec_data, arg_cnt) != 0)
-				return (1);
+			make_exec_cmds(arg, exec_data, arg_cnt);
 			pipe_cnt++;
 			arg_cnt = -1;
 		}
 		arg_cnt++;
 		arg = arg->next;
 	}
-	cmd_cnt = pipe_cnt + 1;
-	if (ft_strcmp(arg->prev->str, "|") != 0 && make_exec_cmds(arg, exec_data, arg_cnt) != 0)
-		return (1);
-	// else if (ft_strcmp(arg->prev->str, "|") == 0)
-	// 	cmd_cnt = pipe_cnt;
-	exec_data->pid = ft_calloc(cmd_cnt + 1, sizeof(pid_t));
-	if (exec_data->pid == 0)
-		return (1);
-	g_data.pidarr = exec_data->pid;//nhwang
-	g_data.p_size = cmd_cnt;//nhwang
+	if (ft_strcmp(arg->prev->str, "|") != 0)
+		make_exec_cmds(arg, exec_data, arg_cnt);
+	exec_data->pid = ft_calloc(pipe_cnt + 1 + 1, sizeof(pid_t));
+	g_data.pidarr = exec_data->pid;
+	g_data.p_size = pipe_cnt + 1;
 	return (0);
 }
 
@@ -89,7 +76,8 @@ int	split_path(t_exec_data *exec_data)
 	int	i;
 
 	i = 0;
-	while (exec_data->env[i] != 0 && ft_strncmp(exec_data->env[i], "PATH=", 5) != 0)
+	while (exec_data->env[i] != 0
+		&& ft_strncmp(exec_data->env[i], "PATH=", 5) != 0)
 		i++;
 	exec_data->path = ft_split(exec_data->env[i] + 5, ':');
 	if (exec_data->path == 0)

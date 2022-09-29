@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 13:01:22 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 14:18:39 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 		exit(1);
 	else if (exec_data->pid[i] == 0)
 	{
+		errno = 0;
 		set_std(exec_data, exec_cmds);
 		if (check_built_in(exec_cmds->cmd) == 1)
 			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist, 1);

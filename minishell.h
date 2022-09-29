@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 12:59:22 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 14:03:52 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,15 @@ typedef struct s_exec_data{
 	t_envlist	*envlist;
 }				t_exec_data;
 
-typedef struct s_gdata//
+typedef struct s_gdata
 {
-	pid_t		*pidarr;//
-	int			p_size;//
-	int			exit_code;//
-	t_exec_data	*exec_data;//
-	int			is_sig;////nhwang
-}				t_gdata;//
+	pid_t		*pidarr;
+	int			p_size;
+	int			exit_code;
+	int			is_sig;
+}				t_gdata;
 
-t_gdata	g_data;//
+t_gdata		g_data;
 
 void		ft_start_minishell(t_par_mdata *par_mdata);
 
