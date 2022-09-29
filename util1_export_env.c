@@ -6,10 +6,9 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 11:15:22 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 15:47:24 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -126,7 +125,7 @@ int	ft_valid(char *str, char key)
 	return (1);
 }
 
-char	*ft_echk(char *st,int *echk, char *str, char **tkey)
+char	*ft_echk(char *st, int *echk, char *str, char **tkey)
 {
 	int	size;
 
@@ -134,11 +133,11 @@ char	*ft_echk(char *st,int *echk, char *str, char **tkey)
 	st = str;
 	while (*st)
 	{
-		size++;//
+		size++;
 		if (*st == '=')
 		{
 			(*tkey) = ft_calloc(size, sizeof(char));
-			ft_strlcpy((*tkey), str, size);//
+			ft_strlcpy((*tkey), str, size);
 			*echk = 1;
 		}
 		st++;
@@ -195,20 +194,3 @@ void	ft_export(t_cmdlist *cmdlist, t_envlist *envlist)
 		curr = curr->next;
 	}
 }
-
-///////
-	///////test ft_export
-	// test = par_mdata->envlist->head->next;
-	// while(test->next)
-	// {
-	// 	printf("%s=%s\n",test->key,test->val);
-	// 	test=test->next;
-	// }
-	// printf("\n--------cmd--------\n\n");
-	// printf("input: %s\n\n", par_mdata->origin);
-	// t_cmdnode *test2;
-	// test2 = par_mdata->cmdlist->head->next;
-	// while(test2->next)
-	// {
-	// 	printf("%s\n",test2->str);
-	// 	test2=test2->next;

@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:13:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 11:13:36 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 15:29:03 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ int	ft_switch(char c)
 		return (D_QUOTE);
 	else if (ft_isspace(c) == 0 && c != 0)
 		return (WORD);
-	return (SPACE_NULL); //null,공백
+	return (SPACE_NULL);
 }

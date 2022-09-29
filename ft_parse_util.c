@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:10:32 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 15:56:37 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 15:10:53 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,38 +46,4 @@ int	ft_cnt_word(char *str)
 		str++;
 	}
 	return (cnt);
-}
-
-char	*ft_val_w_space(char *st_val, t_par_mdata *par_mdata, int type)
-{
-	char		*word;
-
-	if (ft_isspace(*st_val) == 1 && type == WORD)
-	{
-		word = ft_makeword(par_mdata->arglist);
-		ft_pushcmd(par_mdata->cmdlist, word, type);
-		while (*st_val && ft_isspace(*st_val) == 1)
-			st_val++;
-	}
-	return (st_val);
-}
-
-char	*ft_make_key(int type, t_par_mdata *par_mdata, char *st)
-{
-	char		*key;
-	int			i;
-
-	i = 0;
-	while (ft_switch(st[i]) == WORD)
-	{
-		if (st[i] == '$' || ft_isalnum(st[i]) == 0)
-			break ;
-		i++;
-	}
-	key = ft_calloc(i + 1, sizeof(char));
-	ft_memmove(key, st, i);
-	st = st + i;
-	ft_push_val(key, type, par_mdata);
-	free(key);
-	return (st);
 }

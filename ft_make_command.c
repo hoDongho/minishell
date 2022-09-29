@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 11:54:54 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 15:56:21 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 14:38:41 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,19 @@ char	*ft_makeword(t_arglist	*arglist)
 	return (st);
 }
 
-// void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int type)
 void	ft_pushcmd(t_cmdlist *cmdlist, char *str, int swit)
 {
 	t_cmdnode	*new;
 	t_cmdnode	*prev;
 	char		*new_str;
 
-	if (swit == 3 && str == 0) //ㄷㅣ포ㄹ트에서도 테스트 해볼 것것.
+	if (swit == 3 && str == 0)
 		return ;
 	new_str = str;
 	if (str == 0)
 		new_str = ft_calloc(1, sizeof(char));
 	new = ft_newcmd();
-	// new = ft_calloc(1, sizeof(t_cmdnode));
-	// if(!new)
-	// 	return (NULL); print 함수 만들고 exit 쓰기
-	new->p_type = swit;//nhwang
+	new->p_type = swit;
 	new->str = new_str;
 	prev = cmdlist->tail->prev;
 	new->next = cmdlist->tail;

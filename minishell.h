@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 14:03:52 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 15:26:04 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,12 @@ t_argnode	*ft_new_argnode(char c);
 
 int			ft_is_redir(char *str);
 int			ft_redir(t_cmdlist *cmdlist);
+t_cmdnode	*ft_del_redir(t_cmdnode *curr);
+int			ft_out_put_redir(t_cmdnode *curr, int *new_out,
+				int *cnt, int redir_type);
+int			ft_in_put_redir(t_cmdnode *curr, int *new_in);
+void		ft_here_doc(t_cmdnode *curr, int *new_in);
+
 
 int			ft_check_syntax(t_cmdlist *cmdlist);
 int			ft_checkq(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:06:45 by nhwang            #+#    #+#             */
-/*   Updated: 2022/01/12 15:44:00 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/29 14:42:18 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*ft_itoa(int n)
 		nn = nn * (-1);
 		min = 1;
 	}
-	ans = (char *) ft_calloc (len + 1, sizeof(char));
+	ans = (char *) ft_calloc(len + 1, sizeof(char));
 	if (!ans)
 		return (NULL);
 	ft_makestr(ans, nn, min, len);

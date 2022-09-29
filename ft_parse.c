@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:30:17 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 11:29:30 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 14:55:59 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,19 @@ void	ft_parse_all(t_par_mdata *par_mdata, int len)
 
 int	ft_parse(t_par_mdata *par_mdata)
 {
-	int	len;
+	t_cmdnode	*curr;
+	int			len;
 
 	if (ft_checkq(par_mdata->origin))
 		return (1);
 	len = ft_cnt_word(par_mdata->origin);
 	if (len == 0)
-		return (1); //에러 처리
+		return (1);
 	ft_parse_all(par_mdata, len);
-	t_cmdnode	*curr;
 	curr = par_mdata->cmdlist->head->next;
-	if(par_mdata->cmdlist->datasize == 0)
+	if (par_mdata->cmdlist->datasize == 0)
 		return (1);
 	if (ft_check_syntax(par_mdata->cmdlist) != 0)
-		return (1);//syntax code ㅍㅣㄹ요
+		return (1);
 	return (0);
 }
-	// printf("====\n");
-	// while(curr->next)
-	// {
-	// 	printf("%s\n",curr->str);
-	// 	curr=curr->next;
-	// }
-	// printf("\n\n\n\n\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:43:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/01/13 15:51:59 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/29 15:42:27 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	char	*st;
 
+	if (s == 0)
+		return (0);
 	st = (char *)s;
 	while (*st)
 	{
