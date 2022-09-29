@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 17:10:58 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 12:59:22 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_gdata//
 
 t_gdata	g_data;//
 
+void		ft_start_minishell(t_par_mdata *par_mdata);
 
 t_argnode	*ft_new_argnode(char c);
 int			ft_switch(char c);
@@ -120,7 +121,7 @@ void		ft_set_env(t_envlist *envlist, char **env);
 void		ft_envinit(t_envlist *envlist);
 int			ft_isspace(char c);
 
-int			ft_echo(t_cmdlist *cmdlist, t_envlist *envlist);
+int			ft_echo(t_cmdlist *cmdlist);
 int			ft_pwd(t_envlist *envlist);
 int			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_exit(t_cmdlist *cmdlist);
@@ -163,7 +164,7 @@ char		*ft_val_w_space(char *st_val, t_par_mdata *par_mdata, int swit);
 char		*ft_chgenv(char *st, t_par_mdata *par_mdata, int swit);
 void		ft_push(t_arglist	*arglist, char c);
 char		*ft_makeword(t_arglist	*arglist);
-void		ft_init(t_par_mdata *par_mdata);
+void		ft_init(t_par_mdata *par_mdata, int argc, char *argv[]);
 
 int			ft_exec(t_cmdlist *cmdlist, t_envlist *envlist);
 int			ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
@@ -189,6 +190,7 @@ int			ft_redir(t_cmdlist *cmdlist);
 int			ft_check_syntax(t_cmdlist *cmdlist);
 int			ft_checkq(char *str);
 
+void		ft_set_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
 
 
 

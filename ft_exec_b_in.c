@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:15:25 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/28 17:18:44 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 12:05:22 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	b_in_main_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 
 	cmd = cmdlist->head->next;
 	if (ft_strcmp(cmd->str, "echo") == 0)
-		ft_echo(cmdlist, envlist);
+		ft_echo(cmdlist);
 	else if (ft_strcmp(cmd->str, "pwd") == 0)
 		ft_pwd(envlist);
 	else if (ft_strcmp(cmd->str, "cd") == 0)
@@ -57,5 +57,7 @@ int	ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 		close(origin_in);
 		close(origin_out);
 	}
+	if (flag == 1)
+		exit(0);
 	return (0);
 }

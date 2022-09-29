@@ -3,26 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_convert.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/23 17:01:05 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/29 11:12:36 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "pipex.h"
 
-t_exec_cmds	*new_exec_cmds(t_exec_data *exec_data, int size)
+t_exec_cmds	*new_exec_cmds(t_exec_data *exec_data)
 {
 	t_exec_cmds	*new;
 
 	new = ft_calloc(1, sizeof(t_exec_cmds));
-	if (new == 0)
-		return (0);
-	// new->s_cmds = (char **)ft_calloc(size + 1, sizeof(char *));
-	// if (new->s_cmds == 0)
-	// 	return (0);
 	if (exec_data->cmds_head == 0)
 		exec_data->cmds_head = new;
 	if (exec_data->cmds_tail != 0)
@@ -39,9 +34,7 @@ int	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 
 	cnt = 0;
 	i = arg_cnt;
-	exec_cmds = new_exec_cmds(exec_data, arg_cnt);
-	if (exec_cmds == 0)
-		return (1);
+	exec_cmds = new_exec_cmds(exec_data);
 	while (arg_cnt)///
 	{
 		arg = arg->prev;

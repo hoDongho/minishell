@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:12:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 15:56:21 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 11:27:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,16 @@ void	ft_envinit(t_envlist *envlist)
 void	ft_cmdinit(t_cmdlist *cmdlist)
 {
 	cmdlist->head = ft_newcmd();
-	cmdlist->tail = ft_newcmd(); // 에러처리
+	cmdlist->tail = ft_newcmd();
 	cmdlist->head->next = cmdlist->tail;
 	cmdlist->tail->prev = cmdlist->head;
 	cmdlist->datasize = 0;
 }
 
-void	ft_init(t_par_mdata *par_mdata)
+void	ft_init(t_par_mdata *par_mdata, int argc, char *argv[])
 {
+	if (argc != 1 || argv[1] != 0)
+		exit(1);
 	par_mdata->arglist = ft_calloc (1, sizeof(t_arglist));
 	par_mdata->envlist = ft_calloc (1, sizeof(t_envlist));
 	par_mdata->cmdlist = ft_calloc (1, sizeof(t_cmdlist));
@@ -48,4 +50,3 @@ void	ft_init(t_par_mdata *par_mdata)
 	ft_envinit(par_mdata->envlist);
 	ft_cmdinit(par_mdata->cmdlist);
 }
-

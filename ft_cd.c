@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/28 16:38:50 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 12:28:55 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	if (chdir(path) != 0)
 	{
 		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(path, ft_strlen(path));
+		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": ", 2);
 		print_error("", 1);
 		return (1);

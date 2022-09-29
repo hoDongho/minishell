@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:56:13 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/28 17:02:45 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 11:11:07 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	chk_option(char *str)
 	return (0);
 }
 
-int	ft_echo(t_cmdlist *cmdlist, t_envlist *envlist)
+int	ft_echo(t_cmdlist *cmdlist)
 {
 	t_cmdnode	*arg;
 	int			n_opt;

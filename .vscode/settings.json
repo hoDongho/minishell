@@ -9,6 +9,8 @@
 		"stdio.h": "c",
 		"ft_main_exec": "c",
 		"stdlib.h": "c",
-		"wait.h": "c"
+		"wait.h": "c",
+		"stat.h": "c",
+		"signal.h": "c"
 	},
 }

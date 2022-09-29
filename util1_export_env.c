@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 17:28:42 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 11:15:22 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void	ft_env(t_envlist *envlist, int b)
 {
 	t_envnode	*curr;
-	t_envnode	*temp;
 
 	g_data.exit_code = 0;
 	curr = envlist->head->next;
@@ -79,8 +78,6 @@ int	ft_findenv(char *tkey, char *tval, t_envlist *envlist)
 
 int	ft_ex_util(char *tkey, char *tval, t_envlist *envlist)
 {
-	t_envnode	*prev_tail;
-
 	if (ft_findenv(tkey, tval, envlist) == 0)
 		ft_push_env(tkey, tval, envlist);
 	if (tkey)
@@ -159,6 +156,7 @@ int	ft_ex_util2(t_envlist *envlist, t_cmdnode *curr)
 	int			echk;
 
 	echk = 0;
+	st = 0;
 	st = ft_echk(st, &echk, curr->str, &tkey);
 	tval = NULL;
 	if (echk)

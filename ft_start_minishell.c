@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_new_node.c                                      :+:      :+:    :+:   */
+/*   ft_start_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 16:14:49 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 11:26:54 by dhyun            ###   ########seoul.kr  */
+/*   Created: 2022/09/29 11:22:45 by dhyun             #+#    #+#             */
+/*   Updated: 2022/09/29 11:23:53 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmdnode	*ft_newcmd(void)
+void	ft_start_minishell(t_par_mdata *par_mdata)
 {
-	t_cmdnode	*new;
+	char		*input;
 
-	new = ft_calloc(1, sizeof(t_cmdnode));
-	return (new);
-}
-
-t_envnode	*ft_newenv(void)
-{
-	t_envnode	*new;
-
-	new = ft_calloc(1, sizeof(t_envnode));
-	return (new);
-}
-
-t_argnode	*ft_new_argnode(char c)
-{
-	t_argnode	*new;
-
-	new = ft_calloc(1, sizeof(t_argnode));
-	new->c = c;
-	return (new);
+	while (1)
+	{
+		ft_clearcmd(par_mdata->cmdlist);
+		input = readline("minishell$ ");
+		if (!input)
+			break ;
+		if (!*input)
+		{
+			free(input);
+			continue ;
+		}
+		add_history(input);
+		par_mdata->origin = input;
+		if (ft_parse(par_mdata) == 1)
+		{
+			free(input);
+			continue ;
+		}
+		free(input);
+		ft_exec(par_mdata->cmdlist, par_mdata->envlist);
+	}
 }

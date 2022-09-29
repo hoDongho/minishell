@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:13:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/28 15:12:09 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/29 11:13:36 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,15 @@
 
 int	ft_strcmp(char	*st1, char *st2)
 {
-	int	i;
-
 	while ((*st1 != '\0') || (*st2 != '\0'))
 	{
 		if (*st1 == *st2)
 		{
 			st1++;
 			st2++;
-			i++;
 		}
 		else
-		{
 			return (*st1 - *st2);
-		}
 	}
 	return (0);
 }

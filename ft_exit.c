@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/28 16:45:15 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 11:13:09 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	ft_exit(t_cmdlist *cmdlist)
 	{
 		status = ft_atoi(arg->str);
 		if (chk_number(arg->str) != 0
-			|| ft_strlen(arg->str) >= 19 && status == -1
-			|| arg->str[0] == '-' && ft_strlen(arg->str) >= 20 && status == 0)
+			|| (ft_strlen(arg->str) >= 19 && status == -1)
+			|| (arg->str[0] == '-' && ft_strlen(arg->str) >= 20 && status == 0))
 		{
 			write(2, "exit: ", 6);
 			write(2, arg->str, ft_strlen(arg->str));

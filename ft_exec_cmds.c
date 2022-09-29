@@ -3,94 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/28 13:42:32 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/29 13:01:22 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "pipex.h"
 
-int	set_std(int new_in, int new_out)
+void	ft_put_d_pointer(t_exec_cmds *exec_cmds)
 {
-	if (new_in != STDIN_FILENO)
+	t_cmdnode	*curr;
+	int			i;
+
+	i = 0;
+	exec_cmds->s_cmds = (char **)ft_calloc(exec_cmds->cmdlist->datasize + 1,
+			sizeof(char *));
+	curr = exec_cmds->cmdlist->head->next;
+	while (curr->next)
 	{
-		if (dup2(new_in, STDIN_FILENO) == -1)
-			return (1);
-		close(new_in);
+		exec_cmds->s_cmds[i] = curr->str;
+		i++;
+		curr = curr->next;
 	}
-	if (new_out != STDOUT_FILENO)
-	{
-		if (dup2(new_out, STDOUT_FILENO) == -1)
-			return (1);
-		close(new_out);
-	}
-	return (0);
+	exec_cmds->cmd = exec_cmds->s_cmds[0];
+	if (exec_cmds->cmd == 0)
+		exit(0);
 }
 
-int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
+void	set_std(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
 	int	redir_cnt;
 
 	redir_cnt = 0;
+	close(exec_data->pipe_fd[0]);
+	redir_cnt = ft_redir(exec_cmds->cmdlist);
+	if (redir_cnt < 0)
+		exit(1);
+	else if (exec_cmds->next && redir_cnt == 0)
+	{
+		if (dup2(exec_data->pipe_fd[1], STDOUT_FILENO) == -1)
+			exit(1);
+	}
+	close(exec_data->pipe_fd[1]);
+	ft_put_d_pointer(exec_cmds);
+}
+
+int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
+{
 	exec_data->pid[i] = fork();
 	if (exec_data->pid[i] == -1)
-		return (1);
+		exit(1);
 	else if (exec_data->pid[i] == 0)
 	{
-		close(exec_data->pipe_fd[0]);
-		// if
-		// re_dir
-		redir_cnt = ft_redir(exec_cmds->cmdlist);
-		if (redir_cnt < 0)
-			exit(1);
-		else if (exec_cmds->next && redir_cnt == 0)
-		{
-			dup2(exec_data->pipe_fd[1], STDOUT_FILENO);
-		}
-		close(exec_data->pipe_fd[1]);
-		// d_p
-		exec_cmds->s_cmds = (char **)ft_calloc(exec_cmds->cmdlist->datasize + 1, sizeof(char *));
-		if (exec_cmds->s_cmds == 0)
-			return (0);
-		t_cmdnode	*curr;
-		int			i;
-		i = 0;
-		curr = exec_cmds->cmdlist->head->next;
-		while (curr->next)///
-		{
-			exec_cmds->s_cmds[i] = curr->str;
-			i++;
-			curr = curr->next;
-		}
-		exec_cmds->cmd = exec_cmds->s_cmds[0];
-			// set_std(STDIN_FILENO, exec_data->pipe_fd[1]);
-		if (exec_cmds->cmd == 0)
-		{
-			exit(0);
-		}
+		set_std(exec_data, exec_cmds);
 		if (check_built_in(exec_cmds->cmd) == 1)
-		{
-			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist, 1); //0 only b-in, 1 b-in
-			exit(0);
-		}
-		exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
-		if (exec_cmds->p_cmds == 0 || ft_strchr(exec_cmds->p_cmds, '/') == 0)
-		{
-			write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
-			write(2, ": ", 2);
-			write(2, "command not found\n", 18);
-			// printf("command not found: %s\n", exec_cmds->cmd);//
-			exit(127);
-		}
+			ft_exec_built_in(exec_cmds->cmdlist, exec_data->envlist, 1);
+		ft_set_path(exec_data, exec_cmds);
 		if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
 		{
 			if (errno == 13)
 			{
-				write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
-				write(2, ": ", 2);
+				ft_putstr_fd(exec_cmds->cmd, 2);
+				ft_putstr_fd(": ", 2);
 				print_error("", 126);
 			}
 			exit(1);
@@ -109,14 +85,11 @@ int	check_child(t_exec_data *exec_data)
 	{
 		if (waitpid(exec_data->pid[i], &statloc, 0) == -1)
 			return (1);
-		// printf("in exec %d\n",WEXITSTATUS(statloc));
 		i++;
 	}
-	// if (WEXITSTATUS(statloc) != 0)
-	if (g_data.is_sig==0)//nhwang
-		g_data.exit_code = WEXITSTATUS(statloc);//nhwang
-		// return (WEXITSTATUS(statloc));
-	g_data.is_sig=0;//nhwang
+	if (g_data.is_sig == 0)
+		g_data.exit_code = WEXITSTATUS(statloc);
+	g_data.is_sig = 0;
 	return (0);
 }
 
@@ -137,7 +110,7 @@ int	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 			dup2(exec_data->pipe_fd[0], STDIN_FILENO);
 		else
 		{
-			dup2(tmp_in, STDIN_FILENO);//cat cat에서 입력이 이상한 부분과 관련 있지 않을지...
+			dup2(tmp_in, STDIN_FILENO);
 			close(tmp_in);
 		}
 		close(exec_data->pipe_fd[0]);

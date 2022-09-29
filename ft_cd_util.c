@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 15:58:44 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/28 16:35:26 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 11:10:50 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*find_val(t_envlist *envlist, char *key)
 void	change_val(t_envlist *envlist, char *key, char *val)
 {
 	t_envnode	*curr;
-	t_envnode	*new;
 
 	curr = envlist->head->next;
 	while (curr->next)
