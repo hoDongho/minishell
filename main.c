@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/30 13:15:55 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 13:53:41 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,13 @@ void	ft_ctrl_bslash(int sig)
 	int	t;
 
 	t = 0;
-	printf("%d\n", getpid());
-	if (g_data.p_size == 0)
+	if (g_data.p_size == 0)//
 	{
 		rl_on_new_line();
-		rl_replace_line("", 1);
+		rl_replace_line("", 2);
 		rl_redisplay();
 		return ;
 	}
-	while (t < g_data.p_size)
-	{
-		if (g_data.pidarr[t] == 0)
-			return ;
-		t++;
-	}
-	t = 0;
 	g_data.is_sig = 1;
 	while (t < g_data.p_size)
 	{

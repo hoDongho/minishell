@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:15:25 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 11:46:19 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 13:35:04 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	b_in_main_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 
 void	ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 {
-	int			origin_in;
-	int			origin_out;
+	int	origin_in;
+	int	origin_out;
 
 	if (flag == 0)
 	{

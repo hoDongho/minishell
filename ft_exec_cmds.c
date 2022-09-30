@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 11:50:23 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 14:14:06 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	set_std(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 
 	redir_cnt = 0;
 	close(exec_data->pipe_fd[0]);
-	redir_cnt = ft_redir(exec_cmds->cmdlist);
+	if (g_data.p_size > 1)
+		redir_cnt = ft_redir(exec_cmds->cmdlist);
 	if (redir_cnt < 0)
 		exit(1);
 	else if (exec_cmds->next && redir_cnt == 0)

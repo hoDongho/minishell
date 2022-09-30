@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 11:55:54 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 14:10:22 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,48 @@ int	check_cmds(t_cmdlist *cmdlist)
 void	ft_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	int	ret;
+	int	origin_in;
+	int	origin_out;
+	int redir;
+	t_cmdnode *curr;
+
 
 	ret = check_cmds(cmdlist);
-	if (ret != 2)
-		ft_exec_n_built_in(cmdlist, envlist);
-	else
-		ft_exec_built_in(cmdlist, envlist, 0);
+	curr = cmdlist->head->next;
+	while(curr->next)
+	{
+		redir = ft_is_redir(curr->str);
+		if (redir != 0)
+			break ;
+		curr = curr->next;
+	}
+	if (redir && ret != 1)
+	{
+		origin_in = dup(STDIN_FILENO);
+		origin_out = dup(STDOUT_FILENO);
+		if (origin_in == -1 || origin_out == -1)
+			exit(1);
+		if (ft_redir(cmdlist) == -1)
+			return ;
+	}
+
+	if (cmdlist->datasize != 0)
+	{
+		if (ret != 2)
+			ft_exec_n_built_in(cmdlist, envlist);
+		else
+			ft_exec_built_in(cmdlist, envlist, 2);
+	}
+
+
+	if (redir && ret != 1)
+	{
+		if (dup2(origin_in, STDIN_FILENO) == -1)
+			exit(1);
+		if (dup2(origin_out, STDOUT_FILENO) == -1)
+			exit(1);
+		close(origin_in);
+		close(origin_out);
+	}
+
 }
