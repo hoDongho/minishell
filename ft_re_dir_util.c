@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 15:10:33 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 15:21:38 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 00:45:30 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_cmdnode	*ft_del_redir(t_cmdnode *curr)
 		next->prev = prev;
 		temp = curr;
 		curr = next;
+		free(temp->str);//
 		free(temp);
 		i--;
 	}

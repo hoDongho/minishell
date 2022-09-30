@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 16:15:40 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 00:16:00 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@
 # include <sys/stat.h>
 # include <signal.h>
 # include <dirent.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 # include "./libft/libft.h"
-# include "./get_next_line.h"
-# include "./pipex.h"
 
 # define SPACE_NULL 0
 # define QUOTE 1
 # define D_QUOTE 2
 # define WORD 3
+# define BUFFER_SIZE 1
 
 typedef struct s_argnode
 {
@@ -190,5 +191,12 @@ int				ft_in_put_redir(t_cmdnode *curr, int *new_in);
 void			ft_here_doc(t_cmdnode *curr, int *new_in);
 
 void			ft_set_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
+
+char			*ft_strjoin_wc(char *s1, char *s2, char c);
+void			print_error(char *str, int code);
+
+char			*get_next_line(int fd);
+char			*ft_strdup_gnl(const char *s1);
+char			*ft_strjoin_gnl(char *s1, char *s2);
 
 #endif

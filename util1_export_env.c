@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 17:54:20 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 23:18:59 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,10 @@ int	ft_push_env(char *tkey, char *tval, t_envlist *envlist)
 int	ft_findenv(char *tkey, char *tval, t_envlist *envlist)
 {
 	t_envnode	*curr;
-	size_t		size;
 
 	curr = envlist->head->next;
 	while (curr->next)
 	{
-		size = strlen(tkey);
 		if (ft_strcmp(tkey, curr->key) == 0)
 		{
 			if (tval)

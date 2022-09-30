@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 17:19:53 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 23:49:11 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_ctrl_bslash(int sig)
 	g_data.is_sig = 1;
 	while (t < g_data.p_size)
 	{
-		printf("%d\n",getpid());
 		kill(g_data.pidarr[t], SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
 		t++;
 	}
@@ -63,7 +62,6 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_par_mdata	par_mdata;
 
-	printf("P::%d\n",getpid());
 	ft_init(&par_mdata, argc, argv);
 	ft_set_env(par_mdata.envlist, env);
 	signal(SIGINT, ft_ctrl_c);

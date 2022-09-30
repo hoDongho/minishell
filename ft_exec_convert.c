@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 17:55:29 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 00:36:26 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ t_exec_cmds	*new_exec_cmds(t_exec_data *exec_data)
 void	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 {
 	t_exec_cmds	*exec_cmds;
-	int			cnt;
-	int			i;
 
-	cnt = 0;
-	i = arg_cnt;
 	exec_cmds = new_exec_cmds(exec_data);
 	while (arg_cnt)
 	{
@@ -98,10 +94,10 @@ int	convert_env(t_envlist *envlist, t_exec_data *exec_data)
 	while (curr->next)
 	{
 		if (curr->val != 0)
+		{
 			exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
-		if (exec_data->env == 0)//
-			return (1);//
-		i++;
+			i++;//
+		}
 		curr = curr->next;
 	}
 	if (split_path(exec_data) != 0)

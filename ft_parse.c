@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:30:17 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 14:55:59 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/29 23:18:42 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_parse_all(t_par_mdata *par_mdata, int len)
 
 int	ft_parse(t_par_mdata *par_mdata)
 {
-	t_cmdnode	*curr;
 	int			len;
 
 	if (ft_checkq(par_mdata->origin))
@@ -64,7 +63,6 @@ int	ft_parse(t_par_mdata *par_mdata)
 	if (len == 0)
 		return (1);
 	ft_parse_all(par_mdata, len);
-	curr = par_mdata->cmdlist->head->next;
 	if (par_mdata->cmdlist->datasize == 0)
 		return (1);
 	if (ft_check_syntax(par_mdata->cmdlist) != 0)
