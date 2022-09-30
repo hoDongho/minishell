@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 23:49:11 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 13:15:55 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_ctrl_c(int sig)
 	g_data.is_sig = 1;
 	while (g_data.pidarr[t])
 	{
-		kill(g_data.pidarr[t], SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
+		kill(g_data.pidarr[t], SIGKILL);
 		t++;
 	}
 	g_data.exit_code = 128 + sig;
@@ -41,6 +41,7 @@ void	ft_ctrl_bslash(int sig)
 	int	t;
 
 	t = 0;
+	printf("%d\n", getpid());
 	if (g_data.p_size == 0)
 	{
 		rl_on_new_line();
@@ -48,14 +49,21 @@ void	ft_ctrl_bslash(int sig)
 		rl_redisplay();
 		return ;
 	}
+	while (t < g_data.p_size)
+	{
+		if (g_data.pidarr[t] == 0)
+			return ;
+		t++;
+	}
+	t = 0;
 	g_data.is_sig = 1;
 	while (t < g_data.p_size)
 	{
-		kill(g_data.pidarr[t], SIGKILL); //free도 해주긴 해야함?? 잡고있기는 한 상황임
+		kill(g_data.pidarr[t], SIGKILL);
 		t++;
 	}
 	g_data.exit_code = 128 + sig;
-	g_data.p_size = 0; //ㅈ저ㅂ근을 convert에서 하고있음
+	g_data.p_size = 0;
 }
 
 int	main(int argc, char *argv[], char *env[])

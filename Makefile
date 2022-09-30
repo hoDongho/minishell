@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/13 14:00:58 by dhyun             #+#    #+#              #
-#    Updated: 2022/09/30 01:00:46 by dhyun            ###   ########seoul.kr   #
+#    Updated: 2022/09/30 11:15:26 by nhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC	= cc
-CFLAGS	= -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+CFLAGS	= -Wall -Wextra -Werror -I$(shell brew --prefix readline)/include
 
-INC_LIB	= -L$(LIBFT_DIR) -lft -lreadline -L/opt/homebrew/opt/readline/lib
+INC_LIB	= -L$(LIBFT_DIR) -lft -lreadline -L$(shell brew --prefix readline)/lib
 
 RM	= rm -f
 
@@ -25,7 +25,7 @@ SRCS	= ft_cd.c ft_cd_util.c ft_check_syntax.c ft_echo.c ft_exec.c\
 		ft_new_node.c ft_parse.c ft_parse_env.c ft_parse_push.c \
 		ft_parse_util.c ft_pwd.c ft_re_dir.c ft_re_dir_util.c ft_set_env.c\
 		ft_start_minishell.c ft_util.c get_next_line.c get_next_line_utils.c\
-		main.c util1_export_env.c util2_unset.c\
+		main.c ft_export.c ft_env.c ft_unset.c\
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -58,6 +58,6 @@ re:
 	make all
 
 norm:
-	norminette
+	norminette $(SRCS) $(HEADERS) $(LIBFT_DIR)
 
 .PHONY: all bonus clean fclean re norm libft.a

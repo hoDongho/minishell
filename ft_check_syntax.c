@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_syntax.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:53:55 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 12:22:20 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:11:56 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	ft_check_standard(char *st)
 {
-	// int		dchk;
-	int		schk;
+	int		chk;
 	int		standard;
 
 	standard = 0;
-	// dchk = 0;
-	schk = 0;
+	chk = 0;
 	while (*st)
 	{
 		if ((*st == '\'' || *st == '\"') && standard == 0)
@@ -33,16 +31,10 @@ int	ft_check_standard(char *st)
 		if ((*st == '\'' && standard == QUOTE)
 			|| (*st == '\"' && standard == D_QUOTE))
 		{
-			schk++;
-			if (schk % 2 == 0)
+			chk++;
+			if (chk % 2 == 0)
 				standard = 0;
 		}
-		// else if (*st == '\"' && standard == D_QUOTE)
-		// {
-		// 	dchk++;
-		// 	if (dchk % 2 == 0)
-		// 		standard = 0;
-		// }
 		st++;
 	}
 	return (standard);

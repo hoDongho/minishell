@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_n_b_in.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:01:36 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 23:48:20 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:54:42 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,15 @@ void	free_exec_data(t_exec_data *exec_data)
 	g_data.pidarr = 0;
 }
 
-int	ft_exec_convert(t_exec_data *exec_data)
-{
-	if (convert_cmd(exec_data->cmdlist, exec_data) != 0)
-		return (1);
-	if (convert_env(exec_data->envlist, exec_data) != 0)
-		return (1);
-	return (0);
-}
-
-int	ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
+void	ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	t_exec_data	*exec_data;
 
 	exec_data = ft_calloc(1, sizeof(t_exec_data));
-	if (exec_data == 0)
-		return (1);
 	exec_data->cmdlist = cmdlist;
 	exec_data->envlist = envlist;
-	if (ft_exec_convert(exec_data) != 0)
-		return (1);
+	convert_cmd(exec_data->cmdlist, exec_data);
+	convert_env(exec_data->envlist, exec_data);
 	ft_exec_cmds(exec_data, exec_data->cmds_head);
 	free_exec_data(exec_data);
-	return (0);
 }

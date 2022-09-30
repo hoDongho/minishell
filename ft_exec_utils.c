@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 13:00:00 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:55:17 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ char	*ft_strjoin_wc(char *s1, char *s2, char c)
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	new = ft_calloc(len1 + len2 + 1 + 1, sizeof(char));
-	if (new == 0)
-		return (0);
 	ft_memmove(new, s1, len1);
 	new[len1] = c;
 	ft_memmove(new + len1 + 1, s2, len2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:56:13 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 11:11:07 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:41:48 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	chk_option(char *str)
 	return (0);
 }
 
-int	ft_echo(t_cmdlist *cmdlist)
+void	ft_echo(t_cmdlist *cmdlist)
 {
 	t_cmdnode	*arg;
 	int			n_opt;
@@ -49,5 +49,4 @@ int	ft_echo(t_cmdlist *cmdlist)
 	if (n_opt == 0)
 		printf("\n");
 	g_data.exit_code = 0;
-	return (0);
 }

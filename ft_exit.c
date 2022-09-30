@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 11:13:09 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:56:17 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	chk_number(char *str)
 	return (0);
 }
 
-int	ft_exit(t_cmdlist *cmdlist)
+void	ft_exit(t_cmdlist *cmdlist)
 {
 	t_cmdnode	*arg;
 	long long	status;
@@ -53,5 +53,4 @@ int	ft_exit(t_cmdlist *cmdlist)
 	}
 	if (cmdlist->datasize < 3)
 		exit(status);
-	return (0);
 }

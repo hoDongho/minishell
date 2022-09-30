@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 00:36:32 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 12:36:50 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*set_cd_path(t_cmdlist *cmdlist, t_envlist *envlist, char *old_pwd)
 	char		*home;
 	char		*path;
 
+	path = 0;
 	arg = cmdlist->head->next->next;
 	home = find_val(envlist, "HOME");
 	if (home == 0 && cmdlist->datasize == 1)
@@ -54,7 +55,8 @@ char	*set_cd_path(t_cmdlist *cmdlist, t_envlist *envlist, char *old_pwd)
 		path = ft_strdup(home);
 	if (cmdlist->datasize > 1)
 	{
-		free(path);
+		if (path)
+			free(path);
 		path = cd_w_args(arg, envlist, home, old_pwd);
 	}
 	return (path);
@@ -93,7 +95,7 @@ char	*set_old_pwd(t_envlist *envlist)
 	return (old_pwd);
 }
 
-int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
+void	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	char		*old_pwd;
 	char		*path;
@@ -103,7 +105,7 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	if (path == 0)
 	{
 		free(old_pwd);
-		return (1);
+		return ;
 	}
 	if (chdir(path) != 0)
 	{
@@ -111,7 +113,7 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": ", 2);
 		print_error("", 1);
-		return (1);
+		return ;
 	}
 	else if (cmdlist->head->next->next->str != 0
 		&& !ft_strcmp(cmdlist->head->next->next->str, "-"))
@@ -119,5 +121,4 @@ int	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 	free(path);
 	ft_cd_set_env(envlist, old_pwd);
 	g_data.exit_code = 0;
-	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/30 00:16:00 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:59:55 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,18 +146,18 @@ char			*ft_val_w_space(char *st_val, t_par_mdata *par_mdata, int swit);
 
 char			*ft_makeword(t_arglist	*arglist);
 
-int				ft_exec(t_cmdlist *cmdlist, t_envlist *envlist);
-int				ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
-int				ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist,
+void			ft_exec(t_cmdlist *cmdlist, t_envlist *envlist);
+void			ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
+void			ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist,
 					int flag);
-int				ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
+void			ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
 int				check_built_in(char	*str);
 int				check_pipe(t_cmdlist *cmdlist);
 
-int				ft_echo(t_cmdlist *cmdlist);
-int				ft_pwd(t_envlist *envlist);
-int				ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
-int				ft_exit(t_cmdlist *cmdlist);
+void			ft_echo(t_cmdlist *cmdlist);
+void			ft_pwd(t_envlist *envlist);
+void			ft_cd(t_cmdlist *cmdlist, t_envlist *envlist);
+void			ft_exit(t_cmdlist *cmdlist);
 char			*find_val(t_envlist *envlist, char *key);
 void			change_val(t_envlist *envlist, char *key, char *val);
 char			*get_pwd(t_envlist *envlist);
@@ -165,11 +165,11 @@ char			*get_pwd(t_envlist *envlist);
 void			ft_env(t_envlist *envlist, int b);
 void			ft_export(t_cmdlist *cmdlist, t_envlist *envlist);
 void			ft_unset(t_cmdlist *cmdlist, t_envlist *envlist);
-int				ft_ex_util(char *tkey, char *tval, t_envlist *envlist);
-int				ft_ex_util2(t_envlist *envlist, t_cmdnode *curr);
+void			ft_ex_util(char *tkey, char *tval, t_envlist *envlist);
+void			ft_ex_util2(t_envlist *envlist, t_cmdnode *curr);
 char			*ft_echk(char *st, int *sz_ek, char *str, char **tkey);
 int				ft_findenv(char *tkey, char *tval, t_envlist *envlist);
-int				ft_push_env(char *tkey, char *tval, t_envlist *envlist);
+void			ft_push_env(char *tkey, char *tval, t_envlist *envlist);
 void			ft_popenv(char *tkey, t_envlist *envlist);
 int				ft_valid(char *str, char key);
 void			ft_pushcmd(t_cmdlist *cmdlist, char *str, int swit);
@@ -178,8 +178,8 @@ int				ft_strcmp(char	*st1, char *st2);
 
 t_cmdlist		*ft_cpy_cmdlist(t_cmdnode *arg);
 
-int				convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data);
-int				convert_env(t_envlist *envlist, t_exec_data *exec_data);
+void			convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data);
+void			convert_env(t_envlist *envlist, t_exec_data *exec_data);
 
 char			*sel_path(t_exec_data *arglist, t_exec_cmds *cmds);
 

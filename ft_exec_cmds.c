@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 14:18:39 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:50:23 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_std(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	ft_put_d_pointer(exec_cmds);
 }
 
-int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
+void	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 {
 	exec_data->pid[i] = fork();
 	if (exec_data->pid[i] == -1)
@@ -73,10 +73,9 @@ int	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 			exit(1);
 		}
 	}
-	return (0);
 }
 
-int	check_child(t_exec_data *exec_data)
+void	check_child(t_exec_data *exec_data)
 {
 	int	i;
 	int	statloc;
@@ -85,16 +84,15 @@ int	check_child(t_exec_data *exec_data)
 	while (exec_data->pid[i] != 0)
 	{
 		if (waitpid(exec_data->pid[i], &statloc, 0) == -1)
-			return (1);
+			exit(1);
 		i++;
 	}
 	if (g_data.is_sig == 0)
 		g_data.exit_code = WEXITSTATUS(statloc);
 	g_data.is_sig = 0;
-	return (0);
 }
 
-int	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
+void	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
 	int	i;
 	int	tmp_in;
@@ -104,9 +102,8 @@ int	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	while (exec_cmds)
 	{
 		if (pipe(exec_data->pipe_fd) == -1)
-			return (1);
-		if (ft_exec_child(exec_data, exec_cmds, i) != 0)
-			return (1);
+			exit(1);
+		ft_exec_child(exec_data, exec_cmds, i);
 		if (exec_cmds->next != 0)
 			dup2(exec_data->pipe_fd[0], STDIN_FILENO);
 		else
@@ -119,5 +116,5 @@ int	ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 		exec_cmds = exec_cmds->next;
 		i++;
 	}
-	return (check_child(exec_data));
+	check_child(exec_data);
 }

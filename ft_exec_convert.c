@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_convert.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 00:36:26 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:53:11 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	make_exec_cmds(t_cmdnode *arg, t_exec_data *exec_data, int arg_cnt)
 	exec_cmds->cmdlist = ft_cpy_cmdlist(arg);
 }
 
-int	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
+void	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
 {
 	t_cmdnode	*arg;
 	int			arg_cnt;
@@ -64,10 +64,9 @@ int	convert_cmd(t_cmdlist *cmdlist, t_exec_data *exec_data)
 	exec_data->pid = ft_calloc(pipe_cnt + 1 + 1, sizeof(pid_t));
 	g_data.pidarr = exec_data->pid;
 	g_data.p_size = pipe_cnt + 1;
-	return (0);
 }
 
-int	split_path(t_exec_data *exec_data)
+void	split_path(t_exec_data *exec_data)
 {
 	int	i;
 
@@ -76,19 +75,14 @@ int	split_path(t_exec_data *exec_data)
 		&& ft_strncmp(exec_data->env[i], "PATH=", 5) != 0)
 		i++;
 	exec_data->path = ft_split(exec_data->env[i] + 5, ':');
-	if (exec_data->path == 0)
-		return (1);
-	return (0);
 }
 
-int	convert_env(t_envlist *envlist, t_exec_data *exec_data)
+void	convert_env(t_envlist *envlist, t_exec_data *exec_data)
 {
 	t_envnode	*curr;
 	int			i;
 
 	exec_data->env = (char **)ft_calloc(envlist->datasize + 1, sizeof(char *));
-	if (exec_data->env == 0)
-		return (1);
 	i = 0;
 	curr = envlist->head->next;
 	while (curr->next)
@@ -96,11 +90,9 @@ int	convert_env(t_envlist *envlist, t_exec_data *exec_data)
 		if (curr->val != 0)
 		{
 			exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
-			i++;//
+			i++;
 		}
 		curr = curr->next;
 	}
-	if (split_path(exec_data) != 0)
-		return (1);
-	return (0);
+	split_path(exec_data);
 }

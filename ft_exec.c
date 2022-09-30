@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 12:55:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 14:15:36 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:55:54 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	check_pipe(t_cmdlist *cmdlist)
 	while (arg->next)
 	{
 		if (ft_strcmp(arg->str, "|") == 0 && arg->p_type == 3)
-		{
 			return (1);
-		}
 		arg = arg->next;
 	}
 	return (0);
@@ -47,7 +45,7 @@ int	check_cmds(t_cmdlist *cmdlist)
 	return (0);
 }
 
-int	ft_exec(t_cmdlist *cmdlist, t_envlist *envlist)
+void	ft_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 {
 	int	ret;
 
@@ -56,5 +54,4 @@ int	ft_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 		ft_exec_n_built_in(cmdlist, envlist);
 	else
 		ft_exec_built_in(cmdlist, envlist, 0);
-	return (0);
 }

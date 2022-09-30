@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_b_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:15:25 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 12:05:22 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 11:46:19 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	b_in_main_exec(t_cmdlist *cmdlist, t_envlist *envlist)
 		ft_unset(cmdlist, envlist);
 }
 
-int	ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
+void	ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 {
 	int			origin_in;
 	int			origin_out;
@@ -45,7 +45,7 @@ int	ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 		if (origin_in == -1 || origin_out == -1)
 			exit(1);
 		if (ft_redir(cmdlist) == -1)
-			return (1);
+			return ;
 	}
 	b_in_main_exec(cmdlist, envlist);
 	if (flag == 0)
@@ -59,5 +59,4 @@ int	ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist, int flag)
 	}
 	if (flag == 1)
 		exit(0);
-	return (0);
 }
