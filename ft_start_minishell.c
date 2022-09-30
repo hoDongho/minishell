@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_start_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:22:45 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 15:59:26 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 17:04:35 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_start_minishell(t_par_mdata *par_mdata)
 
 	while (1)
 	{
+		signal(SIGINT, ft_ctrl_c);
+		signal(SIGQUIT, ft_ctrl_bslash);
 		ft_clearcmd(par_mdata->cmdlist);
 		input = readline("minishell$ ");
 		if (!input)

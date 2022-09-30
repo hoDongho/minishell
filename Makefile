@@ -6,7 +6,7 @@
 #    By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/13 14:00:58 by dhyun             #+#    #+#              #
-#    Updated: 2022/09/30 13:47:07 by nhwang           ###   ########.fr        #
+#    Updated: 2022/09/30 17:25:38 by nhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS	= ft_cd.c ft_cd_util.c ft_check_syntax.c ft_echo.c ft_exec.c\
 		ft_new_node.c ft_parse.c ft_parse_env.c ft_parse_push.c \
 		ft_parse_util.c ft_pwd.c ft_re_dir.c ft_re_dir_util.c ft_set_env.c\
 		ft_start_minishell.c ft_util.c get_next_line.c get_next_line_utils.c\
-		main.c ft_export.c ft_env.c ft_unset.c\
+		main.c ft_export.c ft_env.c ft_unset.c ft_re_dir_heredoc.c\
 
 OBJS	= $(SRCS:.c=.o)
 

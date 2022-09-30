@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/30 11:59:55 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 17:25:21 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_gdata
 	int			p_size;
 	int			exit_code;
 	int			is_sig;
+	int			hd;
 }				t_gdata;
 
 t_gdata			g_data;
@@ -134,6 +135,7 @@ char			*ft_chgenv(char *st, t_par_mdata *par_mdata, int swit);
 void			ft_push(t_arglist	*arglist, char c);
 
 int				ft_check_syntax(t_cmdlist *cmdlist);
+int				check_re_dir(t_cmdlist *cmdlist);
 int				ft_checkq(char *str);
 int				ft_cnt_word(char *str);
 int				ft_is_redir(char *str);
@@ -148,8 +150,7 @@ char			*ft_makeword(t_arglist	*arglist);
 
 void			ft_exec(t_cmdlist *cmdlist, t_envlist *envlist);
 void			ft_exec_n_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
-void			ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist,
-					int flag);
+void			ft_exec_built_in(t_cmdlist *cmdlist, t_envlist *envlist);
 void			ft_exec_cmds(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
 int				check_built_in(char	*str);
 int				check_pipe(t_cmdlist *cmdlist);
@@ -188,7 +189,7 @@ t_cmdnode		*ft_del_redir(t_cmdnode *curr);
 int				ft_out_put_redir(t_cmdnode *curr, int *new_out,
 					int *cnt, int redir_type);
 int				ft_in_put_redir(t_cmdnode *curr, int *new_in);
-void			ft_here_doc(t_cmdnode *curr, int *new_in);
+int				ft_here_doc(t_cmdnode *curr, int *new_in);
 
 void			ft_set_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
 
@@ -198,5 +199,8 @@ void			print_error(char *str, int code);
 char			*get_next_line(int fd);
 char			*ft_strdup_gnl(const char *s1);
 char			*ft_strjoin_gnl(char *s1, char *s2);
+
+void			ft_ctrl_bslash(int sig);
+void			ft_ctrl_c(int sig);
 
 #endif

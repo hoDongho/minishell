@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_re_dir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:26:21 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 15:25:54 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/09/30 17:40:54 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_chg_redir(t_cmdnode *curr, int *new_in, int *new_out, int *cnt)
 			return (-1);
 	}
 	else if (redir_type == 4)
-		ft_here_doc(curr, new_in);
+		if (ft_here_doc(curr, new_in) != 0)
+			return (-1);
 	return (redir_type);
 }
 
@@ -66,7 +67,7 @@ int	ft_redir(t_cmdlist *cmdlist)
 
 	new_in = STDIN_FILENO;
 	new_out = STDOUT_FILENO;
-	cnt = 0;
+	cnt = 1;
 	if (ft_set_redir(cmdlist, &new_in, &new_out, &cnt) != 0)
 		return (-1);
 	if (new_in != STDIN_FILENO)

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/30 13:53:41 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 17:03:28 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	ft_ctrl_bslash(int sig)
 	int	t;
 
 	t = 0;
-	if (g_data.p_size == 0)//
+	if (g_data.p_size == 0)
 	{
 		rl_on_new_line();
-		rl_replace_line("", 2);
+		rl_replace_line("", 1);
 		rl_redisplay();
 		return ;
 	}
@@ -64,8 +64,6 @@ int	main(int argc, char *argv[], char *env[])
 
 	ft_init(&par_mdata, argc, argv);
 	ft_set_env(par_mdata.envlist, env);
-	signal(SIGINT, ft_ctrl_c);
-	signal(SIGQUIT, ft_ctrl_bslash);
 	g_data.exit_code = 0;
 	ft_start_minishell(&par_mdata);
 	return (0);

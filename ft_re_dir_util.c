@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 15:10:33 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 11:10:20 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 17:29:54 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,31 +86,19 @@ int	ft_in_put_redir(t_cmdnode *curr, int *new_in)
 	return (0);
 }
 
-void	ft_here_doc(t_cmdnode *curr, int *new_in)
+int	check_re_dir(t_cmdlist *cmdlist)
 {
-	char	*hd_exit;
-	char	*hd_input;
+	int			redir;
+	t_cmdnode	*curr;
 
-	if (*new_in != 0)
-		close(*new_in);
-	hd_exit = ft_strjoin(curr->next->str, "\n");
-	*new_in = open("/tmp/.heredoc_tmp", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (*new_in == -1)
-		print_error("open", 1);
-	while (1)
+	redir = 0;
+	curr = cmdlist->head->next;
+	while (curr->next)
 	{
-		write(1, "> ", 2);
-		hd_input = get_next_line(STDIN_FILENO);
-		if (hd_input == 0)
+		redir = ft_is_redir(curr->str);
+		if (redir != 0)
 			break ;
-		if (ft_strcmp(hd_input, hd_exit) == 0)
-			break ;
-		write(*new_in, hd_input, ft_strlen(hd_input));
-		free(hd_input);
+		curr = curr->next;
 	}
-	free(hd_exit);
-	free(hd_input);
-	close(*new_in);
-	*new_in = open("/tmp/.heredoc_tmp", O_RDONLY, 0644);
-	unlink("/tmp/.heredoc_tmp");
+	return (redir);
 }
