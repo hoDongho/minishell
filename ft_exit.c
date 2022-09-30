@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 11:56:17 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:53:50 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_exit(t_cmdlist *cmdlist)
 		{
 			write(2, "exit: ", 6);
 			write(2, arg->str, ft_strlen(arg->str));
-			print_error(": numeric argument required", 255);
+			print_error(": numeric argument required\n", 255);
 			exit(255);
 		}
 		else if (cmdlist->datasize > 2)

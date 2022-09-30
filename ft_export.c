@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:08:16 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/30 11:43:30 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:35:39 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ int	ft_val_first(char *str, char key)
 
 int	ft_valid(char *str, char key)
 {
+	char	*st;
+
+	st = str;
 	if (ft_val_first(str, key) == 0)
 		return (0);
 	str++;
@@ -42,7 +45,7 @@ int	ft_valid(char *str, char key)
 			else
 				write(2, "unset: `", 8);
 			if (*str)
-				write(2, str, ft_strlen(str));
+				write(2, st, ft_strlen(st));
 			print_error("': not a valid identifier\n", 1);
 			return (0);
 		}

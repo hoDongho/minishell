@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 17:06:14 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/30 17:50:01 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:25:46 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	ft_read_heredoc(char *hd_input, char *hd_exit, int *new_in)
 		if (hd_input == 0)
 			break ;
 		if (ft_strcmp(hd_input, hd_exit) == 0)
+		{
+			free(hd_input);
 			break ;
+		}
 		write(*new_in, hd_input, ft_strlen(hd_input));
 		free(hd_input);
 	}

@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:59:47 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 12:36:50 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:37:53 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	ft_cd_set_env(t_envlist *envlist, char *old_pwd)
 		exit(1);
 	}
 	change_val(envlist, "PWD", path);
+	g_data.exit_code = 0;
 }
 
 char	*set_old_pwd(t_envlist *envlist)
@@ -113,6 +114,8 @@ void	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 		ft_putstr_fd(path, 2);
 		ft_putstr_fd(": ", 2);
 		print_error("", 1);
+		free(path);
+		free(old_pwd);
 		return ;
 	}
 	else if (cmdlist->head->next->next->str != 0
@@ -120,5 +123,4 @@ void	ft_cd(t_cmdlist *cmdlist, t_envlist *envlist)
 		printf("%s\n", path);
 	free(path);
 	ft_cd_set_env(envlist, old_pwd);
-	g_data.exit_code = 0;
 }
