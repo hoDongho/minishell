@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 19:00:15 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/03 17:09:21 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,33 @@ t_cmdlist	*ft_cpy_cmdlist(t_cmdnode *arg)
 		arg = arg->next;
 	}
 	return (new);
+}
+
+void	ft_exe_error(t_exec_cmds *exec_cmds)
+{
+	if (errno == 13)
+	{
+		ft_putstr_fd(exec_cmds->cmd, 2);
+		ft_putstr_fd(": ", 2);
+		print_error("", 126);
+	}
+	errno = 2;
+	ft_putstr_fd(exec_cmds->cmd, 2);
+	ft_putstr_fd(": ", 2);
+	print_error("", 127);
+}
+
+void	ft_open_error(t_exec_cmds *exec_cmds)
+{
+	if (errno == 13)
+	{
+		ft_putstr_fd(exec_cmds->cmd, 2);
+		print_error(": ", 126);
+	}
+	else if (ft_strncmp("./", exec_cmds->cmd, 2) == 0
+		|| ft_strchr(exec_cmds->cmd, '/') != 0)
+	{
+		ft_putstr_fd(exec_cmds->cmd, 2);
+		print_error(": ", 127);
+	}
 }

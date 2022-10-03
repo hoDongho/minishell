@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/10/03 16:11:53 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/10/03 17:07:27 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,7 @@ void	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 		}
 		ft_set_path(exec_data, exec_cmds);
 		if (execve(exec_cmds->p_cmds, exec_cmds->s_cmds, exec_data->env) == -1)
-		{
-			if (errno == 13)
-			{
-				ft_putstr_fd(exec_cmds->cmd, 2);
-				ft_putstr_fd(": ", 2);
-				print_error("", 126);
-			}
-			errno = 2;
-			ft_putstr_fd(exec_cmds->cmd, 2);
-			ft_putstr_fd(": ", 2);
-			print_error("", 127);
-		}
+			ft_exe_error(exec_cmds);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:29:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/10/03 16:43:03 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/03 17:09:46 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,8 @@ void			ft_set_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds);
 
 char			*ft_strjoin_wc(char *s1, char *s2, char c);
 void			print_error(char *str, int code);
+void			ft_exe_error(t_exec_cmds *exec_cmds);
+void			ft_open_error(t_exec_cmds *exec_cmds);
 
 char			*get_next_line(int fd);
 char			*ft_strdup_gnl(const char *s1);

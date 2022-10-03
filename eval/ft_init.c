@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:12:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/10/03 16:43:49 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/03 17:05:05 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	ft_cmdinit(t_cmdlist *cmdlist)
 
 void	ft_init(t_par_mdata *par_mdata, int argc, char *argv[])
 {
-	struct termios ter;
+	struct termios	ter;
+
 	if (argc != 1 || argv[1] != 0)
 		exit(1);
 	par_mdata->arglist = ft_calloc (1, sizeof(t_arglist));
