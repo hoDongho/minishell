@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:58:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/10/03 16:20:27 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/10/03 17:00:22 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*search_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	{
 		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmd, '/');
 		ret = open(tmp, O_RDONLY);
-		close(ret);
+		if (ret != -1)
+			close(ret);
 		if (ret > 0)
 			return (tmp);
 		else if (ret == -1 && errno == 13)
@@ -47,13 +48,23 @@ char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	if (tmp != 0)
 		return (tmp);
 	ret = open(exec_cmds->cmd, O_RDONLY);
-	close(ret);
+	if (ret != -1)
+		close(ret);
 	if (ret > 0)
 		return (exec_cmds->cmd);
-	else if (ret < 0 && errno == 13)
+	else if (ret < 0)
 	{
-		write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
-		print_error(": ", 126);
+		if (errno == 13)
+		{
+			ft_putstr_fd(exec_cmds->cmd, 2);
+			print_error(": ", 126);
+		}
+		else if (ft_strncmp("./", exec_cmds->cmd, 2) == 0
+			|| ft_strchr(exec_cmds->cmd, '/') != 0)
+		{
+			ft_putstr_fd(exec_cmds->cmd, 2);
+			print_error(": ", 127);
+		}
 	}
 	return (0);
 }
