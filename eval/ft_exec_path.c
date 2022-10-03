@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:58:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/10/03 17:09:39 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/10/03 17:59:56 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	check_dir(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	{
 		closedir(dir);
 		ft_putstr_fd(exec_cmds->cmd, 2);
-		print_error(": is a directory", 126);
+		print_error(": is a directory\n", 126);
 	}
 }
 

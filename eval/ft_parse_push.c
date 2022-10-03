@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_push.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:57:15 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 14:52:19 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/10/03 17:52:27 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ char	*ft_push_word(t_par_mdata *par_mdata, char *st, int swit)
 			if (*st == '\\' || *st == ';')
 			{
 				st++;
-				if (ft_switch(*st) == SPACE_NULL)
-					ft_push(par_mdata->arglist, '\0');
 				return (st);
 			}
 			ft_push(par_mdata->arglist, *st);
