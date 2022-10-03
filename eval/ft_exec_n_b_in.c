@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_n_b_in.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:01:36 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 11:54:42 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:10:10 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@ void	free_exec_data(t_exec_data *exec_data)
 	int	i;
 
 	i = 0;
-	while (exec_data->path[i])
-		free(exec_data->path[i++]);
-	free(exec_data->path);
+	if (exec_data->path)
+	{
+		while (exec_data->path[i])
+			free(exec_data->path[i++]);
+		free(exec_data->path);
+	}
 	i = 0;
 	while (exec_data->env[i])
 	{

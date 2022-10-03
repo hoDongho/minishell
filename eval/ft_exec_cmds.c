@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 16:00:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 17:44:10 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:11:53 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	ft_exec_child(t_exec_data *exec_data, t_exec_cmds *exec_cmds, int i)
 				ft_putstr_fd(": ", 2);
 				print_error("", 126);
 			}
-			exit(1);
+			errno = 2;
+			ft_putstr_fd(exec_cmds->cmd, 2);
+			ft_putstr_fd(": ", 2);
+			print_error("", 127);
 		}
 	}
 }

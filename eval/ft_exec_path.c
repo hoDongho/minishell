@@ -6,7 +6,7 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:58:32 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/29 14:17:56 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/10/03 16:20:27 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,7 @@ char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
 	int			ret;
 	char		*tmp;
-	DIR			*dir;
 
-	dir = opendir(exec_cmds->cmd);
-	if (dir)
-	{
-		closedir(dir);
-		write(2, exec_cmds->cmd, ft_strlen(exec_cmds->cmd));
-		print_error(": is a directory\n", 126);
-	}
 	tmp = search_path(exec_data, exec_cmds);
 	if (tmp != 0)
 		return (tmp);
@@ -66,8 +58,29 @@ char	*sel_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	return (0);
 }
 
+void	check_dir(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
+{
+	DIR	*dir;
+
+	if (exec_data->path != 0 && ft_strchr(exec_cmds->cmd, '/') == 0)
+		return ;
+	dir = opendir(exec_cmds->cmd);
+	if (dir)
+	{
+		closedir(dir);
+		ft_putstr_fd(exec_cmds->cmd, 2);
+		print_error(": is a directory", 126);
+	}
+}
+
 void	ft_set_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 {
+	check_dir(exec_data, exec_cmds);
+	if (exec_data->path == 0)
+	{
+		exec_cmds->p_cmds = ft_strdup(exec_cmds->cmd);
+		return ;
+	}
 	exec_cmds->p_cmds = sel_path(exec_data, exec_cmds);
 	errno = 0;
 	if (exec_cmds->p_cmds == 0 || ft_strchr(exec_cmds->p_cmds, '/') == 0)

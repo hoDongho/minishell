@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_convert.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 19:00:09 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:08:52 by dhyun            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	split_path(t_exec_data *exec_data)
 	while (exec_data->env[i] != 0
 		&& ft_strncmp(exec_data->env[i], "PATH=", 5) != 0)
 		i++;
-	exec_data->path = ft_split(exec_data->env[i] + 5, ':');
+	if (exec_data->env[i])
+		exec_data->path = ft_split(exec_data->env[i] + 5, ':');
 }
 
 void	convert_env(t_envlist *envlist, t_exec_data *exec_data)
