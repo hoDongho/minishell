@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:04:12 by nhwang            #+#    #+#             */
-/*   Updated: 2022/10/03 14:13:15 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:45:36 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_ctrl_c(int sig)
 		kill(g_data.pidarr[t], SIGKILL);
 		t++;
 	}
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("^C\n", 2);
 	g_data.exit_code = 128 + sig;
 	g_data.p_size = 0;
 }
@@ -54,7 +54,7 @@ void	ft_ctrl_bslash(int sig)
 		kill(g_data.pidarr[t], SIGKILL);
 		t++;
 	}
-	ft_putstr_fd("Quit: 3\n", 2);
+	ft_putstr_fd("^\\Quit: 3\n", 2);
 	g_data.exit_code = 128 + sig;
 	g_data.p_size = 0;
 }

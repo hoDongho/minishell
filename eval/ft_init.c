@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 16:12:51 by nhwang            #+#    #+#             */
-/*   Updated: 2022/09/29 11:27:10 by dhyun            ###   ########seoul.kr  */
+/*   Updated: 2022/10/03 16:43:49 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_cmdinit(t_cmdlist *cmdlist)
 
 void	ft_init(t_par_mdata *par_mdata, int argc, char *argv[])
 {
+	struct termios ter;
 	if (argc != 1 || argv[1] != 0)
 		exit(1);
 	par_mdata->arglist = ft_calloc (1, sizeof(t_arglist));
@@ -49,4 +50,7 @@ void	ft_init(t_par_mdata *par_mdata, int argc, char *argv[])
 	ft_arginit(par_mdata->arglist);
 	ft_envinit(par_mdata->envlist);
 	ft_cmdinit(par_mdata->cmdlist);
+	tcgetattr(STDIN_FILENO, &ter);
+	ter.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &ter);
 }
