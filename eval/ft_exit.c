@@ -6,7 +6,7 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:33:48 by dhyun             #+#    #+#             */
-/*   Updated: 2022/09/30 18:53:50 by nhwang           ###   ########.fr       */
+/*   Updated: 2022/10/04 11:35:55 by nhwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_exit(t_cmdlist *cmdlist)
 	arg = cmdlist->head->next->next;
 	ft_putstr_fd("exit\n", 2);
 	if (!arg->next)
-		status = 0;
+		status = g_data.exit_code;
 	else if (cmdlist->datasize > 1)
 	{
 		status = ft_atoi(arg->str);

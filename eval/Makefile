@@ -6,7 +6,7 @@
 #    By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/13 14:00:58 by dhyun             #+#    #+#              #
-#    Updated: 2022/09/30 17:25:38 by nhwang           ###   ########.fr        #
+#    Updated: 2022/10/04 12:17:31 by nhwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ $(NAME):	$(OBJS)
 	$(CC) -o $@ $^ $(INC_LIB)
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 $(OBJS):	$(HEADERS)
 
