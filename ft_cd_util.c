@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 15:58:44 by dhyun             #+#    #+#             */
 /*   Updated: 2022/09/29 23:50:43 by dhyun            ###   ########seoul.kr  */

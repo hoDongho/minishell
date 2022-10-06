@@ -6,7 +6,11 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 12:58:32 by dhyun             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/03 18:00:43 by nhwang           ###   ########.fr       */
+=======
+/*   Updated: 2022/09/29 22:11:36 by nhwang           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +26,7 @@ char	*search_path(t_exec_data *exec_data, t_exec_cmds *exec_cmds)
 	while (exec_data->path[i])
 	{
 		tmp = ft_strjoin_wc(exec_data->path[i], exec_cmds->cmd, '/');
+		printf("search_path :: %s\n", tmp);
 		ret = open(tmp, O_RDONLY);
 		close(ret);
 		if (ret > 0)

@@ -6,7 +6,11 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 15:00:54 by dhyun             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/30 11:55:17 by nhwang           ###   ########.fr       */
+=======
+/*   Updated: 2022/09/29 22:25:19 by nhwang           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +26,7 @@ char	*ft_strjoin_wc(char *s1, char *s2, char c)
 	new = 0;
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
+	printf("len1 %zu, len2 %zu\n", len1, len2);
 	new = ft_calloc(len1 + len2 + 1 + 1, sizeof(char));
 	ft_memmove(new, s1, len1);
 	new[len1] = c;

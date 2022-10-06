@@ -6,7 +6,11 @@
 /*   By: dhyun <dhyun@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 14:09:57 by nhwang            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/29 23:19:10 by dhyun            ###   ########seoul.kr  */
+=======
+/*   Updated: 2022/09/29 22:09:57 by nhwang           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +37,7 @@ void	ft_popenv(char *tkey, t_envlist *envlist)
 			temp = curr;
 			curr = curr->next;
 			free(temp);
-			continue ;
+			return ;
 		}
 		curr = curr->next;
 	}

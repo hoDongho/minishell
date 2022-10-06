@@ -6,7 +6,11 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 15:43:25 by dhyun             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/30 11:59:46 by nhwang           ###   ########.fr       */
+=======
+/*   Updated: 2022/09/29 21:10:21 by nhwang           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +39,7 @@ void	ft_pwd(t_envlist *envlist)
 
 	pwd = get_pwd(envlist);
 	printf("%s\n", pwd);
-	free(pwd);
+	// unset PWD -> pwd command, (double free error) occurs
+	// free(pwd);
 	g_data.exit_code = 0;
 }

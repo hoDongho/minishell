@@ -6,7 +6,11 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 14:01:36 by dhyun             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/30 11:54:42 by nhwang           ###   ########.fr       */
+=======
+/*   Updated: 2022/09/29 22:23:54 by nhwang           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +47,24 @@ void	free_exec_data(t_exec_data *exec_data)
 	int	i;
 
 	i = 0;
+
 	while (exec_data->path[i])
 		free(exec_data->path[i++]);
 	free(exec_data->path);
 	i = 0;
 	while (exec_data->env[i])
 	{
+<<<<<<< HEAD
+=======
+		printf("\n\nidx %d\n\n", i);
+		printf("data :: %s", exec_data->env[i]);
+>>>>>>> master
 		free(exec_data->env[i]);
 		i++;
 	}
+	system("leaks minishell");
 	free(exec_data->env);
+	system("leaks minishell");
 	free(exec_data->pid);
 	free_exec_data_list(exec_data);
 	free(exec_data);

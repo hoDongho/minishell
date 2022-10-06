@@ -1,0 +1,1 @@
+cc -lreadline -L/Users/nhwang/.brew/opt/readline/lib -I/Users/nhwang/.brew/opt/readline/include -L. -lft -g *.c -o minishell

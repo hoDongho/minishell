@@ -6,7 +6,11 @@
 /*   By: nhwang <nhwang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:44:58 by dhyun             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/30 11:53:11 by nhwang           ###   ########.fr       */
+=======
+/*   Updated: 2022/09/29 22:23:27 by nhwang           ###   ########.fr       */
+>>>>>>> master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +91,25 @@ void	convert_env(t_envlist *envlist, t_exec_data *exec_data)
 	curr = envlist->head->next;
 	while (curr->next)
 	{
+<<<<<<< HEAD
 		if (curr->val != 0)
 		{
 			exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
 			i++;
 		}
+=======
+		// if (curr->val != 0)
+		// 	exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
+		if (curr->val != 0) {
+			// printf("%s=%s\n", curr->key, curr->val);
+			exec_data->env[i] = ft_strjoin_wc(curr->key, curr->val, '=');
+			printf("exec_convert :: %s\n", exec_data->env[i]);
+		}
+			printf("\n\n");
+		if (exec_data->env == 0)//
+			return (1);//
+		i++;
+>>>>>>> master
 		curr = curr->next;
 	}
 	split_path(exec_data);
